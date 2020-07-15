@@ -7,15 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		81253D2A24BF71900054F392 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D2924BF71900054F392 /* Note.swift */; };
+		81253D2C24BF71A40054F392 /* Tuning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D2B24BF71A40054F392 /* Tuning.swift */; };
+		81253D2E24BF72BC0054F392 /* FretBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D2D24BF72BC0054F392 /* FretBoard.swift */; };
+		81253D3324BF736C0054F392 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D3224BF736C0054F392 /* Game.swift */; };
+		81253D3724BF73C70054F392 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D3624BF73C70054F392 /* Question.swift */; };
+		81253D3924BF73D70054F392 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D3824BF73D70054F392 /* Answer.swift */; };
 		81A8583D24BF4C28003E788F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A8583C24BF4C28003E788F /* AppDelegate.swift */; };
 		81A8583F24BF4C28003E788F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A8583E24BF4C28003E788F /* SceneDelegate.swift */; };
 		81A8584124BF4C28003E788F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A8584024BF4C28003E788F /* ContentView.swift */; };
 		81A8584324BF4C2A003E788F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A8584224BF4C2A003E788F /* Assets.xcassets */; };
 		81A8584624BF4C2A003E788F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A8584524BF4C2A003E788F /* Preview Assets.xcassets */; };
 		81A8584924BF4C2A003E788F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81A8584724BF4C2A003E788F /* LaunchScreen.storyboard */; };
+		81F9D17824BF6EAF0062E3F9 /* FretBoardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9D17724BF6EAF0062E3F9 /* FretBoardTests.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		81F9D17A24BF6EAF0062E3F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 81A8583124BF4C28003E788F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81A8583824BF4C28003E788F;
+			remoteInfo = "Fret Notes";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		81253D2924BF71900054F392 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		81253D2B24BF71A40054F392 /* Tuning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tuning.swift; sourceTree = "<group>"; };
+		81253D2D24BF72BC0054F392 /* FretBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FretBoard.swift; sourceTree = "<group>"; };
+		81253D3224BF736C0054F392 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		81253D3624BF73C70054F392 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		81253D3824BF73D70054F392 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		81A8583924BF4C28003E788F /* Fret Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fret Notes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81A8583C24BF4C28003E788F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81A8583E24BF4C28003E788F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +47,9 @@
 		81A8584524BF4C2A003E788F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		81A8584824BF4C2A003E788F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		81A8584A24BF4C2A003E788F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81F9D17524BF6EAF0062E3F9 /* Fret Notes Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fret Notes Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81F9D17724BF6EAF0062E3F9 /* FretBoardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FretBoardTests.swift; sourceTree = "<group>"; };
+		81F9D17924BF6EAF0062E3F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,13 +60,86 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		81F9D17224BF6EAF0062E3F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		81253D2724BF717A0054F392 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				81A8583C24BF4C28003E788F /* AppDelegate.swift */,
+				81A8583E24BF4C28003E788F /* SceneDelegate.swift */,
+				81253D2F24BF73400054F392 /* Model */,
+				81253D3524BF738E0054F392 /* View */,
+				81253D3A24BF73E70054F392 /* Controller */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		81253D2824BF71800054F392 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				81A8584224BF4C2A003E788F /* Assets.xcassets */,
+				81A8584724BF4C2A003E788F /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		81253D2F24BF73400054F392 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				81253D3024BF73470054F392 /* Entities */,
+				81253D3124BF734E0054F392 /* Domain */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		81253D3024BF73470054F392 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				81253D2924BF71900054F392 /* Note.swift */,
+				81253D2B24BF71A40054F392 /* Tuning.swift */,
+				81253D2D24BF72BC0054F392 /* FretBoard.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		81253D3124BF734E0054F392 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				81253D3624BF73C70054F392 /* Question.swift */,
+				81253D3824BF73D70054F392 /* Answer.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		81253D3524BF738E0054F392 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				81A8584024BF4C28003E788F /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		81253D3A24BF73E70054F392 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				81253D3224BF736C0054F392 /* Game.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		81A8583024BF4C28003E788F = {
 			isa = PBXGroup;
 			children = (
 				81A8583B24BF4C28003E788F /* Fret Notes */,
+				81F9D17624BF6EAF0062E3F9 /* Fret Notes Tests */,
 				81A8583A24BF4C28003E788F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				81A8583924BF4C28003E788F /* Fret Notes.app */,
+				81F9D17524BF6EAF0062E3F9 /* Fret Notes Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -56,11 +156,8 @@
 		81A8583B24BF4C28003E788F /* Fret Notes */ = {
 			isa = PBXGroup;
 			children = (
-				81A8583C24BF4C28003E788F /* AppDelegate.swift */,
-				81A8583E24BF4C28003E788F /* SceneDelegate.swift */,
-				81A8584024BF4C28003E788F /* ContentView.swift */,
-				81A8584224BF4C2A003E788F /* Assets.xcassets */,
-				81A8584724BF4C2A003E788F /* LaunchScreen.storyboard */,
+				81253D2724BF717A0054F392 /* Classes */,
+				81253D2824BF71800054F392 /* Resources */,
 				81A8584A24BF4C2A003E788F /* Info.plist */,
 				81A8584424BF4C2A003E788F /* Preview Content */,
 			);
@@ -73,6 +170,15 @@
 				81A8584524BF4C2A003E788F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		81F9D17624BF6EAF0062E3F9 /* Fret Notes Tests */ = {
+			isa = PBXGroup;
+			children = (
+				81F9D17724BF6EAF0062E3F9 /* FretBoardTests.swift */,
+				81F9D17924BF6EAF0062E3F9 /* Info.plist */,
+			);
+			path = "Fret Notes Tests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,18 +201,40 @@
 			productReference = 81A8583924BF4C28003E788F /* Fret Notes.app */;
 			productType = "com.apple.product-type.application";
 		};
+		81F9D17424BF6EAF0062E3F9 /* Fret Notes Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81F9D17E24BF6EAF0062E3F9 /* Build configuration list for PBXNativeTarget "Fret Notes Tests" */;
+			buildPhases = (
+				81F9D17124BF6EAF0062E3F9 /* Sources */,
+				81F9D17224BF6EAF0062E3F9 /* Frameworks */,
+				81F9D17324BF6EAF0062E3F9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				81F9D17B24BF6EAF0062E3F9 /* PBXTargetDependency */,
+			);
+			name = "Fret Notes Tests";
+			productName = "Fret Notes Tests";
+			productReference = 81F9D17524BF6EAF0062E3F9 /* Fret Notes Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		81A8583124BF4C28003E788F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1150;
-				LastUpgradeCheck = 1150;
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Luca Strazzullo";
 				TargetAttributes = {
 					81A8583824BF4C28003E788F = {
 						CreatedOnToolsVersion = 11.5;
+					};
+					81F9D17424BF6EAF0062E3F9 = {
+						CreatedOnToolsVersion = 12.0;
+						TestTargetID = 81A8583824BF4C28003E788F;
 					};
 				};
 			};
@@ -124,6 +252,7 @@
 			projectRoot = "";
 			targets = (
 				81A8583824BF4C28003E788F /* Fret Notes */,
+				81F9D17424BF6EAF0062E3F9 /* Fret Notes Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -139,6 +268,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		81F9D17324BF6EAF0062E3F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -147,12 +283,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				81A8583D24BF4C28003E788F /* AppDelegate.swift in Sources */,
+				81253D3724BF73C70054F392 /* Question.swift in Sources */,
 				81A8583F24BF4C28003E788F /* SceneDelegate.swift in Sources */,
+				81253D3924BF73D70054F392 /* Answer.swift in Sources */,
+				81253D3324BF736C0054F392 /* Game.swift in Sources */,
+				81253D2C24BF71A40054F392 /* Tuning.swift in Sources */,
 				81A8584124BF4C28003E788F /* ContentView.swift in Sources */,
+				81253D2A24BF71900054F392 /* Note.swift in Sources */,
+				81253D2E24BF72BC0054F392 /* FretBoard.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81F9D17124BF6EAF0062E3F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81F9D17824BF6EAF0062E3F9 /* FretBoardTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		81F9D17B24BF6EAF0062E3F9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81A8583824BF4C28003E788F /* Fret Notes */;
+			targetProxy = 81F9D17A24BF6EAF0062E3F9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		81A8584724BF4C2A003E788F /* LaunchScreen.storyboard */ = {
@@ -192,6 +350,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -252,6 +411,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -289,6 +449,7 @@
 				DEVELOPMENT_TEAM = UC9U5RZ8UF;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Fret Notes/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -296,7 +457,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.lucastrazzullo.Fret-Notes";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -309,6 +470,7 @@
 				DEVELOPMENT_TEAM = UC9U5RZ8UF;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Fret Notes/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -316,7 +478,49 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.lucastrazzullo.Fret-Notes";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		81F9D17C24BF6EAF0062E3F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UC9U5RZ8UF;
+				INFOPLIST_FILE = "Fret Notes Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lucastrazzullo.Fret-Notes-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fret Notes.app/Fret Notes";
+			};
+			name = Debug;
+		};
+		81F9D17D24BF6EAF0062E3F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UC9U5RZ8UF;
+				INFOPLIST_FILE = "Fret Notes Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lucastrazzullo.Fret-Notes-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fret Notes.app/Fret Notes";
 			};
 			name = Release;
 		};
@@ -337,6 +541,15 @@
 			buildConfigurations = (
 				81A8584E24BF4C2A003E788F /* Debug */,
 				81A8584F24BF4C2A003E788F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		81F9D17E24BF6EAF0062E3F9 /* Build configuration list for PBXNativeTarget "Fret Notes Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81F9D17C24BF6EAF0062E3F9 /* Debug */,
+				81F9D17D24BF6EAF0062E3F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
