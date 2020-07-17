@@ -1,7 +1,8 @@
 # Fret Notes
 A simple app to learn guitar fretboard notes
 
-## NOTE
+## License
 This is a proof of concept with no guarantee of active maintenance.
 
+See [License](./LICENSE.md)
 
