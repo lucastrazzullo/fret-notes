@@ -1,5 +1,5 @@
 //
-//  Game.swift
+//  Challenge.swift
 //  Fret Notes
 //
 //  Created by luca strazzullo on 15/7/20.
@@ -9,12 +9,11 @@
 import Foundation
 import Combine
 
-class Game: ObservableObject {
+class Challenge: ObservableObject {
 
     // MARK: Instance properties
 
     @Published private(set) var question: Question
-    @Published private(set) var attemptedAnswer: Answer?
 
     private var subscriptions: Set<AnyCancellable> = []
 
@@ -25,27 +24,26 @@ class Game: ObservableObject {
 
     init() {
         fretboard = FretBoard(tuningType: .standard)
-        question = Game.generateRandomQuestion(for: fretboard)
+        question = Challenge.generateRandomQuestion(for: fretboard)
     }
 
 
     // MARK: Public methods
 
     func nextQuestion() {
-        attemptedAnswer = nil
-        question = Game.generateRandomQuestion(for: fretboard)
+        question = Challenge.generateRandomQuestion(for: fretboard)
     }
 
 
-    func attempt(answer: Answer) {
-        attemptedAnswer = answer
+    func result(for note: Note) -> Result {
+        let answer = Answer(note: note)
+        return Result(question: question, attemptedAnswer: answer)
     }
 
 
     private static func generateRandomQuestion(for fretboard: FretBoard) -> Question {
         let fret = fretboard.frets.shuffled().first!
         let string = fretboard.strings.shuffled().first!
-        let note = fretboard.note(on: fret, string: string)
-        return Question(fret: fret, string: string, note: note)
+        return Question(fret: fret, string: string, on: fretboard)
     }
 }

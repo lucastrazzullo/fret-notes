@@ -13,4 +13,10 @@ struct Question {
     let fret: Int
     let string: Int
     let note: Note
+
+    init(fret: Int, string: Int, on fretboard: FretBoard) {
+        self.fret = fret
+        self.string = string
+        self.note = fretboard.note(on: fret, string: string)
+    }
 }
