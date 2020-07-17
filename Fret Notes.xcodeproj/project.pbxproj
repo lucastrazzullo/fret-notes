@@ -14,9 +14,12 @@
 		81253D3724BF73C70054F392 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D3624BF73C70054F392 /* Question.swift */; };
 		81253D3924BF73D70054F392 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D3824BF73D70054F392 /* Answer.swift */; };
 		8129C47224C1C0CC00F05E4C /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8129C47124C1C0CC00F05E4C /* Result.swift */; };
+		8132362424C1F7CF000A2AF5 /* AdaptiveStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8132362324C1F7CF000A2AF5 /* AdaptiveStack.swift */; };
+		818129C724C1D225007AE4F0 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818129C624C1D225007AE4F0 /* ResultView.swift */; };
+		8185373624C1E166005059DD /* FretboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8185373524C1E166005059DD /* FretboardView.swift */; };
 		81A8583D24BF4C28003E788F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A8583C24BF4C28003E788F /* AppDelegate.swift */; };
 		81A8583F24BF4C28003E788F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A8583E24BF4C28003E788F /* SceneDelegate.swift */; };
-		81A8584124BF4C28003E788F /* FretChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A8584024BF4C28003E788F /* FretChallengeView.swift */; };
+		81A8584124BF4C28003E788F /* ChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A8584024BF4C28003E788F /* ChallengeView.swift */; };
 		81A8584324BF4C2A003E788F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A8584224BF4C2A003E788F /* Assets.xcassets */; };
 		81A8584624BF4C2A003E788F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A8584524BF4C2A003E788F /* Preview Assets.xcassets */; };
 		81A8584924BF4C2A003E788F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81A8584724BF4C2A003E788F /* LaunchScreen.storyboard */; };
@@ -41,10 +44,13 @@
 		81253D3624BF73C70054F392 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		81253D3824BF73D70054F392 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		8129C47124C1C0CC00F05E4C /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		8132362324C1F7CF000A2AF5 /* AdaptiveStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveStack.swift; sourceTree = "<group>"; };
+		818129C624C1D225007AE4F0 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
+		8185373524C1E166005059DD /* FretboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FretboardView.swift; sourceTree = "<group>"; };
 		81A8583924BF4C28003E788F /* Fret Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fret Notes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81A8583C24BF4C28003E788F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81A8583E24BF4C28003E788F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		81A8584024BF4C28003E788F /* FretChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FretChallengeView.swift; sourceTree = "<group>"; };
+		81A8584024BF4C28003E788F /* ChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeView.swift; sourceTree = "<group>"; };
 		81A8584224BF4C2A003E788F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		81A8584524BF4C2A003E788F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		81A8584824BF4C2A003E788F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -125,7 +131,10 @@
 		81253D3524BF738E0054F392 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				81A8584024BF4C28003E788F /* FretChallengeView.swift */,
+				8132362324C1F7CF000A2AF5 /* AdaptiveStack.swift */,
+				8185373524C1E166005059DD /* FretboardView.swift */,
+				81A8584024BF4C28003E788F /* ChallengeView.swift */,
+				818129C624C1D225007AE4F0 /* ResultView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -279,14 +288,17 @@
 			files = (
 				81A8583D24BF4C28003E788F /* AppDelegate.swift in Sources */,
 				81253D3724BF73C70054F392 /* Question.swift in Sources */,
+				8185373624C1E166005059DD /* FretboardView.swift in Sources */,
+				818129C724C1D225007AE4F0 /* ResultView.swift in Sources */,
 				81A8583F24BF4C28003E788F /* SceneDelegate.swift in Sources */,
 				81253D3924BF73D70054F392 /* Answer.swift in Sources */,
 				81253D3324BF736C0054F392 /* Challenge.swift in Sources */,
 				81253D2C24BF71A40054F392 /* Tuning.swift in Sources */,
 				8129C47224C1C0CC00F05E4C /* Result.swift in Sources */,
-				81A8584124BF4C28003E788F /* FretChallengeView.swift in Sources */,
+				81A8584124BF4C28003E788F /* ChallengeView.swift in Sources */,
 				81253D2A24BF71900054F392 /* Note.swift in Sources */,
 				81253D2E24BF72BC0054F392 /* FretBoard.swift in Sources */,
+				8132362424C1F7CF000A2AF5 /* AdaptiveStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
