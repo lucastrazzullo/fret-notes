@@ -10,26 +10,35 @@ import SwiftUI
 
 struct ChallengeView: View {
 
-    @StateObject private var game = Challenge()
+    @Environment(\.colorScheme) var colorScheme
+
+    @StateObject private var challenge = Challenge()
 
     @State private var result: Result?
 
     var body: some View {
-        AdaptiveStack(spacing: 40) {
-            VStack(alignment: .center, spacing: 20) {
-                VStack {
-                    Text("What note is at")
+        AdaptiveStack(spacing: 12) {
+            VStack(alignment: .center, spacing: 32) {
+                VStack(alignment: .center, spacing: 20) {
+                    Text("What note is at").font(.headline)
 
-                    VStack {
-                        Text("Fret \(game.question.fret)")
-                        Text("String \(game.question.string)")
+                    HStack(alignment: .center, spacing: 40) {
+                        Text("Fret \(challenge.question.fret)")
+                            .padding(.all, 12)
+                            .background(colorScheme == .dark ? Color.gray : Color.white)
+                            .cornerRadius(12)
+
+                        Text("String \(challenge.question.string)")
+                            .padding(.all, 12)
+                            .background(colorScheme == .dark ? Color.gray : Color.white)
+                            .cornerRadius(12)
                     }
+                    .font(.headline)
                 }
-                .font(.headline)
                 .padding(.top, 40)
 
                 ZStack(alignment: Alignment(horizontal: .center, vertical: .highlightedString)) {
-                    FretboardView(fretboard: game.fretboard, middleFret: game.question.fret, highlightedString: game.question.string)
+                    FretboardView(fretboard: challenge.fretboard, middleFret: challenge.question.fret, highlightedString: challenge.question.string)
 
                     IndicatorView()
                         .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
@@ -40,14 +49,14 @@ struct ChallengeView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             ButtonsView(action: { note in
-                self.result = self.game.result(for: note)
+                self.result = self.challenge.result(for: note)
             })
             .padding(.all, 24)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .sheet(item: $result) { result in
             ResultView(action: {
-                self.game.nextQuestion()
+                self.challenge.nextQuestion()
                 self.result = nil
             }, result: result)
         }
@@ -118,5 +127,6 @@ struct IndicatorView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ChallengeView()
+            .preferredColorScheme(.dark)
     }
 }

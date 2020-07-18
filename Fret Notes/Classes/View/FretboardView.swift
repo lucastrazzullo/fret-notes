@@ -61,6 +61,8 @@ struct FretboardView: View {
 
 struct StringView: View {
 
+    private static let gauges: [CGFloat] = [1, 1.2, 1.8, 2.4, 3.2, 4]
+
     let position: Int
     let isHighlighted: Bool
 
@@ -79,40 +81,42 @@ struct StringView: View {
     // MARK: Private helper methods
 
     private func gauge(at position: Int) -> CGFloat {
-        switch position {
-        case 1:
-            return 1
-        case 2:
-            return 1.2
-        case 3:
-            return 1.8
-        case 4:
-            return 2.4
-        case 5:
-            return 3.2
-        case 6:
-            return 4
-        default:
-            return 1
-        }
+        return StringView.gauges[position - 1]
     }
 }
 
 
 struct FretView: View {
 
-    private static let markPositions: Set<Int> = [3, 5, 7, 9, 12, 15, 17, 19]
+    private static let singleMarkPositions: Set<Int> = [3, 5, 7, 9, 15, 17, 19, 21]
+    private static let doubleMarkPositions: Set<Int> = [12, 24]
 
     let position: Int
 
     var body: some View {
         ZStack {
-            Rectangle()
-                .foregroundColor(.black)
-                .opacity(exists() ? 0.1 : 0)
+            if position < 0 {
+                Rectangle().foregroundColor(.clear)
+            } else if position == 0 {
+                ZStack {
+                    Rectangle().foregroundColor(.clear)
+                    Rectangle().foregroundColor(.gray).frame(maxWidth: 4)
+                }
+            } else {
+                Rectangle()
+                    .foregroundColor(.black)
+                    .opacity(position >= 0 ? 0.1 : 0)
+            }
 
-            if hasMarker() {
-                Circle().frame(width: 12, height: 12, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            if hasSingleMarker() {
+                Circle().frame(width: 12, height: 12, alignment: .center)
+            } else if hasDoubleMarker() {
+                VStack(alignment: .center, spacing: 80) {
+                    Circle().frame(width: 12, height: 12, alignment: .center)
+                    Circle().frame(width: 12, height: 12, alignment: .center)
+                }
+            } else if position > 0 {
+                Text("\(position)").fontWeight(.bold).opacity(0.4)
             }
         }
     }
@@ -120,13 +124,13 @@ struct FretView: View {
 
     // MARK: Private helper methods
 
-    private func hasMarker() -> Bool {
-        return FretView.markPositions.contains(position)
+    private func hasSingleMarker() -> Bool {
+        return FretView.singleMarkPositions.contains(position)
     }
 
 
-    private func exists() -> Bool {
-        return position > 0
+    private func hasDoubleMarker() -> Bool {
+        return FretView.doubleMarkPositions.contains(position)
     }
 }
 
@@ -134,6 +138,6 @@ struct FretView: View {
 struct FretboardView_Previews: PreviewProvider {
     static var previews: some View {
         let fretboard = FretBoard(tuningType: .standard)
-        FretboardView(fretboard: fretboard, middleFret: 2, highlightedString: 1)
+        FretboardView(fretboard: fretboard, middleFret: 12, highlightedString: 1)
     }
 }
