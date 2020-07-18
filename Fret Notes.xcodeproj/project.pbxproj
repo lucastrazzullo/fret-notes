@@ -452,7 +452,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = "\"Fret Notes/Preview Content\"";
 				DEVELOPMENT_TEAM = UC9U5RZ8UF;
 				ENABLE_PREVIEWS = YES;
@@ -464,6 +465,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.lucastrazzullo.Fret-Notes";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Luca Strazzullo (development)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -473,7 +475,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = "\"Fret Notes/Preview Content\"";
 				DEVELOPMENT_TEAM = UC9U5RZ8UF;
 				ENABLE_PREVIEWS = YES;
@@ -485,6 +488,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.lucastrazzullo.Fret-Notes";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Fret Notes - Distribution";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
