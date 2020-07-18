@@ -8,9 +8,24 @@
 
 import SwiftUI
 
+extension VerticalAlignment {
+
+    struct StringAlignment: AlignmentID {
+        static func defaultValue(in d: ViewDimensions) -> CGFloat {
+            d[VerticalAlignment.center]
+        }
+    }
+
+    static let highlightedString = VerticalAlignment(StringAlignment.self)
+}
+
+
 struct FretboardView: View {
 
+    let fretboard: FretBoard
+
     let middleFret: Int
+    let highlightedString: Int
 
     var body: some View {
         ZStack {
@@ -21,35 +36,65 @@ struct FretboardView: View {
             }
             .frame(maxWidth: .infinity)
 
-            VStack(alignment: .center, spacing: 24) {
-                VStack(alignment: .center, spacing: 40) {
-                    Rectangle().frame(height: 1, alignment: .center)
-                    Rectangle().frame(height: 1.2, alignment: .center)
-                    Rectangle().frame(height: 1.8, alignment: .center)
-                    Rectangle().frame(height: 2.4, alignment: .center)
-                    Rectangle().frame(height: 3.2, alignment: .center)
-                    Rectangle().frame(height: 4, alignment: .center)
+            VStack(alignment: .center, spacing: 40) {
+                ForEach(strings(), id: \.self) { position in
+                    StringView(position: position, isHighlighted: position == highlightedString)
                 }
             }
             .frame(maxHeight: .infinity)
-
-            VStack {
-                Text("Fret \(middleFret)")
-                Text("String 2")
-            }
-            .padding(.all, 8)
-            .foregroundColor(.white)
-            .background(Color.accentColor)
-            .cornerRadius(4)
-            .offset(x: 0, y: -66)
         }
     }
 
 
     // MARK: Private helper methods
 
+    private func strings() -> [Int] {
+        return Array(fretboard.strings)
+    }
+
+
     private func frets() -> [Int] {
         return Array(middleFret-2...middleFret+2)
+    }
+}
+
+
+struct StringView: View {
+
+    let position: Int
+    let isHighlighted: Bool
+
+    var body: some View {
+        if isHighlighted {
+            Rectangle()
+                .frame(height: gauge(at: position), alignment: .center)
+                .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
+        } else {
+            Rectangle()
+                .frame(height: gauge(at: position), alignment: .center)
+        }
+    }
+
+
+    // MARK: Private helper methods
+
+    private func gauge(at position: Int) -> CGFloat {
+        switch position {
+        case 1:
+            return 1
+        case 2:
+            return 1.2
+        case 3:
+            return 1.8
+        case 4:
+            return 2.4
+        case 5:
+            return 3.2
+        case 6:
+            return 4
+        default:
+            return 1
+        }
     }
 }
 
@@ -63,8 +108,8 @@ struct FretView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .foregroundColor(.gray)
-                .opacity(exists() ? 0.2 : 0)
+                .foregroundColor(.black)
+                .opacity(exists() ? 0.1 : 0)
 
             if hasMarker() {
                 Circle().frame(width: 12, height: 12, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -88,6 +133,7 @@ struct FretView: View {
 
 struct FretboardView_Previews: PreviewProvider {
     static var previews: some View {
-        FretboardView(middleFret: 2)
+        let fretboard = FretBoard(tuningType: .standard)
+        FretboardView(fretboard: fretboard, middleFret: 2, highlightedString: 1)
     }
 }

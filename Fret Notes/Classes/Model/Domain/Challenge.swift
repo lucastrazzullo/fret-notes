@@ -15,9 +15,9 @@ class Challenge: ObservableObject {
 
     @Published private(set) var question: Question
 
-    private var subscriptions: Set<AnyCancellable> = []
+    let fretboard: FretBoard
 
-    private let fretboard: FretBoard
+    private var subscriptions: Set<AnyCancellable> = []
 
 
     // MARK: Object life cycle

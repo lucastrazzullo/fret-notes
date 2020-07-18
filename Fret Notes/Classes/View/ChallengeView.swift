@@ -19,12 +19,24 @@ struct ChallengeView: View {
             VStack(alignment: .center, spacing: 20) {
                 VStack {
                     Text("What note is at")
+
+                    VStack {
+                        Text("Fret \(game.question.fret)")
+                        Text("String \(game.question.string)")
+                    }
                 }
                 .font(.headline)
                 .padding(.top, 40)
 
-                FretboardView(middleFret: game.question.fret)
+                ZStack(alignment: Alignment(horizontal: .center, vertical: .highlightedString)) {
+                    FretboardView(fretboard: game.fretboard, middleFret: game.question.fret, highlightedString: game.question.string)
+
+                    IndicatorView()
+                        .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
+                        .frame(width: 24, height: 24, alignment: .center)
+                }
             }
+            .background(Color.gray.opacity(0.4).edgesIgnoringSafeArea(.all))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             ButtonsView(action: { note in
@@ -40,6 +52,28 @@ struct ChallengeView: View {
             }, result: result)
         }
     }
+
+
+    // MARK: Private helper methods
+
+//    private func stringAlignment() -> VerticalAlignment {
+//        switch game.question.string {
+//        case 1:
+//            return .firstString
+//        case 2:
+//            return .secondString
+//        case 3:
+//            return .thirdString
+//        case 4:
+//            return .fourthString
+//        case 5:
+//            return .fifthString
+//        case 6:
+//            return .sixthString
+//        default:
+//            return .center
+//        }
+//    }
 }
 
 
@@ -65,6 +99,16 @@ struct ButtonsView: View {
                 .cornerRadius(12)
             }
         }
+    }
+}
+
+
+struct IndicatorView: View {
+
+    var body: some View {
+        Circle()
+            .foregroundColor(.accentColor)
+            .opacity(0.8)
     }
 }
 

@@ -29,7 +29,7 @@ struct ResultView: View {
                     }
                     Text("Time: \(result.timing) sec")
                 } else {
-                    HStack(alignment: .center, spacing: 40) {
+                    HStack(alignment: .center, spacing: 12) {
                         Image(systemName: "hand.thumbsdown")
                         Text("Wrong!")
                     }
