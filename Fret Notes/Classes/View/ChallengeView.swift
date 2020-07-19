@@ -12,49 +12,13 @@ struct ChallengeView: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    @StateObject private var challenge = Challenge()
+    @ObservedObject var challenge: Challenge
+    @ObservedObject private var device = DeviceProperties()
 
     @State private var result: Result?
 
     var body: some View {
-        AdaptiveStack(spacing: 12) {
-            VStack(alignment: .center, spacing: 32) {
-                VStack(alignment: .center, spacing: 20) {
-                    Text("What note is at").font(.headline)
-
-                    HStack(alignment: .center, spacing: 40) {
-                        Text("Fret \(challenge.question.fret)")
-                            .padding(.all, 12)
-                            .background(colorScheme == .dark ? Color.gray : Color.white)
-                            .cornerRadius(12)
-
-                        Text("String \(challenge.question.string)")
-                            .padding(.all, 12)
-                            .background(colorScheme == .dark ? Color.gray : Color.white)
-                            .cornerRadius(12)
-                    }
-                    .font(.headline)
-                }
-                .padding(.top, 40)
-
-                ZStack(alignment: Alignment(horizontal: .center, vertical: .highlightedString)) {
-                    FretboardView(fretboard: challenge.fretboard, middleFret: challenge.question.fret, highlightedString: challenge.question.string)
-
-                    IndicatorView()
-                        .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
-                        .frame(width: 24, height: 24, alignment: .center)
-                }
-            }
-            .background(Color.gray.opacity(0.4).edgesIgnoringSafeArea(.all))
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-            ButtonsView(action: { note in
-                self.result = self.challenge.result(for: note)
-            })
-            .padding(.all, 24)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
-        .sheet(item: $result) { result in
+        buildLayout().sheet(item: $result) { result in
             ResultView(action: {
                 self.challenge.nextQuestion()
                 self.result = nil
@@ -63,61 +27,133 @@ struct ChallengeView: View {
     }
 
 
-    // MARK: Private helper methods
+    private func buildLayout() -> some View {
+        if device.orientation.isLandscape {
+            return AnyView(VStack {
+                HStack {
+                    VStack(alignment: .center, spacing: 32) {
+                        FretboardIndicatorView(challenge: challenge)
+                    }
+                    .background(Color.gray.opacity(0.4).edgesIgnoringSafeArea(.all))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-//    private func stringAlignment() -> VerticalAlignment {
-//        switch game.question.string {
-//        case 1:
-//            return .firstString
-//        case 2:
-//            return .secondString
-//        case 3:
-//            return .thirdString
-//        case 4:
-//            return .fourthString
-//        case 5:
-//            return .fifthString
-//        case 6:
-//            return .sixthString
-//        default:
-//            return .center
-//        }
-//    }
-}
-
-
-struct ButtonsView: View {
-
-    private let layout: [GridItem] = [
-        GridItem(.adaptive(minimum: 80))
-    ]
-
-    let action: (Note) -> Void
-
-    var body: some View {
-        LazyVGrid(columns: layout, spacing: 20) {
-            ForEach(Note.allCases, id: \.self) { note in
-                Button(action: { self.action(note) }) {
-                    Text(note.rawValue)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    ButtonsView(action: { note in
+                        self.result = self.challenge.result(for: note)
+                    })
+                    .padding(.all, 24)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                .font(.title)
-                .padding(12)
-                .foregroundColor(.white)
-                .background(Color.accentColor)
-                .cornerRadius(12)
-            }
+            })
+        } else {
+            return AnyView(VStack(alignment: .center, spacing: 8) {
+                VStack(alignment: .center, spacing: 24) {
+                    QuestionView(question: challenge.question)
+                    FretboardIndicatorView(challenge: challenge)
+                }
+                .padding(.top, 12)
+                .background(Color.gray.opacity(0.4).edgesIgnoringSafeArea(.all))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                ButtonsView(action: { note in
+                    self.result = self.challenge.result(for: note)
+                })
+                .padding(.horizontal, 24)
+                .padding(.vertical, 12)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            })
         }
     }
 }
 
 
-struct IndicatorView: View {
+struct QuestionView: View {
+
+    @Environment(\.colorScheme) var colorScheme
+
+    let question: Question
 
     var body: some View {
-        Circle()
-            .foregroundColor(.accentColor)
-            .opacity(0.8)
+        HStack(alignment: .center, spacing: 20) {
+            Spacer()
+            Text("What note is at:").font(.headline)
+
+            HStack(alignment: .center, spacing: 12) {
+                Text("Fret \(question.fret)")
+                    .padding(.all, 12)
+                    .background(self.colorScheme == .dark ? Color.gray : Color.white)
+                    .cornerRadius(12)
+
+                Text("String \(question.string)")
+                    .padding(.all, 12)
+                    .background(self.colorScheme == .dark ? Color.gray : Color.white)
+                    .cornerRadius(12)
+            }
+            .font(.headline)
+            .frame(maxWidth: .infinity)
+        }
+        .padding(12)
+    }
+}
+
+
+struct FretboardIndicatorView: View {
+
+    @ObservedObject var challenge: Challenge
+
+    var body: some View {
+        ZStack(alignment: Alignment(horizontal: .center, vertical: .highlightedString)) {
+            FretboardView(fretboard: challenge.fretboard, middleFret: challenge.question.fret, highlightedString: challenge.question.string)
+
+            Circle()
+                .foregroundColor(.accentColor)
+                .opacity(0.8)
+                .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
+                .frame(width: 24, height: 24, alignment: .center)
+        }
+    }
+}
+
+
+struct ButtonsView: View {
+
+    let action: (Note) -> Void
+
+    var body: some View {
+        VStack(alignment: .center, spacing: 12) {
+            HStack(alignment: .center, spacing: 12) {
+                ForEach(0..<3, id: \.self) { row in
+                    self.buildButton(for: Note.allCases[row])
+                }
+            }
+            HStack(alignment: .center, spacing: 12) {
+                ForEach(3..<6, id: \.self) { row in
+                    self.buildButton(for: Note.allCases[row])
+                }
+            }
+            HStack(alignment: .center, spacing: 12) {
+                ForEach(6..<9, id: \.self) { row in
+                    self.buildButton(for: Note.allCases[row])
+                }
+            }
+            HStack(alignment: .center, spacing: 12) {
+                ForEach(9..<12, id: \.self) { row in
+                    self.buildButton(for: Note.allCases[row])
+                }
+            }
+        }
+    }
+
+
+    private func buildButton(for note: Note) -> some View {
+        Button(action: { self.action(note) }) {
+            Text(note.rawValue)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        }
+        .font(.title)
+        .padding(12)
+        .foregroundColor(.white)
+        .background(Color.accentColor)
+        .cornerRadius(12)
     }
 }
 
@@ -126,7 +162,7 @@ struct IndicatorView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ChallengeView()
-            .preferredColorScheme(.dark)
+        ChallengeView(challenge: Challenge())
+            .preferredColorScheme(.light)
     }
 }

@@ -38,7 +38,7 @@ struct FretboardView: View {
 
             VStack(alignment: .center, spacing: 40) {
                 ForEach(strings(), id: \.self) { position in
-                    StringView(position: position, isHighlighted: position == highlightedString)
+                    StringView(position: position, isHighlighted: position == self.highlightedString)
                 }
             }
             .frame(maxHeight: .infinity)
@@ -68,12 +68,12 @@ struct StringView: View {
 
     var body: some View {
         if isHighlighted {
-            Rectangle()
+            return AnyView(Rectangle()
                 .frame(height: gauge(at: position), alignment: .center)
-                .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
+                .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] })
         } else {
-            Rectangle()
-                .frame(height: gauge(at: position), alignment: .center)
+            return AnyView(Rectangle()
+                .frame(height: gauge(at: position), alignment: .center))
         }
     }
 
@@ -100,10 +100,14 @@ struct FretView: View {
             } else if position == 0 {
                 ZStack {
                     Rectangle().foregroundColor(.clear)
-                    Rectangle().foregroundColor(.gray).frame(maxWidth: 4)
+                    Rectangle()
+                        .edgesIgnoringSafeArea(.all)
+                        .foregroundColor(.gray)
+                        .frame(maxWidth: 4)
                 }
             } else {
                 Rectangle()
+                    .edgesIgnoringSafeArea(.all)
                     .foregroundColor(.black)
                     .opacity(position >= 0 ? 0.1 : 0)
             }
@@ -138,6 +142,6 @@ struct FretView: View {
 struct FretboardView_Previews: PreviewProvider {
     static var previews: some View {
         let fretboard = FretBoard(tuningType: .standard)
-        FretboardView(fretboard: fretboard, middleFret: 12, highlightedString: 1)
+        return FretboardView(fretboard: fretboard, middleFret: 12, highlightedString: 1)
     }
 }

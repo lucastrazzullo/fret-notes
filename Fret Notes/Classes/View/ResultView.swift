@@ -53,6 +53,6 @@ struct ResultView_Previews: PreviewProvider {
         let question = Question(fret: 2, string: 2, on: fretboard)
         let answer = Answer(note: question.note)
         let result = Result(question: question, attemptedAnswer: answer)
-        ResultView(action: {}, result: result)
+        return ResultView(action: {}, result: result)
     }
 }
