@@ -13,54 +13,31 @@ struct ChallengeView: View {
     @Environment(\.colorScheme) var colorScheme
 
     @ObservedObject var challenge: Challenge
-    @ObservedObject private var device = DeviceProperties()
 
     @State private var result: Result?
 
     var body: some View {
-        buildLayout().sheet(item: $result) { result in
+        VStack(alignment: .center, spacing: 8) {
+            VStack(alignment: .center, spacing: 24) {
+                QuestionView(question: challenge.question)
+                FretboardIndicatorView(challenge: challenge)
+            }
+            .padding(.top, 12)
+            .background(Color.gray.opacity(0.4).edgesIgnoringSafeArea(.all))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            ButtonsView(action: { note in
+                self.result = self.challenge.result(for: note)
+            })
+            .padding(.horizontal, 24)
+            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .sheet(item: $result) { result in
             ResultView(action: {
                 self.challenge.nextQuestion()
                 self.result = nil
             }, result: result)
-        }
-    }
-
-
-    private func buildLayout() -> some View {
-        if device.orientation.isLandscape {
-            return AnyView(VStack {
-                HStack {
-                    VStack(alignment: .center, spacing: 32) {
-                        FretboardIndicatorView(challenge: challenge)
-                    }
-                    .background(Color.gray.opacity(0.4).edgesIgnoringSafeArea(.all))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-                    ButtonsView(action: { note in
-                        self.result = self.challenge.result(for: note)
-                    })
-                    .padding(.all, 24)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
-            })
-        } else {
-            return AnyView(VStack(alignment: .center, spacing: 8) {
-                VStack(alignment: .center, spacing: 24) {
-                    QuestionView(question: challenge.question)
-                    FretboardIndicatorView(challenge: challenge)
-                }
-                .padding(.top, 12)
-                .background(Color.gray.opacity(0.4).edgesIgnoringSafeArea(.all))
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-                ButtonsView(action: { note in
-                    self.result = self.challenge.result(for: note)
-                })
-                .padding(.horizontal, 24)
-                .padding(.vertical, 12)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            })
         }
     }
 }

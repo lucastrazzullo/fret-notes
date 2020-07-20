@@ -14,7 +14,6 @@
 		81253D3724BF73C70054F392 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D3624BF73C70054F392 /* Question.swift */; };
 		81253D3924BF73D70054F392 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D3824BF73D70054F392 /* Answer.swift */; };
 		8129C47224C1C0CC00F05E4C /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8129C47124C1C0CC00F05E4C /* Result.swift */; };
-		8132362424C1F7CF000A2AF5 /* DeviceProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8132362324C1F7CF000A2AF5 /* DeviceProperties.swift */; };
 		818129C724C1D225007AE4F0 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818129C624C1D225007AE4F0 /* ResultView.swift */; };
 		8185373624C1E166005059DD /* FretboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8185373524C1E166005059DD /* FretboardView.swift */; };
 		81A8583D24BF4C28003E788F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A8583C24BF4C28003E788F /* AppDelegate.swift */; };
@@ -44,7 +43,6 @@
 		81253D3624BF73C70054F392 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		81253D3824BF73D70054F392 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		8129C47124C1C0CC00F05E4C /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
-		8132362324C1F7CF000A2AF5 /* DeviceProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceProperties.swift; sourceTree = "<group>"; };
 		818129C624C1D225007AE4F0 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		8185373524C1E166005059DD /* FretboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FretboardView.swift; sourceTree = "<group>"; };
 		81A8583924BF4C28003E788F /* Fret Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fret Notes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,7 +99,6 @@
 		81253D2F24BF73400054F392 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8132362324C1F7CF000A2AF5 /* DeviceProperties.swift */,
 				81253D3024BF73470054F392 /* Entities */,
 				81253D3124BF734E0054F392 /* Domain */,
 			);
@@ -298,7 +295,6 @@
 				81A8584124BF4C28003E788F /* ChallengeView.swift in Sources */,
 				81253D2A24BF71900054F392 /* Note.swift in Sources */,
 				81253D2E24BF72BC0054F392 /* FretBoard.swift in Sources */,
-				8132362424C1F7CF000A2AF5 /* DeviceProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

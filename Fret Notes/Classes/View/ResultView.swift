@@ -23,24 +23,31 @@ struct ResultView: View {
 
             VStack(alignment: .center, spacing: 40) {
                 if result.isCorrect {
-                    HStack(alignment: .center, spacing: 12) {
-                        Image(systemName: "hand.thumbsup")
-                        Text("Correct!")
+                    VStack(alignment: .center, spacing: 12) {
+                        HStack(alignment: .center, spacing: 12) {
+                            Image(systemName: "hand.thumbsup")
+                            Text("Correct!")
+                        }
+                        .font(.title)
+
+                        Text("Time: \(result.timing) sec")
                     }
-                    Text("Time: \(result.timing) sec")
                 } else {
-                    HStack(alignment: .center, spacing: 12) {
-                        Image(systemName: "hand.thumbsdown")
-                        Text("Wrong!")
+                    VStack(alignment: .center, spacing: 12) {
+                        HStack(alignment: .center, spacing: 12) {
+                            Image(systemName: "hand.thumbsdown")
+                            Text("Wrong!")
+                        }
+                        .font(.title)
+
+                        Text("Was: \(result.question.note.rawValue)")
                     }
-                    Text("Was: \(result.question.note.rawValue)")
                 }
 
                 Button(action: action) {
                     Text("Continue")
                 }
             }
-            .font(.title)
         }
     }
 }
@@ -51,7 +58,7 @@ struct ResultView_Previews: PreviewProvider {
     static var previews: some View {
         let fretboard = FretBoard(tuningType: .standard)
         let question = Question(fret: 2, string: 2, on: fretboard)
-        let answer = Answer(note: question.note)
+        let answer = Answer(note: Note.b)
         let result = Result(question: question, attemptedAnswer: answer)
         return ResultView(action: {}, result: result)
     }
