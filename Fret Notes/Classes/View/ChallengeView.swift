@@ -10,8 +10,6 @@ import SwiftUI
 
 struct ChallengeView: View {
 
-    @Environment(\.colorScheme) var colorScheme
-
     @ObservedObject var challenge: Challenge
 
     @State private var result: Result?
