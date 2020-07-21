@@ -34,11 +34,22 @@ struct ChallengeView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .sheet(item: $result) { result in
-            ResultView(action: {
-                self.challenge.nextQuestion()
-                self.result = nil
-            }, result: result)
+        .alert(item: $result) { result in
+            if result.isCorrect {
+                return Alert(title: Text("Correct!"),
+                             message: Text("Time: \(result.timing) sec"),
+                             dismissButton: .default(Text("Next"), action: {
+                    self.challenge.nextQuestion()
+                    self.result = nil
+                }))
+            } else {
+                return Alert(title: Text("Wrong!"),
+                             message: Text("It was: \(result.question.note.name)\(result.question.note.symbol ?? "")"),
+                             dismissButton: .default(Text("Next"), action: {
+                    self.challenge.nextQuestion()
+                    self.result = nil
+                }))
+            }
         }
         .background(Color("Challenge.background"))
         .edgesIgnoringSafeArea(.all)
@@ -71,19 +82,19 @@ struct FretboardIndicatorView: View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .highlightedString)) {
             FretboardView(fretboard: challenge.fretboard, middleFret: challenge.question.fret, highlightedString: challenge.question.string)
 
-            Circle()
-                .foregroundColor(Color("FretboardIndicator.indicator"))
-                .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
-                .frame(width: 24, height: 24, alignment: .center)
-                .shadow(color: Color.black.opacity(colorScheme == .dark ? 1 : 0.2), radius: 2)
-                .animation(.easeOut)
+            ZStack {
+                Circle()
+                    .foregroundColor(Color("FretboardIndicator.indicator"))
+                    .frame(width: 24, height: 24, alignment: .center)
+                    .shadow(color: Color.black.opacity(colorScheme == .dark ? 1 : 0.2), radius: 2)
 
-            Circle()
-                .foregroundColor(Color("FretboardIndicator.indicator"))
-                .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
-                .frame(width: 32, height: 32, alignment: .center)
-                .animation(.easeOut)
-                .opacity(0.2)
+                Circle()
+                    .foregroundColor(Color("FretboardIndicator.indicator"))
+                    .frame(width: 32, height: 32, alignment: .center)
+                    .opacity(0.2)
+            }
+            .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
+            .animation(.easeOut)
         }
         .background(Color("FretboardIndicator.background"))
         .mask(BottomRadiusShape(radius: 24))
