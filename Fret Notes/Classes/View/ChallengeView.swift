@@ -15,21 +15,25 @@ struct ChallengeView: View {
     @State private var result: Result?
 
     var body: some View {
-        VStack(alignment: .center, spacing: 8) {
-            VStack(alignment: .center, spacing: 24) {
-                QuestionView(question: challenge.question)
-                FretboardIndicatorView(challenge: challenge)
-            }
+        VStack(alignment: .center, spacing: 40) {
+            FretboardIndicatorView(challenge: challenge)
             .padding(.top, 12)
-            .background(Color.gray.opacity(0.4).edgesIgnoringSafeArea(.all))
+            .background(Color.gray.opacity(0.4))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .edgesIgnoringSafeArea(.all)
 
-            ButtonsView(action: { note in
-                self.result = self.challenge.result(for: note)
-            })
-            .padding(.horizontal, 24)
-            .padding(.vertical, 12)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            VStack(alignment: .center, spacing: 12) {
+                QuestionView(question: challenge.question)
+                .padding(12)
+                .frame(maxWidth: .infinity)
+
+                ButtonsView(action: { note in
+                    self.result = self.challenge.result(for: note)
+                })
+                .padding(.horizontal, 24)
+                .padding(.vertical, 12)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
         }
         .sheet(item: $result) { result in
             ResultView(action: {
@@ -43,30 +47,14 @@ struct ChallengeView: View {
 
 struct QuestionView: View {
 
-    @Environment(\.colorScheme) var colorScheme
-
     let question: Question
 
     var body: some View {
-        HStack(alignment: .center, spacing: 20) {
-            Spacer()
-            Text("What note is at:").font(.headline)
-
-            HStack(alignment: .center, spacing: 12) {
-                Text("Fret \(question.fret)")
-                    .padding(.all, 12)
-                    .background(self.colorScheme == .dark ? Color.gray : Color.white)
-                    .cornerRadius(12)
-
-                Text("String \(question.string)")
-                    .padding(.all, 12)
-                    .background(self.colorScheme == .dark ? Color.gray : Color.white)
-                    .cornerRadius(12)
-            }
-            .font(.headline)
-            .frame(maxWidth: .infinity)
+        HStack(alignment: .center, spacing: 24) {
+            Text("Fret \(question.fret)")
+            Text("String \(question.string)")
         }
-        .padding(12)
+        .font(.headline)
     }
 }
 
@@ -121,14 +109,13 @@ struct ButtonsView: View {
 
     private func buildButton(for note: Note) -> some View {
         Button(action: { self.action(note) }) {
-            Text(note.rawValue)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            HStack(alignment: .top, spacing: 4) {
+                Text(note.name).font(.title).foregroundColor(.secondary)
+                Text(note.symbol ?? "").font(.headline).foregroundColor(.primary)
+            }
+            .frame(maxWidth: .infinity, maxHeight: 32, alignment: .center)
         }
-        .font(.title)
         .padding(12)
-        .foregroundColor(.white)
-        .background(Color.accentColor)
-        .cornerRadius(12)
     }
 }
 
@@ -138,6 +125,6 @@ struct ButtonsView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ChallengeView(challenge: Challenge())
-            .preferredColorScheme(.light)
+            .preferredColorScheme(.dark)
     }
 }

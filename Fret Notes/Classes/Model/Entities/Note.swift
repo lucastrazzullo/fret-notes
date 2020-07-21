@@ -8,17 +8,38 @@
 
 import Foundation
 
-enum Note: String, CaseIterable {
-    case a = "A"
-    case aSharp = "A#"
-    case b = "B"
-    case c = "C"
-    case cSharp = "C#"
-    case d = "D"
-    case dSharp = "D#"
-    case e = "E"
-    case f = "F"
-    case fSharp = "F#"
-    case g = "G"
-    case gSharp = "G#"
+enum Note: CaseIterable {
+    case a
+    case aSharp
+    case b
+    case c
+    case cSharp
+    case d
+    case dSharp
+    case e
+    case f
+    case fSharp
+    case g
+    case gSharp
+
+    var name: String {
+        switch self {
+        case .a, .aSharp: return "A"
+        case .b: return "B"
+        case .c, .cSharp: return "C"
+        case .d, .dSharp: return "D"
+        case .e: return "E"
+        case .f, .fSharp: return "F"
+        case .g, .gSharp: return "G"
+        }
+    }
+
+    var symbol: String? {
+        switch self {
+        case .aSharp, .cSharp, .dSharp, .fSharp, .gSharp:
+            return "#"
+        default:
+            return nil
+        }
+    }
 }

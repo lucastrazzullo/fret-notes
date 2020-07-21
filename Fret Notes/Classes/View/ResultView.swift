@@ -40,7 +40,11 @@ struct ResultView: View {
                         }
                         .font(.title)
 
-                        Text("Was: \(result.question.note.rawValue)")
+                        HStack {
+                            Text("Was:")
+                            Text(result.question.note.name)
+                            Text(result.question.note.symbol ?? "")
+                        }
                     }
                 }
 
