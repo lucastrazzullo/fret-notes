@@ -17,15 +17,14 @@ struct ChallengeView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 40) {
             FretboardIndicatorView(challenge: challenge)
-            .padding(.top, 12)
-            .background(Color.gray.opacity(0.4))
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .edgesIgnoringSafeArea(.all)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.top, 12)
 
             VStack(alignment: .center, spacing: 12) {
                 QuestionView(question: challenge.question)
                 .padding(12)
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity, maxHeight: 64)
 
                 ButtonsView(action: { note in
                     self.result = self.challenge.result(for: note)
@@ -41,6 +40,8 @@ struct ChallengeView: View {
                 self.result = nil
             }, result: result)
         }
+        .background(Color("Challenge.background"))
+        .edgesIgnoringSafeArea(.all)
     }
 }
 
@@ -52,6 +53,7 @@ struct QuestionView: View {
     var body: some View {
         HStack(alignment: .center, spacing: 24) {
             Text("Fret \(question.fret)")
+            Rectangle().frame(width: 1).opacity(0.2)
             Text("String \(question.string)")
         }
         .font(.headline)
@@ -61,6 +63,8 @@ struct QuestionView: View {
 
 struct FretboardIndicatorView: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     @ObservedObject var challenge: Challenge
 
     var body: some View {
@@ -68,11 +72,22 @@ struct FretboardIndicatorView: View {
             FretboardView(fretboard: challenge.fretboard, middleFret: challenge.question.fret, highlightedString: challenge.question.string)
 
             Circle()
-                .foregroundColor(.accentColor)
-                .opacity(0.8)
+                .foregroundColor(Color("FretboardIndicator.indicator"))
                 .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
                 .frame(width: 24, height: 24, alignment: .center)
+                .shadow(color: Color.black.opacity(colorScheme == .dark ? 1 : 0.2), radius: 2)
+                .animation(.easeOut)
+
+            Circle()
+                .foregroundColor(Color("FretboardIndicator.indicator"))
+                .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
+                .frame(width: 32, height: 32, alignment: .center)
+                .animation(.easeOut)
+                .opacity(0.2)
         }
+        .background(Color("FretboardIndicator.background"))
+        .mask(BottomRadiusShape(radius: 24))
+        .shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: -2)
     }
 }
 

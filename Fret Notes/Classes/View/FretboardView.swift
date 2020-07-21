@@ -29,7 +29,7 @@ struct FretboardView: View {
 
     var body: some View {
         ZStack {
-            HStack(alignment: .center, spacing: 12) {
+            HStack(alignment: .center, spacing: 8) {
                 ForEach(frets(), id: \.self) { position in
                     FretView(position: position)
                 }
@@ -61,19 +61,25 @@ struct FretboardView: View {
 
 struct StringView: View {
 
-    private static let gauges: [CGFloat] = [1, 1.2, 1.8, 2.4, 3.2, 4]
+    private static let gauges: [CGFloat] = [2, 2.2, 2.8, 3.4, 4.2, 5]
 
     let position: Int
     let isHighlighted: Bool
 
     var body: some View {
         if isHighlighted {
-            return AnyView(Rectangle()
-                .frame(height: gauge(at: position), alignment: .center)
-                .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] })
+            return AnyView(
+                Rectangle()
+                    .foregroundColor(Color("Fretboard.string"))
+                    .frame(height: gauge(at: position), alignment: .center)
+                    .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
+            )
         } else {
-            return AnyView(Rectangle()
-                .frame(height: gauge(at: position), alignment: .center))
+            return AnyView(
+                Rectangle()
+                    .foregroundColor(Color("Fretboard.string"))
+                    .frame(height: gauge(at: position), alignment: .center)
+            )
         }
     }
 
@@ -102,25 +108,33 @@ struct FretView: View {
                     Rectangle().foregroundColor(.clear)
                     Rectangle()
                         .edgesIgnoringSafeArea(.all)
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color("Fretboard.capo"))
                         .frame(maxWidth: 4)
                 }
             } else {
                 Rectangle()
                     .edgesIgnoringSafeArea(.all)
-                    .foregroundColor(.black)
-                    .opacity(position >= 0 ? 0.1 : 0)
+                    .foregroundColor(Color("Fretboard.fret"))
+
+                VStack {
+                    Spacer()
+                    Text("\(position)")
+                        .fontWeight(.bold)
+                        .opacity(0.2)
+                        .padding(.bottom, 12)
+                }
             }
 
             if hasSingleMarker() {
-                Circle().frame(width: 12, height: 12, alignment: .center)
+                Circle()
+                    .frame(width: 12, height: 12, alignment: .center)
+                    .foregroundColor(Color("Fretboard.marker"))
             } else if hasDoubleMarker() {
                 VStack(alignment: .center, spacing: 80) {
                     Circle().frame(width: 12, height: 12, alignment: .center)
                     Circle().frame(width: 12, height: 12, alignment: .center)
                 }
-            } else if position > 0 {
-                Text("\(position)").fontWeight(.bold).opacity(0.4)
+                .foregroundColor(Color("Fretboard.marker"))
             }
         }
     }
@@ -142,6 +156,7 @@ struct FretView: View {
 struct FretboardView_Previews: PreviewProvider {
     static var previews: some View {
         let fretboard = FretBoard(tuningType: .standard)
-        return FretboardView(fretboard: fretboard, middleFret: 12, highlightedString: 1)
+        FretboardView(fretboard: fretboard, middleFret: 2, highlightedString: 1)
+            .preferredColorScheme(.dark)
     }
 }
