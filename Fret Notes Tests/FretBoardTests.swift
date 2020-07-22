@@ -11,7 +11,7 @@ import XCTest
 
 class FretBoardTests: XCTestCase {
 
-    private let fretboard = FretBoard()
+    private let fretboard = FretBoard(tuningType: .standard)
 
     func testNoteAtFretZero() {
         XCTAssertEqual(fretboard.note(on: 0, string: 1), .e)
