@@ -42,6 +42,7 @@ class Average: ObservableObject {
         updateValue()
 
         UserDefaults.standard.setValue(latestTimings, forKey: Average.userDefaultsKey)
+        UserDefaults.standard.synchronize()
     }
 
 
@@ -50,6 +51,7 @@ class Average: ObservableObject {
         updateValue()
 
         UserDefaults.standard.setValue(latestTimings, forKey: Average.userDefaultsKey)
+        UserDefaults.standard.synchronize()
     }
 
 
