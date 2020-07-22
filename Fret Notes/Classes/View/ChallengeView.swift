@@ -29,8 +29,7 @@ struct ChallengeView: View {
                 ButtonsView(action: { note in
                     self.result = self.challenge.result(for: note)
                 })
-                .padding(.horizontal, 24)
-                .padding(.vertical, 12)
+                .padding(.all, 24)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
