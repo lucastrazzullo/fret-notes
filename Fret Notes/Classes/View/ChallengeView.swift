@@ -11,6 +11,7 @@ import SwiftUI
 struct ChallengeView: View {
 
     @ObservedObject var challenge: Challenge
+    @ObservedObject var average: Average
 
     @State private var result: Result?
 
@@ -21,10 +22,12 @@ struct ChallengeView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.top, 12)
 
-            AverageView()
-            .padding(.all, 12)
-            .background(Color.white.opacity(0.2))
-            .cornerRadius(12)
+            if let value = average.value {
+                AverageView(average: value, reset: average.reset)
+                .padding(.all, 12)
+                .background(Color.white.opacity(0.2))
+                .cornerRadius(12)
+            }
 
             VStack(alignment: .center, spacing: 12) {
                 QuestionView(question: challenge.question)
@@ -32,30 +35,32 @@ struct ChallengeView: View {
                 .frame(maxWidth: .infinity, maxHeight: 64)
 
                 ButtonsView(action: { note in
-                    self.result = self.challenge.result(for: note)
+                    result = challenge.result(for: note)
                 })
                 .padding(.horizontal, 24)
                 .padding(.bottom, 40)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .alert(item: $result) { result in
-            if result.isCorrect {
+        .alert(item: $result) { answerResult in
+            if answerResult.isCorrect {
                 return Alert(title: Text("Correct!"),
-                             message: Text("Time: \(result.timing) sec"),
+                             message: Text("Time: \(answerResult.timing, specifier: "%.2f") sec"),
                              dismissButton: .default(Text("Next"), action: {
-                    self.challenge.nextQuestion()
-                    self.result = nil
+                                challenge.nextQuestion()
+                                average.add(timing: answerResult.timing)
+                                result = nil
                 }))
             } else {
                 return Alert(title: Text("Wrong!"),
-                             message: Text("It was: \(result.question.note.name)\(result.question.note.symbol ?? "")"),
+                             message: Text("It was: \(answerResult.question.note.name)\(answerResult.question.note.symbol ?? "")"),
                              dismissButton: .default(Text("Next"), action: {
-                    self.challenge.nextQuestion()
-                    self.result = nil
+                                challenge.nextQuestion()
+                                result = nil
                 }))
             }
         }
+        .animation(.default)
         .background(Color("Challenge.background"))
         .edgesIgnoringSafeArea(.all)
     }
@@ -64,15 +69,18 @@ struct ChallengeView: View {
 
 struct AverageView: View {
 
+    let average: Double
+    let reset: () -> Void
+
     var body: some View {
         HStack(alignment: .center, spacing: 12) {
             HStack(alignment: .firstTextBaseline, spacing: 4) {
                 Text("Average")
-                Text("3.23").font(.title)
+                Text("\(average, specifier: "%.2f")").font(.title)
                 Text("seconds").font(.caption2)
             }
 
-            Button(action: {}) {
+            Button(action: reset) {
                 Text("Reset").font(.subheadline)
                 Image(systemName: "arrow.counterclockwise")
             }
@@ -122,7 +130,6 @@ struct FretboardIndicatorView: View {
                     .opacity(0.2)
             }
             .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
-            .animation(.easeOut)
         }
         .background(Color("FretboardIndicator.background"))
         .mask(BottomRadiusShape(radius: 24))
@@ -178,7 +185,7 @@ struct ButtonsView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ChallengeView(challenge: Challenge())
+        ChallengeView(challenge: Challenge(), average: Average(timings: [2.3, 3.4]))
             .preferredColorScheme(.light)
     }
 }
