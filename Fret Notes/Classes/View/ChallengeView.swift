@@ -15,11 +15,16 @@ struct ChallengeView: View {
     @State private var result: Result?
 
     var body: some View {
-        VStack(alignment: .center, spacing: 40) {
+        VStack(alignment: .center, spacing: 24) {
             FretboardIndicatorView(challenge: challenge)
             .edgesIgnoringSafeArea(.all)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.top, 12)
+
+            AverageView()
+            .padding(.all, 12)
+            .background(Color.white.opacity(0.2))
+            .cornerRadius(12)
 
             VStack(alignment: .center, spacing: 12) {
                 QuestionView(question: challenge.question)
@@ -29,7 +34,8 @@ struct ChallengeView: View {
                 ButtonsView(action: { note in
                     self.result = self.challenge.result(for: note)
                 })
-                .padding(.all, 24)
+                .padding(.horizontal, 24)
+                .padding(.bottom, 40)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
@@ -52,6 +58,29 @@ struct ChallengeView: View {
         }
         .background(Color("Challenge.background"))
         .edgesIgnoringSafeArea(.all)
+    }
+}
+
+
+struct AverageView: View {
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 12) {
+            HStack(alignment: .firstTextBaseline, spacing: 4) {
+                Text("Average")
+                Text("3.23").font(.title)
+                Text("seconds").font(.caption2)
+            }
+
+            Button(action: {}) {
+                Text("Reset").font(.subheadline)
+                Image(systemName: "arrow.counterclockwise")
+            }
+            .padding(.all, 8)
+            .background(Color("Action.background"))
+            .foregroundColor(Color("Action.foreground"))
+            .cornerRadius(4)
+        }
     }
 }
 
@@ -150,6 +179,6 @@ struct ButtonsView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ChallengeView(challenge: Challenge())
-            .preferredColorScheme(.dark)
+            .preferredColorScheme(.light)
     }
 }
