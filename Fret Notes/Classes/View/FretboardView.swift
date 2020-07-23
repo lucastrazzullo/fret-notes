@@ -36,12 +36,15 @@ struct FretboardView: View {
             }
             .frame(maxWidth: .infinity)
 
-            VStack(alignment: .center, spacing: 40) {
+            VStack(alignment: .center) {
                 ForEach(strings(), id: \.self) { position in
+                    Spacer()
                     StringView(position: position, isHighlighted: position == self.highlightedString)
+                    Spacer()
                 }
             }
             .frame(maxHeight: .infinity)
+            .padding(.vertical, 36)
         }
     }
 
@@ -73,13 +76,14 @@ struct StringView: View {
                     .foregroundColor(Color("Fretboard.string"))
                     .frame(height: gauge(at: position), alignment: .center)
                     .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
-            )
+            ).frame(height: 5, alignment: .center)
         } else {
             return AnyView(
                 Rectangle()
                     .foregroundColor(Color("Fretboard.string"))
                     .frame(height: gauge(at: position), alignment: .center)
-            )
+
+            )       .frame(height: 5, alignment: .center)
         }
     }
 

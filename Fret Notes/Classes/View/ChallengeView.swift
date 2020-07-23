@@ -22,12 +22,16 @@ struct ChallengeView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.top, 12)
 
-            if let value = average.value {
-                AverageView(average: value, reset: average.reset)
-                .padding(.all, 12)
-                .background(Color.white.opacity(0.2))
-                .cornerRadius(12)
+            ZStack {
+                if let result = result {
+                    ResultView(result: result, action: nextQuestion)
+                } else if let value = average.value {
+                    AverageView(average: value, reset: average.reset)
+                }
             }
+            .padding(.all, 12)
+            .background(Color.white.opacity(0.2))
+            .cornerRadius(12)
 
             VStack(alignment: .center, spacing: 12) {
                 QuestionView(question: challenge.question)
@@ -42,27 +46,61 @@ struct ChallengeView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .alert(item: $result) { answerResult in
-            if answerResult.isCorrect {
-                return Alert(title: Text("Correct!"),
-                             message: Text("Time: \(answerResult.timing, specifier: "%.2f") sec"),
-                             dismissButton: .default(Text("Next"), action: {
-                                challenge.nextQuestion()
-                                average.add(timing: answerResult.timing)
-                                result = nil
-                }))
-            } else {
-                return Alert(title: Text("Wrong!"),
-                             message: Text("It was: \(answerResult.question.note.name)\(answerResult.question.note.symbol ?? "")"),
-                             dismissButton: .default(Text("Next"), action: {
-                                challenge.nextQuestion()
-                                result = nil
-                }))
-            }
-        }
         .animation(.default)
         .background(Color("Challenge.background"))
         .edgesIgnoringSafeArea(.all)
+    }
+
+
+    // MARK: Private helper methods
+
+    private func nextQuestion() {
+        if let result = result, result.isCorrect {
+            average.add(timing: result.timing)
+        }
+        result = nil
+        challenge.nextQuestion()
+    }
+}
+
+
+struct ResultView: View {
+
+    let result: Result
+    let action: () -> Void
+
+    var body: some View {
+        VStack(alignment: .center, spacing: 24) {
+            VStack {
+                if result.isCorrect {
+                    Text("🥁").font(.largeTitle)
+                    Text("Well Job!").font(.headline)
+                } else {
+                    Text("🔕").font(.largeTitle)
+                    Text("Wrong note!").font(.headline)
+                }
+            }
+            VStack {
+                HStack {
+                    Text(result.question.note.fullName).bold()
+                    Text("is the correct note")
+                }
+                HStack {
+                    Text("Answered in")
+                    Text("\(result.timing, specifier: "%.2f")").font(.headline)
+                    Text("seconds").font(.callout)
+                }
+            }
+            Button(action: action) {
+                Text("Next")
+            }
+            .padding(.all, 8)
+            .background(Color("Action.background"))
+            .foregroundColor(Color("Action.foreground"))
+            .cornerRadius(4)
+        }
+        .padding()
+        .cornerRadius(12)
     }
 }
 
@@ -100,8 +138,12 @@ struct QuestionView: View {
     var body: some View {
         HStack(alignment: .center, spacing: 24) {
             Text("Fret \(question.fret)")
-            Rectangle().frame(width: 1).opacity(0.2)
+                .frame(width: 100, height: 36, alignment: .center)
+            Rectangle()
+                .opacity(0.2)
+                .frame(width: 1)
             Text("String \(question.string)")
+                .frame(width: 100, height: 36, alignment: .center)
         }
         .font(.headline)
     }
@@ -143,7 +185,7 @@ struct ButtonsView: View {
     let action: (Note) -> Void
 
     var body: some View {
-        VStack(alignment: .center, spacing: 12) {
+        VStack(alignment: .center, spacing: 4) {
             HStack(alignment: .center, spacing: 12) {
                 ForEach(0..<3, id: \.self) { row in
                     self.buildButton(for: Note.allCases[row])
@@ -186,6 +228,6 @@ struct ButtonsView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ChallengeView(challenge: Challenge(), average: Average(timings: [2.3, 3.4]))
-            .preferredColorScheme(.light)
+            .preferredColorScheme(.dark)
     }
 }

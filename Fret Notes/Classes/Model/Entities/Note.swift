@@ -22,6 +22,14 @@ enum Note: CaseIterable {
     case g
     case gSharp
 
+    var fullName: String {
+        if let symbol = symbol {
+            return "\(name)\(symbol)"
+        } else {
+            return name
+        }
+    }
+
     var name: String {
         switch self {
         case .a, .aSharp: return "A"
