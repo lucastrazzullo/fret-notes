@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		811A5B0324C7077600658641 /* BottomRadiusShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A5B0224C7077600658641 /* BottomRadiusShape.swift */; };
 		81253D2A24BF71900054F392 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D2924BF71900054F392 /* Note.swift */; };
 		81253D2C24BF71A40054F392 /* Tuning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D2B24BF71A40054F392 /* Tuning.swift */; };
 		81253D2E24BF72BC0054F392 /* FretBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D2D24BF72BC0054F392 /* FretBoard.swift */; };
@@ -38,7 +37,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		811A5B0224C7077600658641 /* BottomRadiusShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomRadiusShape.swift; sourceTree = "<group>"; };
 		81253D2924BF71900054F392 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		81253D2B24BF71A40054F392 /* Tuning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tuning.swift; sourceTree = "<group>"; };
 		81253D2D24BF72BC0054F392 /* FretBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FretBoard.swift; sourceTree = "<group>"; };
@@ -135,9 +133,8 @@
 		81253D3524BF738E0054F392 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				811A5B0224C7077600658641 /* BottomRadiusShape.swift */,
-				8185373524C1E166005059DD /* FretboardView.swift */,
 				81A8584024BF4C28003E788F /* ChallengeView.swift */,
+				8185373524C1E166005059DD /* FretboardView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -291,7 +288,6 @@
 			files = (
 				81A8583D24BF4C28003E788F /* AppDelegate.swift in Sources */,
 				81253D3724BF73C70054F392 /* Question.swift in Sources */,
-				811A5B0324C7077600658641 /* BottomRadiusShape.swift in Sources */,
 				81779BA724C85419004CF9C8 /* Average.swift in Sources */,
 				8185373624C1E166005059DD /* FretboardView.swift in Sources */,
 				81A8583F24BF4C28003E788F /* SceneDelegate.swift in Sources */,

@@ -20,78 +20,83 @@ extension VerticalAlignment {
 }
 
 
+extension HorizontalAlignment {
+
+    struct FretAlignment: AlignmentID {
+        static func defaultValue(in d: ViewDimensions) -> CGFloat {
+            d[HorizontalAlignment.center]
+        }
+    }
+
+    static let highlightedFret = HorizontalAlignment(FretAlignment.self)
+}
+
+
 struct FretboardView: View {
 
     let fretboard: FretBoard
 
-    let middleFret: Int
+    let highlightedFret: Int
     let highlightedString: Int
 
     var body: some View {
         ZStack {
             HStack(alignment: .center, spacing: 8) {
-                ForEach(frets(), id: \.self) { position in
-                    FretView(position: position)
+                ForEach(Array(fretboard.frets), id: \.self) { position in
+                    if position == highlightedFret {
+                        FretView(position: position)
+                        .alignmentGuide(.highlightedFret) { d in d[HorizontalAlignment.center] }
+                        .frame(width: FretboardView.fretWidth(at: position))
+                        .background(fretBackgroundColor(at: position).edgesIgnoringSafeArea(.all))
+                    } else {
+                        FretView(position: position)
+                        .frame(width: FretboardView.fretWidth(at: position))
+                        .background(fretBackgroundColor(at: position).edgesIgnoringSafeArea(.all))
+                    }
                 }
             }
-            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 100)
 
             VStack(alignment: .center) {
-                ForEach(strings(), id: \.self) { position in
-                    Spacer()
-                    StringView(position: position, isHighlighted: position == self.highlightedString)
-                    Spacer()
+                ForEach(Array(fretboard.strings), id: \.self) { position in
+                    if position == highlightedString {
+                        StringView(position: position)
+                            .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
+                            .frame(maxHeight: .infinity)
+
+                    } else {
+                        StringView(position: position)
+                            .frame(maxHeight: .infinity)
+                    }
                 }
             }
-            .frame(maxHeight: .infinity)
-            .padding(.vertical, 36)
+            .padding(.vertical, 40)
         }
     }
 
 
     // MARK: Private helper methods
 
-    private func strings() -> [Int] {
-        return Array(fretboard.strings)
+    private func fretBackgroundColor(at position: Int) -> Color {
+        return position == 0 ? Color("Fretboard.capo") : Color("Fretboard.fret")
     }
 
 
-    private func frets() -> [Int] {
-        return Array(middleFret-2...middleFret+2)
-    }
-}
+    // MARK: Type methods
 
-
-struct StringView: View {
-
-    private static let gauges: [CGFloat] = [2, 2.2, 2.8, 3.4, 4.2, 5]
-
-    let position: Int
-    let isHighlighted: Bool
-
-    var body: some View {
-        if isHighlighted {
-            return AnyView(
-                Rectangle()
-                    .foregroundColor(Color("Fretboard.string"))
-                    .frame(height: gauge(at: position), alignment: .center)
-                    .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
-            ).frame(height: 5, alignment: .center)
-        } else {
-            return AnyView(
-                Rectangle()
-                    .foregroundColor(Color("Fretboard.string"))
-                    .frame(height: gauge(at: position), alignment: .center)
-
-            )       .frame(height: 5, alignment: .center)
+    static func fretWidth(at position: Int) -> CGFloat {
+        switch position {
+        case 0:
+            return 16
+        case 1...7:
+            return 100
+        case 8...12:
+            return 80
+        case 13...15:
+            return 60
+        default:
+            return 50
         }
-    }
-
-
-    // MARK: Private helper methods
-
-    private func gauge(at position: Int) -> CGFloat {
-        return StringView.gauges[position - 1]
     }
 }
 
@@ -105,28 +110,12 @@ struct FretView: View {
 
     var body: some View {
         ZStack {
-            if position < 0 {
-                Rectangle().foregroundColor(.clear)
-            } else if position == 0 {
-                ZStack {
-                    Rectangle().foregroundColor(.clear)
-                    Rectangle()
-                        .edgesIgnoringSafeArea(.all)
-                        .foregroundColor(Color("Fretboard.capo"))
-                        .frame(maxWidth: 4)
-                }
-            } else {
-                Rectangle()
-                    .edgesIgnoringSafeArea(.all)
-                    .foregroundColor(Color("Fretboard.fret"))
-
-                VStack {
-                    Spacer()
-                    Text("\(position)")
-                        .fontWeight(.bold)
-                        .opacity(0.2)
-                        .padding(.bottom, 12)
-                }
+            VStack {
+                Spacer()
+                Text("\(position)")
+                    .fontWeight(.bold)
+                    .opacity(0.2)
+                    .padding(.bottom, 12)
             }
 
             if hasSingleMarker() {
@@ -157,10 +146,33 @@ struct FretView: View {
 }
 
 
+struct StringView: View {
+
+    private static let gauges: [CGFloat] = [2, 2.2, 2.8, 3.4, 4.2, 5]
+
+    let position: Int
+
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .foregroundColor(Color("Fretboard.string"))
+                .frame(height: gauge(at: position), alignment: .center)
+        }
+    }
+
+
+    // MARK: Private helper methods
+
+    private func gauge(at position: Int) -> CGFloat {
+        return StringView.gauges[position - 1]
+    }
+}
+
+
 struct FretboardView_Previews: PreviewProvider {
     static var previews: some View {
         let fretboard = FretBoard(tuningType: .standard)
-        FretboardView(fretboard: fretboard, middleFret: 2, highlightedString: 1)
+        FretboardView(fretboard: fretboard, highlightedFret: 15, highlightedString: 1)
             .preferredColorScheme(.dark)
     }
 }

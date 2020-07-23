@@ -19,8 +19,6 @@ struct ChallengeView: View {
         VStack(alignment: .center, spacing: 24) {
             FretboardIndicatorView(challenge: challenge)
             .edgesIgnoringSafeArea(.all)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.top, 12)
 
             ZStack {
                 if let result = result {
@@ -47,8 +45,7 @@ struct ChallengeView: View {
             }
         }
         .animation(.default)
-        .background(Color("Challenge.background"))
-        .edgesIgnoringSafeArea(.all)
+        .background(Color("Challenge.background").edgesIgnoringSafeArea(.all))
     }
 
 
@@ -60,6 +57,61 @@ struct ChallengeView: View {
         }
         result = nil
         challenge.nextQuestion()
+    }
+}
+
+
+struct FretboardIndicatorView: View {
+
+    struct IndicatorView: View {
+
+        @Environment(\.colorScheme) var colorScheme
+
+        var body: some View {
+            ZStack {
+                Circle()
+                    .foregroundColor(Color("FretboardIndicator.indicator"))
+                    .frame(width: 24, height: 24, alignment: .center)
+                    .shadow(color: Color.black.opacity(colorScheme == .dark ? 1 : 0.2), radius: 2)
+
+                Circle()
+                    .foregroundColor(Color("FretboardIndicator.indicator"))
+                    .frame(width: 32, height: 32, alignment: .center)
+                    .opacity(0.2)
+            }
+        }
+    }
+
+
+    // MARK: Instance properties
+
+    @ObservedObject var challenge: Challenge
+
+    var body: some View {
+        GeometryReader { geometry in
+            ScrollView(.horizontal, showsIndicators: false) {
+                ZStack(alignment: Alignment(horizontal: .highlightedFret, vertical: .highlightedString)) {
+                    FretboardView(fretboard: challenge.fretboard, highlightedFret: challenge.question.fret, highlightedString: challenge.question.string)
+                    IndicatorView()
+                }
+            }
+            .content.offset(x: -highlightedFretPosition(centeredRelativeTo: geometry.size.width), y: 0)
+            .background(backgroundColor())
+        }
+    }
+
+
+    // MARK: Private helper methods
+
+    private func backgroundColor() -> some View {
+        Color("FretboardIndicator.background")
+        .edgesIgnoringSafeArea(.all)
+        .shadow(color: Color.black.opacity(0.4), radius: 2, x: 0, y: 2)
+    }
+
+
+    private func highlightedFretPosition(centeredRelativeTo viewportWidth: CGFloat) -> CGFloat {
+        return CGFloat(Array(0...challenge.question.fret).reduce(0, { $0 + FretboardView.fretWidth(at: $1) })) - viewportWidth / 4
     }
 }
 
@@ -146,36 +198,6 @@ struct QuestionView: View {
                 .frame(width: 100, height: 36, alignment: .center)
         }
         .font(.headline)
-    }
-}
-
-
-struct FretboardIndicatorView: View {
-
-    @Environment(\.colorScheme) var colorScheme
-
-    @ObservedObject var challenge: Challenge
-
-    var body: some View {
-        ZStack(alignment: Alignment(horizontal: .center, vertical: .highlightedString)) {
-            FretboardView(fretboard: challenge.fretboard, middleFret: challenge.question.fret, highlightedString: challenge.question.string)
-
-            ZStack {
-                Circle()
-                    .foregroundColor(Color("FretboardIndicator.indicator"))
-                    .frame(width: 24, height: 24, alignment: .center)
-                    .shadow(color: Color.black.opacity(colorScheme == .dark ? 1 : 0.2), radius: 2)
-
-                Circle()
-                    .foregroundColor(Color("FretboardIndicator.indicator"))
-                    .frame(width: 32, height: 32, alignment: .center)
-                    .opacity(0.2)
-            }
-            .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
-        }
-        .background(Color("FretboardIndicator.background"))
-        .mask(BottomRadiusShape(radius: 24))
-        .shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: -2)
     }
 }
 
