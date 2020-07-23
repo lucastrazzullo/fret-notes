@@ -25,12 +25,13 @@ class Application {
 
     // MARK: Public methods
 
-    func active() {
+    func resume() {
+        challenge.nextQuestion()
         userActivity.becomeCurrent()
     }
 
 
-    func unactive() {
+    func pause() {
         userActivity.resignCurrent()
     }
 

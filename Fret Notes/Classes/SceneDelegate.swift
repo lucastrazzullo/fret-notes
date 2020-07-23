@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         if let windowScene = scene as? UIWindowScene {
-            application.active()
+            application.resume()
 
             let contentView = ChallengeView(challenge: application.challenge, average: Average())
             let window = UIWindow(windowScene: windowScene)
@@ -30,11 +30,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        application.unactive()
+        application.pause()
     }
 
 
     func sceneWillEnterForeground(_ scene: UIScene) {
-        application.active()
+        application.resume()
     }
 }
