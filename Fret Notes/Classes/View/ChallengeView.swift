@@ -25,7 +25,7 @@ struct ChallengeView: View {
             .alignmentGuide(.highlightedFret) { dimension in
                 dimension[.highlightedFret] + fretboardOffset
             }
-            .frame(alignment: Alignment(horizontal: .highlightedFret, vertical: .center))
+            .frame(minHeight: 260, alignment: Alignment(horizontal: .highlightedFret, vertical: .center))
             .background(Color("FretboardIndicator.background").edgesIgnoringSafeArea(.all).shadow(color: Color.black.opacity(0.4), radius: 2, x: 0, y: 2))
             .gesture(DragGesture().onChanged { value in
                 fretboardOffset = -value.translation.width
@@ -44,17 +44,15 @@ struct ChallengeView: View {
             .background(Color.white.opacity(0.2))
             .cornerRadius(12)
 
-            VStack(alignment: .center, spacing: 12) {
+            VStack(alignment: .center, spacing: 4) {
                 QuestionView(question: challenge.question)
                 .padding(12)
-                .frame(maxWidth: .infinity, maxHeight: 64)
 
                 ButtonsView(action: { note in
                     result = challenge.result(for: note)
                 })
                 .padding(.horizontal, 24)
                 .padding(.bottom, 40)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .animation(.default)
@@ -166,14 +164,14 @@ struct QuestionView: View {
     let question: Question
 
     var body: some View {
-        HStack(alignment: .center, spacing: 24) {
+        HStack(alignment: .center, spacing: 12) {
             Text("Fret \(question.fret)")
-                .frame(width: 100, height: 36, alignment: .center)
+                .frame(width: 100, height: 32, alignment: .center)
             Rectangle()
                 .opacity(0.2)
                 .frame(width: 1)
             Text("String \(question.string)")
-                .frame(width: 100, height: 36, alignment: .center)
+                .frame(width: 100, height: 32, alignment: .center)
         }
         .font(.headline)
     }

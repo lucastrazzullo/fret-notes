@@ -70,7 +70,7 @@ struct FretboardView: View {
                     }
                 }
             }
-            .padding(.vertical, 40)
+            .padding(.vertical, 28)
         }
     }
 
@@ -113,9 +113,9 @@ struct FretView: View {
             VStack {
                 Spacer()
                 Text("\(position)")
-                    .fontWeight(.bold)
+                    .font(.footnote)
                     .opacity(0.2)
-                    .padding(.bottom, 12)
+                    .padding(.bottom, 8)
             }
 
             if hasSingleMarker() {
@@ -172,7 +172,7 @@ struct StringView: View {
 struct FretboardView_Previews: PreviewProvider {
     static var previews: some View {
         let fretboard = FretBoard(tuningType: .standard)
-        FretboardView(fretboard: fretboard, highlightedFret: 15, highlightedString: 1)
+        FretboardView(fretboard: fretboard, highlightedFret: 1, highlightedString: 1)
             .preferredColorScheme(.dark)
     }
 }
