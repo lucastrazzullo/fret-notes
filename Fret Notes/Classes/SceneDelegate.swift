@@ -37,4 +37,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         application.resume()
     }
+
+
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        application.resume()
+    }
 }
