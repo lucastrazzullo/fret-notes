@@ -14,6 +14,7 @@ struct ChallengeView: View {
     @ObservedObject var average: Average
 
     @State private var result: Result?
+    @State private var fretboardOffset: CGFloat = 0
 
     var body: some View {
         VStack(alignment: .center, spacing: 24) {
@@ -21,8 +22,16 @@ struct ChallengeView: View {
                 FretboardView(fretboard: challenge.fretboard, highlightedFret: challenge.question.fret, highlightedString: challenge.question.string)
                 IndicatorView()
             }
+            .alignmentGuide(.highlightedFret) { dimension in
+                dimension[.highlightedFret] + fretboardOffset
+            }
             .frame(alignment: Alignment(horizontal: .highlightedFret, vertical: .center))
             .background(Color("FretboardIndicator.background").edgesIgnoringSafeArea(.all).shadow(color: Color.black.opacity(0.4), radius: 2, x: 0, y: 2))
+            .gesture(DragGesture().onChanged { value in
+                fretboardOffset = -value.translation.width
+            }.onEnded { _ in
+                fretboardOffset = 0
+            })
 
             ZStack {
                 if let result = result {
