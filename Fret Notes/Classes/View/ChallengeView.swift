@@ -17,10 +17,8 @@ struct ChallengeView: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 24) {
-            GeometryReader { geometry in
-                FretboardIndicatorView(challenge: challenge, fretboardOffset: fretboardOffset(for: challenge.question.fret, in: geometry))
-                .edgesIgnoringSafeArea(.all)
-            }
+            FretboardIndicatorView(challenge: challenge)
+            .edgesIgnoringSafeArea(.all)
 
             ZStack {
                 if let result = result {
@@ -60,13 +58,6 @@ struct ChallengeView: View {
         result = nil
         challenge.nextQuestion()
     }
-
-
-    private func fretboardOffset(for fret: Int, in viewportGeometry: GeometryProxy) -> CGFloat {
-        let leftFrets = Array(0...fret + 1)
-        let leftWidth = leftFrets.reduce(0, { $0 + FretboardView.fretWidth(at: $1) })
-        return -CGFloat(leftWidth - viewportGeometry.size.width / 2)
-    }
 }
 
 
@@ -96,14 +87,12 @@ struct FretboardIndicatorView: View {
 
     @ObservedObject var challenge: Challenge
 
-    let fretboardOffset: CGFloat
-
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .highlightedFret, vertical: .highlightedString)) {
             FretboardView(fretboard: challenge.fretboard, highlightedFret: challenge.question.fret, highlightedString: challenge.question.string)
             IndicatorView()
         }
-        .offset(x: fretboardOffset, y: 0)
+        .frame(alignment: Alignment(horizontal: .highlightedFret, vertical: .center))
         .background(backgroundColor())
     }
 
