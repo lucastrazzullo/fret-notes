@@ -17,8 +17,12 @@ struct ChallengeView: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 24) {
-            FretboardIndicatorView(challenge: challenge)
-            .edgesIgnoringSafeArea(.all)
+            ZStack(alignment: Alignment(horizontal: .highlightedFret, vertical: .highlightedString)) {
+                FretboardView(fretboard: challenge.fretboard, highlightedFret: challenge.question.fret, highlightedString: challenge.question.string)
+                IndicatorView()
+            }
+            .frame(alignment: Alignment(horizontal: .highlightedFret, vertical: .center))
+            .background(Color("FretboardIndicator.background").edgesIgnoringSafeArea(.all).shadow(color: Color.black.opacity(0.4), radius: 2, x: 0, y: 2))
 
             ZStack {
                 if let result = result {
@@ -61,48 +65,22 @@ struct ChallengeView: View {
 }
 
 
-struct FretboardIndicatorView: View {
+struct IndicatorView: View {
 
-    struct IndicatorView: View {
-
-        @Environment(\.colorScheme) var colorScheme
-
-        var body: some View {
-            ZStack {
-                Circle()
-                    .foregroundColor(Color("FretboardIndicator.indicator"))
-                    .frame(width: 24, height: 24, alignment: .center)
-                    .shadow(color: Color.black.opacity(colorScheme == .dark ? 1 : 0.2), radius: 2)
-
-                Circle()
-                    .foregroundColor(Color("FretboardIndicator.indicator"))
-                    .frame(width: 32, height: 32, alignment: .center)
-                    .opacity(0.2)
-            }
-        }
-    }
-
-
-    // MARK: Instance properties
-
-    @ObservedObject var challenge: Challenge
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
-        ZStack(alignment: Alignment(horizontal: .highlightedFret, vertical: .highlightedString)) {
-            FretboardView(fretboard: challenge.fretboard, highlightedFret: challenge.question.fret, highlightedString: challenge.question.string)
-            IndicatorView()
+        ZStack {
+            Circle()
+                .foregroundColor(Color("FretboardIndicator.indicator"))
+                .frame(width: 24, height: 24, alignment: .center)
+                .shadow(color: Color.black.opacity(colorScheme == .dark ? 1 : 0.2), radius: 2)
+
+            Circle()
+                .foregroundColor(Color("FretboardIndicator.indicator"))
+                .frame(width: 32, height: 32, alignment: .center)
+                .opacity(0.2)
         }
-        .frame(alignment: Alignment(horizontal: .highlightedFret, vertical: .center))
-        .background(backgroundColor())
-    }
-
-
-    // MARK: Private helper methods
-
-    private func backgroundColor() -> some View {
-        Color("FretboardIndicator.background")
-        .edgesIgnoringSafeArea(.all)
-        .shadow(color: Color.black.opacity(0.4), radius: 2, x: 0, y: 2)
     }
 }
 
