@@ -102,7 +102,7 @@ struct ResultView: View {
             VStack {
                 if result.isCorrect {
                     Text("🥁").font(.largeTitle)
-                    Text("Well Job!").font(.headline)
+                    Text("Good Job!").font(.headline)
                 } else {
                     Text("🔕").font(.largeTitle)
                     Text("Wrong note!").font(.headline)
