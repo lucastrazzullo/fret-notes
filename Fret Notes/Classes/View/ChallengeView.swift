@@ -23,22 +23,18 @@ struct ChallengeView: View {
                 IndicatorView()
             }
             .alignmentGuide(.highlightedFret) { dimension in
-                dimension[.highlightedFret] + fretboardOffset
+                dimension[.highlightedFret] + self.fretboardOffset
             }
             .frame(minHeight: 260, alignment: Alignment(horizontal: .highlightedFret, vertical: .center))
             .background(Color("FretboardIndicator.background").edgesIgnoringSafeArea(.all).shadow(color: Color.black.opacity(0.4), radius: 2, x: 0, y: 2))
             .gesture(DragGesture().onChanged { value in
-                fretboardOffset = -value.translation.width
+                self.fretboardOffset = -value.translation.width
             }.onEnded { _ in
-                fretboardOffset = 0
+                self.fretboardOffset = 0
             })
 
             ZStack {
-                if let result = result {
-                    ResultView(result: result, action: nextQuestion)
-                } else if let value = average.value {
-                    AverageView(average: value, reset: average.reset)
-                }
+                contextView()
             }
             .padding(.all, 12)
             .background(Color.white.opacity(0.2))
@@ -49,7 +45,7 @@ struct ChallengeView: View {
                 .padding(12)
 
                 ButtonsView(action: { note in
-                    result = challenge.result(for: note)
+                    self.result = self.challenge.result(for: note)
                 })
                 .padding(.horizontal, 24)
                 .padding(.bottom, 40)
@@ -68,6 +64,17 @@ struct ChallengeView: View {
         }
         result = nil
         challenge.nextQuestion()
+    }
+
+
+    private func contextView() -> some View {
+        if let result = result {
+            return AnyView(ResultView(result: result, action: nextQuestion))
+        } else if let value = average.value {
+            return AnyView(AverageView(average: value, reset: average.reset))
+        } else {
+            return AnyView(EmptyView())
+        }
     }
 }
 
@@ -143,7 +150,7 @@ struct AverageView: View {
             HStack(alignment: .firstTextBaseline, spacing: 4) {
                 Text("Average")
                 Text("\(average, specifier: "%.2f")").font(.title)
-                Text("seconds").font(.caption2)
+                Text("seconds").font(.caption)
             }
 
             Button(action: reset) {
@@ -214,7 +221,7 @@ struct ButtonsView: View {
                 Text(note.name).font(.title).foregroundColor(.secondary)
                 Text(note.symbol ?? "").font(.headline).foregroundColor(.primary)
             }
-            .frame(maxWidth: .infinity, maxHeight: 32, alignment: .center)
+            .frame(maxWidth: 80, maxHeight: 32, alignment: .center)
         }
         .padding(12)
     }
