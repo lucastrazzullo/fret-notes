@@ -19,7 +19,7 @@ struct ChallengeView: View {
                 }
                 .frame(width: geometry.size.width)
                 .padding(.top, 12).padding(.bottom, 8)
-                .background(Color("Challenge.topBackground").edgesIgnoringSafeArea(.top).shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 2))
+                .background(self.topBackgroundColor())
 
                 DashboardView()
                 .padding(.all, 12)
@@ -32,8 +32,23 @@ struct ChallengeView: View {
             }
             .animation(.default)
             .frame(width: geometry.size.width)
-            .background(Color("Challenge.background").edgesIgnoringSafeArea(.all))
+            .background(self.backgroundColor())
         }
+    }
+
+
+    // MARK: Private helper methods
+
+    private func topBackgroundColor() -> some View {
+        Color("Challenge.topBackground")
+        .edgesIgnoringSafeArea(.top)
+        .shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 2)
+    }
+
+
+    private func backgroundColor() -> some View {
+        Color("Challenge.background")
+        .edgesIgnoringSafeArea(.all)
     }
 }
 
