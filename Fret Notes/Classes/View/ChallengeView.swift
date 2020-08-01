@@ -16,36 +16,40 @@ struct ChallengeView: View {
     @State private var result: Result?
 
     var body: some View {
-        VStack(alignment: .center, spacing: 20) {
-            VStack(alignment: .center, spacing: 8) {
-                FretboardIndicatorView(challenge: challenge)
-                FretboardConfiguration(challenge: challenge)
-            }
-            .padding(.top, 12).padding(.bottom, 8)
-            .background(Color("FretboardIndicator.background").edgesIgnoringSafeArea(.top).shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 2))
-
-
-            ZStack<AnyView> {
-                if let result = result {
-                    return AnyView(ResultView(result: result, action: nextQuestion))
-                } else if let value = average.value {
-                    return AnyView(AverageView(average: value, reset: average.reset))
-                } else {
-                    return AnyView(EmptyView())
+        GeometryReader { geometry in
+            VStack(alignment: .center, spacing: 20) {
+                VStack(alignment: .center, spacing: 8) {
+                    FretboardIndicatorView(challenge: self.challenge)
+                    FretboardConfiguration(challenge: self.challenge)
                 }
-            }
-            .padding(.all, 12)
-            .background(Color.white.opacity(0.2))
-            .cornerRadius(12)
+                .frame(width: geometry.size.width)
+                .padding(.top, 12).padding(.bottom, 8)
+                .background(Color("FretboardIndicator.background").edgesIgnoringSafeArea(.top).shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 2))
 
-            ButtonsView(action: { note in
-                self.result = self.challenge.result(for: note)
-            })
-            .padding(.horizontal, 24)
-            .padding(.bottom, 40)
+
+                ZStack<AnyView> {
+                    if let result = self.result {
+                        return AnyView(ResultView(result: result, action: self.nextQuestion))
+                    } else if let value = self.average.value {
+                        return AnyView(AverageView(average: value, reset: self.average.reset))
+                    } else {
+                        return AnyView(EmptyView())
+                    }
+                }
+                .padding(.all, 12)
+                .background(Color.white.opacity(0.2))
+                .cornerRadius(12)
+
+                ButtonsView(action: { note in
+                    self.result = self.challenge.result(for: note)
+                })
+                .padding(.horizontal, 24)
+                .padding(.bottom, 40)
+            }
+            .animation(.default)
+            .frame(width: geometry.size.width)
+            .background(Color("Challenge.background").edgesIgnoringSafeArea(.all))
         }
-        .animation(.default)
-        .background(Color("Challenge.background").edgesIgnoringSafeArea(.all))
     }
 
 
@@ -112,20 +116,20 @@ struct FretboardConfiguration: View {
     @State private var showConfigurations: Bool = false
 
     var body: some View {
-        HStack(alignment: .center, spacing: 0) {
+        HStack(alignment: .center) {
             HStack(alignment: .center, spacing: 4) {
-                Text("Fret \(challenge.question.fret)")
+                Text("Fret \(challenge.question.fret)").font(.headline)
                 Text("|")
-                Text("String \(challenge.question.string)")
+                Text("String \(challenge.question.string)").font(.headline)
             }
             .padding()
-            .font(.headline)
 
             HStack {
                 Text(challenge.configuration.title).underline()
                 Image(systemName: "list.dash")
             }
             .padding()
+            .frame(maxWidth: .infinity, alignment: .trailing)
             .background(Color("FretboardIndicator.background"))
             .foregroundColor(Color("Action.accent"))
             .onTapGesture {
