@@ -124,7 +124,7 @@ struct FretView: View {
                 Spacer()
                 Text("\(position)")
                     .font(.footnote)
-                    .opacity(0.2)
+                    .opacity(0.8)
                     .padding(.bottom, 8)
             }
 
@@ -183,6 +183,6 @@ struct FretboardView_Previews: PreviewProvider {
     static var previews: some View {
         let fretboard = FretBoard(tuningType: .standard)
         return FretboardView(fretboard: fretboard, highlightedFret: 1, highlightedString: 1)
-            .preferredColorScheme(.dark)
+            .preferredColorScheme(.light)
     }
 }

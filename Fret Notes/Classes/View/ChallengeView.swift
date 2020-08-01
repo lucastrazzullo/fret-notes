@@ -247,8 +247,8 @@ struct ButtonsView: View {
     private func buildButton(for note: Note) -> some View {
         Button(action: { self.action(note) }) {
             HStack(alignment: .top, spacing: 4) {
-                Text(note.name).font(.title).foregroundColor(.secondary)
-                Text(note.symbol ?? "").font(.headline).foregroundColor(.primary)
+                Text(note.name).font(.title).foregroundColor(.primary)
+                Text(note.symbol ?? "").font(.headline).foregroundColor(.secondary)
             }
             .frame(maxWidth: 80, maxHeight: 32, alignment: .center)
         }
@@ -262,6 +262,6 @@ struct ButtonsView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ChallengeView(challenge: Challenge(), average: Average(timings: [2.3, 3.4]))
-            .preferredColorScheme(.dark)
+            .preferredColorScheme(.light)
     }
 }
