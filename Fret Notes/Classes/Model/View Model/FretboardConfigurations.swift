@@ -32,9 +32,9 @@ struct FretboardConfigurations {
     init() {
         items = [
             .init(frets: FretBoard.defaultFretsRange, title: "Full fretboard"),
-            .init(frets: 0...9, title: "From 0 to 9th fret"),
-            .init(frets: 7...12, title: "From 7th to 12th fret"),
-            .init(frets: 12...22, title: "From 12th to 22th fret")
+            .init(frets: 0...9, title: "0 to 9th fret"),
+            .init(frets: 7...12, title: "7th to 12th fret"),
+            .init(frets: 12...22, title: "12th to 22th fret")
         ]
     }
 

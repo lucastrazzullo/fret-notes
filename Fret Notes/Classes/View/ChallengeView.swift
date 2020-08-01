@@ -141,8 +141,15 @@ struct FretboardConfiguration: View {
     // MARK: Private helper methods
 
     private func fretboardConfigurationButtons() -> [ActionSheet.Button] {
+        let buttonLabel = { (item: FretboardConfigurations.ConfigurationItem) -> Text in
+            if self.challenge.configuration.frets == item.frets {
+                return Text(item.title + " ✔︎")
+            } else {
+                return Text(item.title)
+            }
+        }
         var buttons = challenge.configurations.items.map { item -> ActionSheet.Button in
-            .default(Text(item.title), action: { self.challenge.updateConfiguration(item) })
+            .default(buttonLabel(item), action: { self.challenge.updateConfiguration(item) })
         }
         buttons.append(ActionSheet.Button.cancel())
         return buttons
