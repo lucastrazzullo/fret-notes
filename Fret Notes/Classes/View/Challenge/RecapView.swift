@@ -11,8 +11,9 @@ import SwiftUI
 struct RecapView: View {
 
     @EnvironmentObject var challenge: Challenge
+    @EnvironmentObject var configuration: Configuration
 
-    @State private var showConfigurations: Bool = false
+    @State private var showFretSections: Bool = false
 
     var body: some View {
         HStack(alignment: .center) {
@@ -24,17 +25,17 @@ struct RecapView: View {
             .padding()
 
             HStack {
-                Text(title(for: challenge.configuration)).underline()
+                Text(fretSectionItemTitle(for: configuration.fretboard.frets)).underline()
                 Image(systemName: "list.dash")
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .trailing)
             .foregroundColor(Color("Action.accent"))
             .onTapGesture {
-                self.showConfigurations = true
+                self.showFretSections = true
             }
-            .actionSheet(isPresented: $showConfigurations) {
-                ActionSheet(title: Text("Fretboard configuration"), message: nil, buttons: fretboardConfigurationButtons())
+            .actionSheet(isPresented: $showFretSections) {
+                ActionSheet(title: Text("Fretboard configuration"), message: nil, buttons: fretSectionButtons())
             }
         }
     }
@@ -42,19 +43,18 @@ struct RecapView: View {
 
     // MARK: Private helper methods
 
-    private func fretboardConfigurationButtons() -> [ActionSheet.Button] {
-        let buttonLabel = { (configuration: Configuration) -> Text in
-            if self.challenge.configuration.fretboard == configuration.fretboard {
-                return Text(self.title(for: configuration) + " ✔︎")
+    private func fretSectionButtons() -> [ActionSheet.Button] {
+        let buttonLabel = { (frets: ClosedRange<Int>) -> Text in
+            if self.configuration.fretboard.frets == frets {
+                return Text(self.fretSectionItemTitle(for: frets) + " ✔︎")
             } else {
-                return Text(self.title(for: configuration))
+                return Text(self.fretSectionItemTitle(for: frets))
             }
         }
-        var buttons = Configuration.Default.allCases
-            .map(Configuration.init(with:))
-            .map { configuration -> ActionSheet.Button in
-                .default(buttonLabel(configuration)) {
-                    self.challenge.updateConfiguration(configuration)
+        var buttons = Configuration.FretSection.allCases
+            .map { fretSection -> ActionSheet.Button in
+                .default(buttonLabel(fretSection.frets)) {
+                    self.configuration.update(with: fretSection)
                 }
             }
         buttons.append(ActionSheet.Button.cancel())
@@ -62,22 +62,27 @@ struct RecapView: View {
     }
 
 
-    private func title(for configuration: Configuration) -> String {
-        return "\(configuration.fretboard.frets.lowerBound)th to \(configuration.fretboard.frets.upperBound)th fret"
+    private func fretSectionItemTitle(for fretSection: ClosedRange<Int>) -> String {
+        return "\(fretSection.lowerBound)th to \(fretSection.upperBound)th fret"
     }
 }
 
 
 struct ChallengeRecapView_Previews: PreviewProvider {
+
+    private static let configuration: Configuration = Configuration(with: .endBoard)
+
     static var previews: some View {
         Group {
             RecapView()
-            .environmentObject(Challenge())
+            .environmentObject(Challenge(configuration: .init()))
+            .environmentObject(configuration)
             .previewLayout(PreviewLayout.sizeThatFits)
             .preferredColorScheme(.light)
 
             RecapView()
-            .environmentObject(Challenge())
+            .environmentObject(Challenge(configuration: .init()))
+            .environmentObject(configuration)
             .previewLayout(PreviewLayout.sizeThatFits)
             .preferredColorScheme(.dark)
         }

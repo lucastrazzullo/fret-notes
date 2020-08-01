@@ -57,19 +57,21 @@ struct ChallengeView: View {
 
 struct ContentView_Previews: PreviewProvider {
 
-    private static let noAnsweredChallenge: Challenge = Challenge()
+    private static let configuration: Configuration = Configuration(with: .startBoard)
+
+    private static let noAnsweredChallenge: Challenge = Challenge(configuration: .init())
     private static let correctlyAnsweredChallenge: Challenge = {
-        let challenge = Challenge()
+        let challenge = Challenge(configuration: configuration)
         let question = challenge.question
-        let fretboard = challenge.configuration.fretboard
+        let fretboard = configuration.fretboard
         let note = fretboard.note(on: question.fret, string: question.string)
         challenge.attemptAnswer(with: note)
         return challenge
     }()
     private static let wronglyAnsweredChallenge: Challenge = {
-        let challenge = Challenge()
+        let challenge = Challenge(configuration: configuration)
         let question = challenge.question
-        let fretboard = challenge.configuration.fretboard
+        let fretboard = configuration.fretboard
         let correctNote = fretboard.note(on: question.fret, string: question.string)
         var notes = Note.allCases
         notes.remove(at: Note.allCases.firstIndex(of: correctNote)!)
@@ -83,21 +85,25 @@ struct ContentView_Previews: PreviewProvider {
             ChallengeView()
             .environmentObject(Average(timings: [2, 4]))
             .environmentObject(noAnsweredChallenge)
+            .environmentObject(configuration)
             .preferredColorScheme(.light)
 
             ChallengeView()
             .environmentObject(Average(timings: []))
             .environmentObject(noAnsweredChallenge)
+            .environmentObject(configuration)
             .preferredColorScheme(.dark)
 
             ChallengeView()
             .environmentObject(Average(timings: []))
             .environmentObject(correctlyAnsweredChallenge)
+            .environmentObject(configuration)
             .preferredColorScheme(.light)
 
             ChallengeView()
             .environmentObject(Average(timings: []))
             .environmentObject(wronglyAnsweredChallenge)
+            .environmentObject(configuration)
             .preferredColorScheme(.dark)
         }
     }

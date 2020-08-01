@@ -10,6 +10,7 @@ import Foundation
 
 class Application {
 
+    let configuration: Configuration
     let challenge: Challenge
     let average: Average
 
@@ -19,7 +20,8 @@ class Application {
     // MARK: Object life cycle
 
     init() {
-        challenge = Challenge()
+        configuration = Configuration.stored() ?? Configuration()
+        challenge = Challenge(configuration: configuration)
         average = Average()
         userActivity = Application.buildChallengeActivity()
     }

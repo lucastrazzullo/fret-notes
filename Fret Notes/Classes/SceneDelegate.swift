@@ -23,6 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let contentView = ChallengeView()
                 .environmentObject(application.average)
                 .environmentObject(application.challenge)
+                .environmentObject(application.configuration)
 
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: contentView)

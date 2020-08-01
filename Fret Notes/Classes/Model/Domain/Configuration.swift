@@ -8,24 +8,24 @@
 
 import Foundation
 
-struct Configuration: Codable {
+class Configuration: ObservableObject {
 
-    enum Default: Int, CaseIterable {
+    enum FretSection: Int, CaseIterable {
         case full
         case startBoard
         case middleBoard
         case endBoard
 
-        var fretboard: Fretboard {
+        var frets: ClosedRange<Int> {
             switch self {
             case .full:
-                return Fretboard(.standard)
+                return Fretboard.defaultFretsRange
             case .startBoard:
-                return Fretboard(.standard, frets: 0...9)
+                return 0...9
             case .middleBoard:
-                return Fretboard(.standard, frets: 7...12)
+                return 7...12
             case .endBoard:
-                return Fretboard(.standard, frets: 12...22)
+                return 12...22
             }
         }
     }
@@ -33,12 +33,13 @@ struct Configuration: Codable {
 
     // MARK: Type properties
 
-    private static let userDefaultsKey: String = "configuration"
+    private static let userDefaultsKey: String = "configuration.fretboard"
+    private static let defaultTuning: Tuning.Default = .standard
 
 
     // MARK: Instance properties
 
-    let fretboard: Fretboard
+    @Published private(set) var fretboard: Fretboard
 
 
     // MARK: Object life cycle
@@ -48,23 +49,35 @@ struct Configuration: Codable {
     }
 
 
-    init(with default: Default = Default.full) {
-        self.init(fretboard: `default`.fretboard)
+    convenience init(with fretSection: FretSection = FretSection.full) {
+        self.init(fretboard: Fretboard(Configuration.defaultTuning, frets: fretSection.frets))
     }
 
 
     // MARK: Public methods
 
+    func update(with fretSection: FretSection) {
+        objectWillChange.send()
+        fretboard.frets = fretSection.frets
+        store()
+    }
+
+
+    // MARK: Storage
+
     static func stored() -> Configuration? {
         guard let data = UserDefaults.standard.object(forKey: Configuration.userDefaultsKey) as? Data else {
             return nil
         }
-        return try? JSONDecoder().decode(Configuration.self, from: data)
+        guard let fretboard = try? JSONDecoder().decode(Fretboard.self, from: data) else {
+            return nil
+        }
+        return Configuration(fretboard: fretboard)
     }
 
 
-    func store() {
-        if let data = try? JSONEncoder().encode(self) {
+    private func store() {
+        if let data = try? JSONEncoder().encode(fretboard) {
             UserDefaults.standard.setValue(data, forKey: Configuration.userDefaultsKey)
             UserDefaults.standard.synchronize()
         }

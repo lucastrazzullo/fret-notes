@@ -15,37 +15,31 @@ class Challenge: ObservableObject {
 
     @Published private(set) var question: Question
     @Published private(set) var result: Result?
-    @Published private(set) var configuration: Configuration
 
     private var subscriptions: Set<AnyCancellable> = []
 
 
     // MARK: Object life cycle
 
-    init() {
-        let defaultConfiguration = Configuration.stored() ?? Configuration()
-        configuration = defaultConfiguration
-        question = Challenge.makeRandomQuestion(for: defaultConfiguration.fretboard)
+    init(configuration: Configuration) {
+        question = Challenge.makeRandomQuestion(for: configuration.fretboard)
+
+        configuration.$fretboard
+            .sink(receiveValue: nextQuestion(for:))
+            .store(in: &subscriptions)
     }
 
 
     // MARK: Public methods
-
-    func updateConfiguration(_ newConfiguration: Configuration) {
-        configuration = newConfiguration
-        configuration.store()
-        question = Challenge.makeRandomQuestion(for: configuration.fretboard)
-    }
-
 
     func attemptAnswer(with note: Note) {
         result = Result(question: question, attemptedAnswer: Answer(note: note))
     }
 
 
-    func nextQuestion() {
+    func nextQuestion(for fretboard: Fretboard) {
         result = nil
-        question = Challenge.makeRandomQuestion(for: configuration.fretboard)
+        question = Challenge.makeRandomQuestion(for: fretboard)
     }
 
 

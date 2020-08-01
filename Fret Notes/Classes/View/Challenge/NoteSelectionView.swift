@@ -55,12 +55,12 @@ struct ButtonsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NoteSelectionView()
-            .environmentObject(Challenge())
+            .environmentObject(Challenge(configuration: .init()))
             .previewLayout(PreviewLayout.sizeThatFits)
             .preferredColorScheme(.light)
 
             NoteSelectionView()
-            .environmentObject(Challenge())
+            .environmentObject(Challenge(configuration: .init()))
             .previewLayout(PreviewLayout.sizeThatFits)
             .preferredColorScheme(.dark)
         }

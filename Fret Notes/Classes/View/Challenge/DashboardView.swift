@@ -10,8 +10,9 @@ import SwiftUI
 
 struct DashboardView: View {
 
-    @EnvironmentObject var average: Average
+    @EnvironmentObject var configuration: Configuration
     @EnvironmentObject var challenge: Challenge
+    @EnvironmentObject var average: Average
 
     var body: some View {
         ZStack<AnyView> {
@@ -20,7 +21,7 @@ struct DashboardView: View {
                     if let result = self.challenge.result, result.isCorrect {
                         self.average.add(timing: result.timing)
                     }
-                    self.challenge.nextQuestion()
+                    self.challenge.nextQuestion(for: self.configuration.fretboard)
                 }))
             } else {
                 return AnyView(AverageView())
@@ -101,19 +102,21 @@ struct AverageView: View {
 
 struct DashboardView_Previews: PreviewProvider {
 
-    private static let noAnsweredChallenge: Challenge = Challenge()
+    private static let configuration: Configuration = Configuration()
+
+    private static let noAnsweredChallenge: Challenge = Challenge(configuration: .init())
     private static let correctlyAnsweredChallenge: Challenge = {
-        let challenge = Challenge()
+        let challenge = Challenge(configuration: configuration)
         let question = challenge.question
-        let fretboard = challenge.configuration.fretboard
+        let fretboard = configuration.fretboard
         let note = fretboard.note(on: question.fret, string: question.string)
         challenge.attemptAnswer(with: note)
         return challenge
     }()
     private static let wronglyAnsweredChallenge: Challenge = {
-        let challenge = Challenge()
+        let challenge = Challenge(configuration: configuration)
         let question = challenge.question
-        let fretboard = challenge.configuration.fretboard
+        let fretboard = configuration.fretboard
         let correctNote = fretboard.note(on: question.fret, string: question.string)
         var notes = Note.allCases
         notes.remove(at: Note.allCases.firstIndex(of: correctNote)!)
@@ -127,24 +130,28 @@ struct DashboardView_Previews: PreviewProvider {
             DashboardView()
             .environmentObject(noAnsweredChallenge)
             .environmentObject(Average(timings: [2, 4]))
+            .environmentObject(configuration)
             .previewLayout(PreviewLayout.sizeThatFits)
             .preferredColorScheme(.light)
 
             DashboardView()
             .environmentObject(noAnsweredChallenge)
             .environmentObject(Average(timings: []))
+            .environmentObject(configuration)
             .previewLayout(PreviewLayout.sizeThatFits)
             .preferredColorScheme(.dark)
 
             DashboardView()
             .environmentObject(correctlyAnsweredChallenge)
             .environmentObject(Average(timings: []))
+            .environmentObject(configuration)
             .previewLayout(PreviewLayout.sizeThatFits)
             .preferredColorScheme(.light)
 
             DashboardView()
             .environmentObject(wronglyAnsweredChallenge)
             .environmentObject(Average(timings: []))
+            .environmentObject(configuration)
             .previewLayout(PreviewLayout.sizeThatFits)
             .preferredColorScheme(.dark)
         }

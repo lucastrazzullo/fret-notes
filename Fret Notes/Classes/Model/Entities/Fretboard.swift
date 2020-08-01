@@ -15,7 +15,7 @@ struct Fretboard: Codable, Equatable {
 
     // MARK: Instance properties
 
-    let frets: ClosedRange<Int>
+    var frets: ClosedRange<Int>
     let strings: ClosedRange<Int>
 
     private let tuning: Tuning
