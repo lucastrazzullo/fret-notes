@@ -179,8 +179,8 @@ struct StringView: View {
 
 struct FretboardView_Previews: PreviewProvider {
 
-    static let fretboard6Strings = Fretboard(tuningType: .standard, frets: 0...3)
-    static let fretboard3Strings = Fretboard(tuningType: .standard, frets: 0...3, strings: 4...6)
+    static let fretboard6Strings = Fretboard(.standard, frets: 0...3)
+    static let fretboard3Strings = Fretboard(.standard, frets: 0...3, strings: 4...6)
 
     static var previews: some View {
         Group {

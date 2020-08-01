@@ -105,7 +105,7 @@ struct DashboardView_Previews: PreviewProvider {
     private static let correctlyAnsweredChallenge: Challenge = {
         let challenge = Challenge()
         let question = challenge.question
-        let fretboard = challenge.fretboard
+        let fretboard = challenge.configuration.fretboard
         let note = fretboard.note(on: question.fret, string: question.string)
         challenge.attemptAnswer(with: note)
         return challenge
@@ -113,7 +113,7 @@ struct DashboardView_Previews: PreviewProvider {
     private static let wronglyAnsweredChallenge: Challenge = {
         let challenge = Challenge()
         let question = challenge.question
-        let fretboard = challenge.fretboard
+        let fretboard = challenge.configuration.fretboard
         let correctNote = fretboard.note(on: question.fret, string: question.string)
         var notes = Note.allCases
         notes.remove(at: Note.allCases.firstIndex(of: correctNote)!)

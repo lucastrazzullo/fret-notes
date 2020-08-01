@@ -8,52 +8,63 @@
 
 import Foundation
 
-struct Configuration {
+struct Configuration: Codable {
 
-    struct ConfigurationItem: Identifiable, Codable {
-        let id: String = UUID().uuidString
-        let frets: ClosedRange<Int>
-        let title: String
+    enum Default: Int, CaseIterable {
+        case full
+        case startBoard
+        case middleBoard
+        case endBoard
+
+        var fretboard: Fretboard {
+            switch self {
+            case .full:
+                return Fretboard(.standard)
+            case .startBoard:
+                return Fretboard(.standard, frets: 0...9)
+            case .middleBoard:
+                return Fretboard(.standard, frets: 7...12)
+            case .endBoard:
+                return Fretboard(.standard, frets: 12...22)
+            }
+        }
     }
 
 
     // MARK: Type properties
 
-    private static let userDefaultsKey: String = "defaultConfiguration"
+    private static let userDefaultsKey: String = "configuration"
 
 
     // MARK: Instance properties
 
-    let items: [ConfigurationItem]
+    let fretboard: Fretboard
 
 
     // MARK: Object life cycle
 
-    init() {
-        items = [
-            .init(frets: Fretboard.defaultFretsRange, title: "Full fretboard"),
-            .init(frets: 0...9, title: "0 to 9th fret"),
-            .init(frets: 7...12, title: "7th to 12th fret"),
-            .init(frets: 12...22, title: "12th to 22th fret")
-        ]
+    init(fretboard: Fretboard) {
+        self.fretboard = fretboard
+    }
+
+
+    init(with default: Default = Default.full) {
+        self.init(fretboard: `default`.fretboard)
     }
 
 
     // MARK: Public methods
 
-    func `default`() -> ConfigurationItem {
+    static func stored() -> Configuration? {
         guard let data = UserDefaults.standard.object(forKey: Configuration.userDefaultsKey) as? Data else {
-            return items[0]
+            return nil
         }
-        guard let configuration = try? JSONDecoder().decode(ConfigurationItem.self, from: data) else {
-            return items[0]
-        }
-        return configuration
+        return try? JSONDecoder().decode(Configuration.self, from: data)
     }
 
 
-    func save(defaultConfiguration item: ConfigurationItem) {
-        if let data = try? JSONEncoder().encode(item) {
+    func store() {
+        if let data = try? JSONEncoder().encode(self) {
             UserDefaults.standard.setValue(data, forKey: Configuration.userDefaultsKey)
             UserDefaults.standard.synchronize()
         }

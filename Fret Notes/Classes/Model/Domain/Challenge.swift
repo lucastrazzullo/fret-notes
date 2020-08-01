@@ -15,11 +15,7 @@ class Challenge: ObservableObject {
 
     @Published private(set) var question: Question
     @Published private(set) var result: Result?
-    @Published private(set) var fretboard: Fretboard
-    @Published private(set) var configuration: Configuration.ConfigurationItem
-
-    let tuning: TuningType = .standard
-    let configurations: Configuration
+    @Published private(set) var configuration: Configuration
 
     private var subscriptions: Set<AnyCancellable> = []
 
@@ -27,36 +23,29 @@ class Challenge: ObservableObject {
     // MARK: Object life cycle
 
     init() {
-        configurations = Configuration()
-
-        let defaultConfiguration = configurations.default()
-        let defaultFretboard = Fretboard(tuningType: tuning, frets: defaultConfiguration.frets)
-        fretboard = defaultFretboard
+        let defaultConfiguration = Configuration.stored() ?? Configuration()
         configuration = defaultConfiguration
-        question = Challenge.generateRandomQuestion(for: defaultFretboard)
+        question = Challenge.makeRandomQuestion(for: defaultConfiguration.fretboard)
     }
 
 
     // MARK: Public methods
 
-    func updateConfiguration(_ item: Configuration.ConfigurationItem) {
-        configurations.save(defaultConfiguration: item)
-        configuration = item
-
-        fretboard = Fretboard(tuningType: tuning, frets: item.frets)
-        question = Challenge.generateRandomQuestion(for: fretboard)
+    func updateConfiguration(_ newConfiguration: Configuration) {
+        configuration = newConfiguration
+        configuration.store()
+        question = Challenge.makeRandomQuestion(for: configuration.fretboard)
     }
 
 
     func attemptAnswer(with note: Note) {
-        let answer = Answer(note: note)
-        result = Result(question: question, attemptedAnswer: answer)
+        result = Result(question: question, attemptedAnswer: Answer(note: note))
     }
 
 
     func nextQuestion() {
         result = nil
-        question = Challenge.generateRandomQuestion(for: fretboard)
+        question = Challenge.makeRandomQuestion(for: configuration.fretboard)
     }
 
 
@@ -67,7 +56,9 @@ class Challenge: ObservableObject {
     }
 
 
-    private static func generateRandomQuestion(for fretboard: Fretboard) -> Question {
+    // MARK: Private Type methods
+
+    private static func makeRandomQuestion(for fretboard: Fretboard) -> Question {
         let fret = fretboard.frets.shuffled().first!
         let string = fretboard.strings.shuffled().first!
         return Question(fret: fret, string: string, on: fretboard)

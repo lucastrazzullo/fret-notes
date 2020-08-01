@@ -8,25 +8,25 @@
 
 import Foundation
 
-struct Fretboard {
+struct Fretboard: Codable, Equatable {
 
     static let defaultFretsRange = 0...24
 
 
     // MARK: Instance properties
 
-    let tuning: Tuning
-
     let frets: ClosedRange<Int>
     let strings: ClosedRange<Int>
+
+    private let tuning: Tuning
 
 
     // MARK: Object life cycle
 
-    init(tuningType: TuningType, frets: ClosedRange<Int> = defaultFretsRange, strings: ClosedRange<Int> = 1...6) {
+    init(_ default: Tuning.Default, frets: ClosedRange<Int> = defaultFretsRange, strings: ClosedRange<Int> = 1...6) {
         self.frets = frets
         self.strings = strings
-        self.tuning = tuningType.tuning
+        self.tuning = Tuning(with: `default`)
     }
 
 
@@ -37,7 +37,6 @@ struct Fretboard {
         let firstNoteOnString = tuning.firstNote(on: string)
         let firstNotePosition = allNotes.firstIndex(of: firstNoteOnString)!
         let index = (firstNotePosition + fret) % allNotes.count
-
         return allNotes[index]
     }
 }

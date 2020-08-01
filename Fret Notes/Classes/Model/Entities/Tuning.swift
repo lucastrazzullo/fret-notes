@@ -8,32 +8,26 @@
 
 import Foundation
 
-protocol Tuning {
-    var notes: [Note] { get }
-}
+struct Tuning: Codable, Equatable {
 
+    enum Default: Int, Codable {
+        case standard
 
-extension Tuning {
+        var notes: [Note] {
+            switch self {
+            case .standard:
+                return [.e, .a, .d, .g, .b, .e]
+            }
+        }
+    }
+
+    let notes: [Note]
+
+    init(with default: Default) {
+        notes = `default`.notes
+    }
 
     func firstNote(on string: Int) -> Note {
         return notes.reversed()[string - 1]
-    }
-}
-
-
-// MARK: - Tunings
-
-struct StandardTuning: Tuning {
-    let notes: [Note] = [.e, .a, .d, .g, .b, .e]
-}
-
-
-enum TuningType {
-    case standard
-
-    var tuning: Tuning {
-        switch self {
-        case .standard: return StandardTuning()
-        }
     }
 }

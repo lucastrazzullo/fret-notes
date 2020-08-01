@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Note: CaseIterable {
+enum Note: Int, CaseIterable, Codable {
     case a
     case aSharp
     case b

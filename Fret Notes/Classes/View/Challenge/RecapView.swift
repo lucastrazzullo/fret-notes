@@ -24,7 +24,7 @@ struct RecapView: View {
             .padding()
 
             HStack {
-                Text(challenge.configuration.title).underline()
+                Text(title(for: challenge.configuration)).underline()
                 Image(systemName: "list.dash")
             }
             .padding()
@@ -43,18 +43,27 @@ struct RecapView: View {
     // MARK: Private helper methods
 
     private func fretboardConfigurationButtons() -> [ActionSheet.Button] {
-        let buttonLabel = { (item: Configuration.ConfigurationItem) -> Text in
-            if self.challenge.configuration.frets == item.frets {
-                return Text(item.title + " ✔︎")
+        let buttonLabel = { (configuration: Configuration) -> Text in
+            if self.challenge.configuration.fretboard == configuration.fretboard {
+                return Text(self.title(for: configuration) + " ✔︎")
             } else {
-                return Text(item.title)
+                return Text(self.title(for: configuration))
             }
         }
-        var buttons = challenge.configurations.items.map { item -> ActionSheet.Button in
-            .default(buttonLabel(item), action: { self.challenge.updateConfiguration(item) })
-        }
+        var buttons = Configuration.Default.allCases
+            .map(Configuration.init(with:))
+            .map { configuration -> ActionSheet.Button in
+                .default(buttonLabel(configuration)) {
+                    self.challenge.updateConfiguration(configuration)
+                }
+            }
         buttons.append(ActionSheet.Button.cancel())
         return buttons
+    }
+
+
+    private func title(for configuration: Configuration) -> String {
+        return "\(configuration.fretboard.frets.lowerBound)th to \(configuration.fretboard.frets.upperBound)th fret"
     }
 }
 
