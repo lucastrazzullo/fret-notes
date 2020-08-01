@@ -12,13 +12,15 @@ struct FretBoard {
 
     let tuning: Tuning
 
-    let frets: ClosedRange<Int> = 0...24
-    let strings: ClosedRange<Int> = 1...6
+    let frets: ClosedRange<Int>
+    let strings: ClosedRange<Int>
 
 
     // MARK: Object life cycle
 
-    init(tuningType: TuningType) {
+    init(tuningType: TuningType, frets: ClosedRange<Int> = 0...24, strings: ClosedRange<Int> = 1...6) {
+        self.frets = frets
+        self.strings = strings
         self.tuning = tuningType.tuning
     }
 

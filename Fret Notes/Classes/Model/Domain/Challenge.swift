@@ -14,8 +14,9 @@ class Challenge: ObservableObject {
     // MARK: Instance properties
 
     @Published private(set) var question: Question
+    @Published private(set) var configuration: FretboardConfigurations.ConfigurationItem
 
-    let fretboard: FretBoard
+    private(set) var configurations: FretboardConfigurations
 
     private var subscriptions: Set<AnyCancellable> = []
 
@@ -23,15 +24,24 @@ class Challenge: ObservableObject {
     // MARK: Object life cycle
 
     init() {
-        fretboard = FretBoard(tuningType: .standard)
-        question = Challenge.generateRandomQuestion(for: fretboard)
+        configurations = FretboardConfigurations(tuningType: .standard)
+
+        let currentConfiguration = configurations.items[0]
+        configuration = currentConfiguration
+        question = Challenge.generateRandomQuestion(for: currentConfiguration.fretboard)
     }
 
 
     // MARK: Public methods
 
+    func updateConfiguration(_ item: FretboardConfigurations.ConfigurationItem) {
+        configuration = item
+        question = Challenge.generateRandomQuestion(for: configuration.fretboard)
+    }
+
+
     func nextQuestion() {
-        question = Challenge.generateRandomQuestion(for: fretboard)
+        question = Challenge.generateRandomQuestion(for: configuration.fretboard)
     }
 
 

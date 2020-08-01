@@ -23,6 +23,7 @@
 		81A8584624BF4C2A003E788F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A8584524BF4C2A003E788F /* Preview Assets.xcassets */; };
 		81A8584924BF4C2A003E788F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81A8584724BF4C2A003E788F /* LaunchScreen.storyboard */; };
 		81DB3BC424C6ECBD00BDE228 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DB3BC324C6ECBD00BDE228 /* Application.swift */; };
+		81EB965824D2C4F700F71ACE /* FretboardConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB965724D2C4F700F71ACE /* FretboardConfigurations.swift */; };
 		81F9D17824BF6EAF0062E3F9 /* FretBoardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9D17724BF6EAF0062E3F9 /* FretBoardTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		81A8584824BF4C2A003E788F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		81A8584A24BF4C2A003E788F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81DB3BC324C6ECBD00BDE228 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
+		81EB965724D2C4F700F71ACE /* FretboardConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FretboardConfigurations.swift; sourceTree = "<group>"; };
 		81F9D17524BF6EAF0062E3F9 /* Fret Notes Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fret Notes Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F9D17724BF6EAF0062E3F9 /* FretBoardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FretBoardTests.swift; sourceTree = "<group>"; };
 		81F9D17924BF6EAF0062E3F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 			children = (
 				81253D3024BF73470054F392 /* Entities */,
 				81253D3124BF734E0054F392 /* Domain */,
+				81EB965624D2C4DD00F71ACE /* View Model */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -174,6 +177,14 @@
 				81A8584524BF4C2A003E788F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		81EB965624D2C4DD00F71ACE /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				81EB965724D2C4F700F71ACE /* FretboardConfigurations.swift */,
+			);
+			path = "View Model";
 			sourceTree = "<group>";
 		};
 		81F9D17624BF6EAF0062E3F9 /* Fret Notes Tests */ = {
@@ -291,6 +302,7 @@
 				81779BA724C85419004CF9C8 /* Average.swift in Sources */,
 				8185373624C1E166005059DD /* FretboardView.swift in Sources */,
 				81A8583F24BF4C28003E788F /* SceneDelegate.swift in Sources */,
+				81EB965824D2C4F700F71ACE /* FretboardConfigurations.swift in Sources */,
 				81253D3924BF73D70054F392 /* Answer.swift in Sources */,
 				81253D3324BF736C0054F392 /* Challenge.swift in Sources */,
 				81253D2C24BF71A40054F392 /* Tuning.swift in Sources */,

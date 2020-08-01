@@ -14,42 +14,35 @@ struct ChallengeView: View {
     @ObservedObject var average: Average
 
     @State private var result: Result?
-    @State private var fretboardOffset: CGFloat = 0
 
     var body: some View {
-        VStack(alignment: .center, spacing: 24) {
-            ZStack(alignment: Alignment(horizontal: .highlightedFret, vertical: .highlightedString)) {
-                FretboardView(fretboard: challenge.fretboard, highlightedFret: challenge.question.fret, highlightedString: challenge.question.string)
-                IndicatorView()
+        VStack(alignment: .center, spacing: 32) {
+            VStack(alignment: .center, spacing: 24) {
+                FretboardIndicatorView(challenge: challenge)
+                FretboardConfiguration(challenge: challenge)
             }
-            .alignmentGuide(.highlightedFret) { dimension in
-                dimension[.highlightedFret] + self.fretboardOffset
-            }
-            .frame(minHeight: 260, alignment: Alignment(horizontal: .highlightedFret, vertical: .center))
-            .background(Color("FretboardIndicator.background").edgesIgnoringSafeArea(.all).shadow(color: Color.black.opacity(0.4), radius: 2, x: 0, y: 2))
-            .gesture(DragGesture().onChanged { value in
-                self.fretboardOffset = -value.translation.width
-            }.onEnded { _ in
-                self.fretboardOffset = 0
-            })
+            .padding(.bottom, 24)
+            .background(Color("FretboardIndicator.background").edgesIgnoringSafeArea(.top).shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 2))
 
-            ZStack {
-                contextView()
+
+            ZStack<AnyView> {
+                if let result = result {
+                    return AnyView(ResultView(result: result, action: nextQuestion))
+                } else if let value = average.value {
+                    return AnyView(AverageView(average: value, reset: average.reset))
+                } else {
+                    return AnyView(EmptyView())
+                }
             }
             .padding(.all, 12)
             .background(Color.white.opacity(0.2))
             .cornerRadius(12)
 
-            VStack(alignment: .center, spacing: 4) {
-                QuestionView(question: challenge.question)
-                .padding(12)
-
-                ButtonsView(action: { note in
-                    self.result = self.challenge.result(for: note)
-                })
-                .padding(.horizontal, 24)
-                .padding(.bottom, 40)
-            }
+            ButtonsView(action: { note in
+                self.result = self.challenge.result(for: note)
+            })
+            .padding(.horizontal, 24)
+            .padding(.bottom, 40)
         }
         .animation(.default)
         .background(Color("Challenge.background").edgesIgnoringSafeArea(.all))
@@ -65,16 +58,29 @@ struct ChallengeView: View {
         result = nil
         challenge.nextQuestion()
     }
+}
 
 
-    private func contextView() -> some View {
-        if let result = result {
-            return AnyView(ResultView(result: result, action: nextQuestion))
-        } else if let value = average.value {
-            return AnyView(AverageView(average: value, reset: average.reset))
-        } else {
-            return AnyView(EmptyView())
+struct FretboardIndicatorView: View {
+
+    @ObservedObject var challenge: Challenge
+
+    @State private var fretboardOffset: CGFloat = 0
+
+    var body: some View {
+        ZStack(alignment: Alignment(horizontal: .highlightedFret, vertical: .highlightedString)) {
+            FretboardView(fretboard: challenge.configuration.fretboard, highlightedFret: challenge.question.fret, highlightedString: challenge.question.string)
+            IndicatorView()
         }
+        .alignmentGuide(.highlightedFret) { dimension in
+            dimension[.highlightedFret] + self.fretboardOffset
+        }
+        .frame(minHeight: 260, alignment: Alignment(horizontal: .highlightedFret, vertical: .center))
+        .gesture(DragGesture().onChanged { value in
+            self.fretboardOffset = -value.translation.width
+        }.onEnded { _ in
+            self.fretboardOffset = 0
+        })
     }
 }
 
@@ -95,6 +101,48 @@ struct IndicatorView: View {
                 .frame(width: 32, height: 32, alignment: .center)
                 .opacity(0.2)
         }
+    }
+}
+
+
+struct FretboardConfiguration: View {
+
+    @ObservedObject var challenge: Challenge
+
+    @State private var showConfigurations: Bool = false
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 80) {
+            HStack(alignment: .center, spacing: 8) {
+                Text("Fret \(challenge.question.fret)")
+                Text("|")
+                Text("String \(challenge.question.string)")
+            }
+            .font(.headline)
+
+            HStack {
+                Text(challenge.configuration.title)
+                Image(systemName: "list.dash")
+            }
+            .foregroundColor(Color("Action.accent"))
+            .onTapGesture {
+                self.showConfigurations = true
+            }
+            .actionSheet(isPresented: $showConfigurations) {
+                ActionSheet(title: Text("Fretboard configuration"), message: nil, buttons: fretboardConfigurationButtons())
+            }
+        }
+    }
+
+
+    // MARK: Private helper methods
+
+    private func fretboardConfigurationButtons() -> [ActionSheet.Button] {
+        var buttons = challenge.configurations.items.map { item -> ActionSheet.Button in
+            .default(Text(item.title), action: { self.challenge.updateConfiguration(item) })
+        }
+        buttons.append(ActionSheet.Button.cancel())
+        return buttons
     }
 }
 
@@ -130,7 +178,7 @@ struct ResultView: View {
                 Text("Next")
             }
             .padding(.all, 8)
-            .background(Color("Action.background"))
+            .background(Color("Action.accent"))
             .foregroundColor(Color("Action.foreground"))
             .cornerRadius(4)
         }
@@ -158,29 +206,10 @@ struct AverageView: View {
                 Image(systemName: "arrow.counterclockwise")
             }
             .padding(.all, 8)
-            .background(Color("Action.background"))
+            .background(Color("Action.accent"))
             .foregroundColor(Color("Action.foreground"))
             .cornerRadius(4)
         }
-    }
-}
-
-
-struct QuestionView: View {
-
-    let question: Question
-
-    var body: some View {
-        HStack(alignment: .center, spacing: 12) {
-            Text("Fret \(question.fret)")
-                .frame(width: 100, height: 32, alignment: .center)
-            Rectangle()
-                .opacity(0.2)
-                .frame(width: 1)
-            Text("String \(question.string)")
-                .frame(width: 100, height: 32, alignment: .center)
-        }
-        .font(.headline)
     }
 }
 
