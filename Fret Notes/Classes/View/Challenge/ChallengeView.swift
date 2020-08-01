@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ChallengeView: View {
 
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
+
     var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .center, spacing: 20) {
@@ -30,7 +32,7 @@ struct ChallengeView: View {
                 .padding(.horizontal, 24)
                 .padding(.bottom, 40)
             }
-            .animation(.default)
+            .animation(self.reduceMotion ? .none : .default)
             .frame(width: geometry.size.width)
             .background(self.backgroundColor())
         }
