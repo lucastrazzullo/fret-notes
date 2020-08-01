@@ -44,6 +44,9 @@ struct FretboardView: View {
             HStack(alignment: .center, spacing: 8) {
                 ForEach(Array(fretboard.frets), id: \.self) { position in
                     self.fretView(at: position)
+                    .frame(width: FretboardView.fretWidth(at: position))
+                    .background(self.fretBackgroundColor(at: position))
+                    .cornerRadius(8)
                 }
             }
             .padding(.horizontal, 100)
@@ -51,9 +54,10 @@ struct FretboardView: View {
             VStack(alignment: .center) {
                 ForEach(Array(fretboard.strings), id: \.self) { position in
                     self.stringView(at: position)
+                    .frame(maxHeight: .infinity)
                 }
             }
-            .padding(.vertical, 28)
+            .padding(.vertical, 32)
         }
     }
 
@@ -68,13 +72,9 @@ struct FretboardView: View {
     private func fretView(at position: Int) -> some View {
         if position == highlightedFret {
             return AnyView(FretView(position: position)
-            .alignmentGuide(.highlightedFret) { d in d[HorizontalAlignment.center] }
-            .frame(width: FretboardView.fretWidth(at: position))
-            .background(fretBackgroundColor(at: position).edgesIgnoringSafeArea(.all)))
+            .alignmentGuide(.highlightedFret) { d in d[HorizontalAlignment.center] })
         } else {
-            return AnyView(FretView(position: position)
-            .frame(width: FretboardView.fretWidth(at: position))
-            .background(fretBackgroundColor(at: position).edgesIgnoringSafeArea(.all)))
+            return AnyView(FretView(position: position))
         }
     }
 
@@ -82,12 +82,10 @@ struct FretboardView: View {
     private func stringView(at position: Int) -> some View {
         if position == highlightedString {
             return AnyView(StringView(position: position)
-                .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] }
-                .frame(maxHeight: .infinity))
+                .alignmentGuide(.highlightedString) { d in d[VerticalAlignment.center] })
 
         } else {
-            return AnyView(StringView(position: position)
-                .frame(maxHeight: .infinity))
+            return AnyView(StringView(position: position))
         }
     }
 

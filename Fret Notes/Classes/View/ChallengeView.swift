@@ -16,12 +16,12 @@ struct ChallengeView: View {
     @State private var result: Result?
 
     var body: some View {
-        VStack(alignment: .center, spacing: 32) {
-            VStack(alignment: .center, spacing: 24) {
+        VStack(alignment: .center, spacing: 20) {
+            VStack(alignment: .center, spacing: 8) {
                 FretboardIndicatorView(challenge: challenge)
                 FretboardConfiguration(challenge: challenge)
             }
-            .padding(.bottom, 24)
+            .padding(.top, 12).padding(.bottom, 8)
             .background(Color("FretboardIndicator.background").edgesIgnoringSafeArea(.top).shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 2))
 
 
@@ -112,18 +112,21 @@ struct FretboardConfiguration: View {
     @State private var showConfigurations: Bool = false
 
     var body: some View {
-        HStack(alignment: .center, spacing: 80) {
-            HStack(alignment: .center, spacing: 8) {
+        HStack(alignment: .center, spacing: 0) {
+            HStack(alignment: .center, spacing: 4) {
                 Text("Fret \(challenge.question.fret)")
                 Text("|")
                 Text("String \(challenge.question.string)")
             }
+            .padding()
             .font(.headline)
 
             HStack {
-                Text(challenge.configuration.title)
+                Text(challenge.configuration.title).underline()
                 Image(systemName: "list.dash")
             }
+            .padding()
+            .background(Color("FretboardIndicator.background"))
             .foregroundColor(Color("Action.accent"))
             .onTapGesture {
                 self.showConfigurations = true
@@ -219,7 +222,7 @@ struct ButtonsView: View {
     let action: (Note) -> Void
 
     var body: some View {
-        VStack(alignment: .center, spacing: 4) {
+        VStack(alignment: .center, spacing: 2) {
             HStack(alignment: .center, spacing: 12) {
                 ForEach(0..<3, id: \.self) { row in
                     self.buildButton(for: Note.allCases[row])
