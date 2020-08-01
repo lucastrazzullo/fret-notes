@@ -10,14 +10,13 @@ import SwiftUI
 
 struct FretboardIndicatorView: View {
 
-    let fretboard: Fretboard
-    let question: Question
+    @EnvironmentObject var challenge: Challenge
 
     @State private var fretboardOffset: CGFloat = 0
 
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .highlightedFret, vertical: .highlightedString)) {
-            FretboardView(fretboard: fretboard, highlightedFret: question.fret, highlightedString: question.string)
+            FretboardView(fretboard: challenge.fretboard, highlightedFret: challenge.question.fret, highlightedString: challenge.question.string)
             IndicatorView()
         }
         .alignmentGuide(.highlightedFret) { dimension in
@@ -48,6 +47,25 @@ struct IndicatorView: View {
                 .foregroundColor(Color("FretboardIndicator.indicator"))
                 .frame(width: 32, height: 32, alignment: .center)
                 .opacity(0.2)
+        }
+    }
+}
+
+
+struct FretboardIndicatorView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            FretboardIndicatorView()
+            .environmentObject(Challenge())
+            .frame(height: 400)
+            .previewLayout(PreviewLayout.sizeThatFits)
+            .preferredColorScheme(.light)
+
+            FretboardIndicatorView()
+            .environmentObject(Challenge())
+            .frame(height: 400)
+            .previewLayout(PreviewLayout.sizeThatFits)
+            .preferredColorScheme(.dark)
         }
     }
 }

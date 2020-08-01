@@ -14,10 +14,12 @@ class Challenge: ObservableObject {
     // MARK: Instance properties
 
     @Published private(set) var question: Question
+    @Published private(set) var result: Result?
     @Published private(set) var fretboard: Fretboard
-    @Published private(set) var configuration: FretboardConfigurations.ConfigurationItem
+    @Published private(set) var configuration: Configuration.ConfigurationItem
 
-    private(set) var configurations: FretboardConfigurations
+    let tuning: TuningType = .standard
+    let configurations: Configuration
 
     private var subscriptions: Set<AnyCancellable> = []
 
@@ -25,10 +27,10 @@ class Challenge: ObservableObject {
     // MARK: Object life cycle
 
     init() {
-        configurations = FretboardConfigurations()
+        configurations = Configuration()
 
-        let defaultConfiguration = configurations.getDefaultConfigutation()
-        let defaultFretboard = Fretboard(tuningType: .standard, frets: defaultConfiguration.frets)
+        let defaultConfiguration = configurations.default()
+        let defaultFretboard = Fretboard(tuningType: tuning, frets: defaultConfiguration.frets)
         fretboard = defaultFretboard
         configuration = defaultConfiguration
         question = Challenge.generateRandomQuestion(for: defaultFretboard)
@@ -37,23 +39,31 @@ class Challenge: ObservableObject {
 
     // MARK: Public methods
 
-    func updateConfiguration(_ item: FretboardConfigurations.ConfigurationItem) {
+    func updateConfiguration(_ item: Configuration.ConfigurationItem) {
         configurations.save(defaultConfiguration: item)
         configuration = item
 
-        fretboard = Fretboard(tuningType: .standard, frets: item.frets)
+        fretboard = Fretboard(tuningType: tuning, frets: item.frets)
         question = Challenge.generateRandomQuestion(for: fretboard)
+    }
+
+
+    func attemptAnswer(with note: Note) {
+        let answer = Answer(note: note)
+        result = Result(question: question, attemptedAnswer: answer)
     }
 
 
     func nextQuestion() {
+        result = nil
         question = Challenge.generateRandomQuestion(for: fretboard)
     }
 
 
-    func result(for note: Note) -> Result {
-        let answer = Answer(note: note)
-        return Result(question: question, attemptedAnswer: answer)
+    func resetQuestionTimer() {
+        if result == nil {
+            question.time = Date()
+        }
     }
 
 

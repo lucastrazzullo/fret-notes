@@ -11,6 +11,7 @@ import Foundation
 class Application {
 
     let challenge: Challenge
+    let average: Average
 
     private let userActivity: NSUserActivity
 
@@ -19,6 +20,7 @@ class Application {
 
     init() {
         challenge = Challenge()
+        average = Average()
         userActivity = Application.buildChallengeActivity()
     }
 
@@ -26,7 +28,7 @@ class Application {
     // MARK: Public methods
 
     func resume() {
-        challenge.nextQuestion()
+        challenge.resetQuestionTimer()
         userActivity.becomeCurrent()
     }
 

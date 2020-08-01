@@ -9,7 +9,7 @@
 import Foundation
 
 struct Question {
-    let time: Date = Date()
+    var time: Date = Date()
     let fret: Int
     let string: Int
     let note: Note

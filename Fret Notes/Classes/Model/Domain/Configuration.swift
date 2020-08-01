@@ -1,5 +1,5 @@
 //
-//  FretboardConfigurations.swift
+//  Configuration.swift
 //  Fret Notes
 //
 //  Created by luca strazzullo on 30/7/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FretboardConfigurations {
+struct Configuration {
 
     struct ConfigurationItem: Identifiable, Codable {
         let id: String = UUID().uuidString
@@ -41,8 +41,8 @@ struct FretboardConfigurations {
 
     // MARK: Public methods
 
-    func getDefaultConfigutation() -> ConfigurationItem {
-        guard let data = UserDefaults.standard.object(forKey: FretboardConfigurations.userDefaultsKey) as? Data else {
+    func `default`() -> ConfigurationItem {
+        guard let data = UserDefaults.standard.object(forKey: Configuration.userDefaultsKey) as? Data else {
             return items[0]
         }
         guard let configuration = try? JSONDecoder().decode(ConfigurationItem.self, from: data) else {
@@ -54,7 +54,7 @@ struct FretboardConfigurations {
 
     func save(defaultConfiguration item: ConfigurationItem) {
         if let data = try? JSONEncoder().encode(item) {
-            UserDefaults.standard.setValue(data, forKey: FretboardConfigurations.userDefaultsKey)
+            UserDefaults.standard.setValue(data, forKey: Configuration.userDefaultsKey)
             UserDefaults.standard.synchronize()
         }
     }

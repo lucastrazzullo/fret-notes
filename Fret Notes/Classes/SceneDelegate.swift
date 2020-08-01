@@ -20,7 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             application.resume()
 
-            let contentView = ChallengeView(challenge: application.challenge, average: Average())
+            let contentView = ChallengeView()
+                .environmentObject(application.average)
+                .environmentObject(application.challenge)
+
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: contentView)
             self.window = window

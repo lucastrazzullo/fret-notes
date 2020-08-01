@@ -14,7 +14,10 @@
 		81253D3724BF73C70054F392 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D3624BF73C70054F392 /* Question.swift */; };
 		81253D3924BF73D70054F392 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D3824BF73D70054F392 /* Answer.swift */; };
 		8129C47224C1C0CC00F05E4C /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8129C47124C1C0CC00F05E4C /* Result.swift */; };
-		8161A30424D5A63B00233321 /* FretboardIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161A30324D5A63B00233321 /* FretboardIndicatorView.swift */; };
+		8161A30624D5A88400233321 /* RecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161A30524D5A88400233321 /* RecapView.swift */; };
+		8161A30824D5AD2700233321 /* NoteSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161A30724D5AD2700233321 /* NoteSelectionView.swift */; };
+		8161A30A24D5B1FC00233321 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161A30924D5B1FC00233321 /* DashboardView.swift */; };
+		8161A30C24D5BD6800233321 /* FretboardIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161A30B24D5BD6800233321 /* FretboardIndicatorView.swift */; };
 		81779BA724C85419004CF9C8 /* Average.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81779BA624C85419004CF9C8 /* Average.swift */; };
 		8185373624C1E166005059DD /* FretboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8185373524C1E166005059DD /* FretboardView.swift */; };
 		81A8583D24BF4C28003E788F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A8583C24BF4C28003E788F /* AppDelegate.swift */; };
@@ -24,7 +27,7 @@
 		81A8584624BF4C2A003E788F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A8584524BF4C2A003E788F /* Preview Assets.xcassets */; };
 		81A8584924BF4C2A003E788F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81A8584724BF4C2A003E788F /* LaunchScreen.storyboard */; };
 		81DB3BC424C6ECBD00BDE228 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DB3BC324C6ECBD00BDE228 /* Application.swift */; };
-		81EB965824D2C4F700F71ACE /* FretboardConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB965724D2C4F700F71ACE /* FretboardConfigurations.swift */; };
+		81EB965824D2C4F700F71ACE /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB965724D2C4F700F71ACE /* Configuration.swift */; };
 		81F9D17824BF6EAF0062E3F9 /* FretBoardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9D17724BF6EAF0062E3F9 /* FretBoardTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,7 +49,10 @@
 		81253D3624BF73C70054F392 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		81253D3824BF73D70054F392 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		8129C47124C1C0CC00F05E4C /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
-		8161A30324D5A63B00233321 /* FretboardIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FretboardIndicatorView.swift; sourceTree = "<group>"; };
+		8161A30524D5A88400233321 /* RecapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecapView.swift; sourceTree = "<group>"; };
+		8161A30724D5AD2700233321 /* NoteSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSelectionView.swift; sourceTree = "<group>"; };
+		8161A30924D5B1FC00233321 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		8161A30B24D5BD6800233321 /* FretboardIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FretboardIndicatorView.swift; path = ../FretboardIndicatorView.swift; sourceTree = "<group>"; };
 		81779BA624C85419004CF9C8 /* Average.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Average.swift; sourceTree = "<group>"; };
 		8185373524C1E166005059DD /* FretboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FretboardView.swift; sourceTree = "<group>"; };
 		81A8583924BF4C28003E788F /* Fret Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fret Notes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,7 +64,7 @@
 		81A8584824BF4C2A003E788F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		81A8584A24BF4C2A003E788F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81DB3BC324C6ECBD00BDE228 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
-		81EB965724D2C4F700F71ACE /* FretboardConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FretboardConfigurations.swift; sourceTree = "<group>"; };
+		81EB965724D2C4F700F71ACE /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		81F9D17524BF6EAF0062E3F9 /* Fret Notes Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fret Notes Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F9D17724BF6EAF0062E3F9 /* FretBoardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FretBoardTests.swift; sourceTree = "<group>"; };
 		81F9D17924BF6EAF0062E3F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -107,7 +113,6 @@
 			children = (
 				81253D3024BF73470054F392 /* Entities */,
 				81253D3124BF734E0054F392 /* Domain */,
-				81EB965624D2C4DD00F71ACE /* View Model */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -128,6 +133,7 @@
 				81253D3624BF73C70054F392 /* Question.swift */,
 				81253D3824BF73D70054F392 /* Answer.swift */,
 				8129C47124C1C0CC00F05E4C /* Result.swift */,
+				81EB965724D2C4F700F71ACE /* Configuration.swift */,
 				81779BA624C85419004CF9C8 /* Average.swift */,
 				81253D3224BF736C0054F392 /* Challenge.swift */,
 				81DB3BC324C6ECBD00BDE228 /* Application.swift */,
@@ -138,11 +144,22 @@
 		81253D3524BF738E0054F392 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				81A8584024BF4C28003E788F /* ChallengeView.swift */,
 				8185373524C1E166005059DD /* FretboardView.swift */,
-				8161A30324D5A63B00233321 /* FretboardIndicatorView.swift */,
+				8161A30D24D5BDF500233321 /* Challenge */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		8161A30D24D5BDF500233321 /* Challenge */ = {
+			isa = PBXGroup;
+			children = (
+				8161A30B24D5BD6800233321 /* FretboardIndicatorView.swift */,
+				8161A30924D5B1FC00233321 /* DashboardView.swift */,
+				8161A30724D5AD2700233321 /* NoteSelectionView.swift */,
+				8161A30524D5A88400233321 /* RecapView.swift */,
+				81A8584024BF4C28003E788F /* ChallengeView.swift */,
+			);
+			path = Challenge;
 			sourceTree = "<group>";
 		};
 		81A8583024BF4C28003E788F = {
@@ -180,14 +197,6 @@
 				81A8584524BF4C2A003E788F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		81EB965624D2C4DD00F71ACE /* View Model */ = {
-			isa = PBXGroup;
-			children = (
-				81EB965724D2C4F700F71ACE /* FretboardConfigurations.swift */,
-			);
-			path = "View Model";
 			sourceTree = "<group>";
 		};
 		81F9D17624BF6EAF0062E3F9 /* Fret Notes Tests */ = {
@@ -300,18 +309,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8161A30C24D5BD6800233321 /* FretboardIndicatorView.swift in Sources */,
 				81A8583D24BF4C28003E788F /* AppDelegate.swift in Sources */,
 				81253D3724BF73C70054F392 /* Question.swift in Sources */,
 				81779BA724C85419004CF9C8 /* Average.swift in Sources */,
 				8185373624C1E166005059DD /* FretboardView.swift in Sources */,
 				81A8583F24BF4C28003E788F /* SceneDelegate.swift in Sources */,
-				81EB965824D2C4F700F71ACE /* FretboardConfigurations.swift in Sources */,
+				81EB965824D2C4F700F71ACE /* Configuration.swift in Sources */,
 				81253D3924BF73D70054F392 /* Answer.swift in Sources */,
 				81253D3324BF736C0054F392 /* Challenge.swift in Sources */,
-				8161A30424D5A63B00233321 /* FretboardIndicatorView.swift in Sources */,
+				8161A30824D5AD2700233321 /* NoteSelectionView.swift in Sources */,
 				81253D2C24BF71A40054F392 /* Tuning.swift in Sources */,
 				8129C47224C1C0CC00F05E4C /* Result.swift in Sources */,
 				81A8584124BF4C28003E788F /* ChallengeView.swift in Sources */,
+				8161A30A24D5B1FC00233321 /* DashboardView.swift in Sources */,
+				8161A30624D5A88400233321 /* RecapView.swift in Sources */,
 				81253D2A24BF71900054F392 /* Note.swift in Sources */,
 				81DB3BC424C6ECBD00BDE228 /* Application.swift in Sources */,
 				81253D2E24BF72BC0054F392 /* Fretboard.swift in Sources */,

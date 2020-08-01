@@ -178,9 +178,21 @@ struct StringView: View {
 
 
 struct FretboardView_Previews: PreviewProvider {
+
+    static let fretboard6Strings = Fretboard(tuningType: .standard, frets: 0...3)
+    static let fretboard3Strings = Fretboard(tuningType: .standard, frets: 0...3, strings: 4...6)
+
     static var previews: some View {
-        let fretboard = Fretboard(tuningType: .standard)
-        return FretboardView(fretboard: fretboard, highlightedFret: 1, highlightedString: 1)
+        Group {
+            FretboardView(fretboard: fretboard6Strings, highlightedFret: 1, highlightedString: 6)
+            .frame(height: 400)
+            .previewLayout(PreviewLayout.sizeThatFits)
             .preferredColorScheme(.light)
+
+            FretboardView(fretboard: fretboard3Strings, highlightedFret: 1, highlightedString: 6)
+            .frame(height: 400)
+            .previewLayout(PreviewLayout.sizeThatFits)
+            .preferredColorScheme(.dark)
+        }
     }
 }
