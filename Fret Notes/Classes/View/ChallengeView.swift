@@ -69,7 +69,7 @@ struct FretboardIndicatorView: View {
 
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .highlightedFret, vertical: .highlightedString)) {
-            FretboardView(fretboard: challenge.configuration.fretboard, highlightedFret: challenge.question.fret, highlightedString: challenge.question.string)
+            FretboardView(fretboard: challenge.fretboard, highlightedFret: challenge.question.fret, highlightedString: challenge.question.string)
             IndicatorView()
         }
         .alignmentGuide(.highlightedFret) { dimension in

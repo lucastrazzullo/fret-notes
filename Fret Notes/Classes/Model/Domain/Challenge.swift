@@ -14,6 +14,7 @@ class Challenge: ObservableObject {
     // MARK: Instance properties
 
     @Published private(set) var question: Question
+    @Published private(set) var fretboard: FretBoard
     @Published private(set) var configuration: FretboardConfigurations.ConfigurationItem
 
     private(set) var configurations: FretboardConfigurations
@@ -24,24 +25,29 @@ class Challenge: ObservableObject {
     // MARK: Object life cycle
 
     init() {
-        configurations = FretboardConfigurations(tuningType: .standard)
+        configurations = FretboardConfigurations()
 
-        let currentConfiguration = configurations.items[0]
-        configuration = currentConfiguration
-        question = Challenge.generateRandomQuestion(for: currentConfiguration.fretboard)
+        let defaultConfiguration = configurations.getDefaultConfigutation()
+        let defaultFretboard = FretBoard(tuningType: .standard, frets: defaultConfiguration.frets)
+        fretboard = defaultFretboard
+        configuration = defaultConfiguration
+        question = Challenge.generateRandomQuestion(for: defaultFretboard)
     }
 
 
     // MARK: Public methods
 
     func updateConfiguration(_ item: FretboardConfigurations.ConfigurationItem) {
+        configurations.save(defaultConfiguration: item)
         configuration = item
-        question = Challenge.generateRandomQuestion(for: configuration.fretboard)
+
+        fretboard = FretBoard(tuningType: .standard, frets: item.frets)
+        question = Challenge.generateRandomQuestion(for: fretboard)
     }
 
 
     func nextQuestion() {
-        question = Challenge.generateRandomQuestion(for: configuration.fretboard)
+        question = Challenge.generateRandomQuestion(for: fretboard)
     }
 
 

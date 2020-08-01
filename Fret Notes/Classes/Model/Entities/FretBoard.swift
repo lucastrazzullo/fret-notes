@@ -10,6 +10,11 @@ import Foundation
 
 struct FretBoard {
 
+    static let defaultFretsRange = 0...24
+
+
+    // MARK: Instance properties
+
     let tuning: Tuning
 
     let frets: ClosedRange<Int>
@@ -18,7 +23,7 @@ struct FretBoard {
 
     // MARK: Object life cycle
 
-    init(tuningType: TuningType, frets: ClosedRange<Int> = 0...24, strings: ClosedRange<Int> = 1...6) {
+    init(tuningType: TuningType, frets: ClosedRange<Int> = defaultFretsRange, strings: ClosedRange<Int> = 1...6) {
         self.frets = frets
         self.strings = strings
         self.tuning = tuningType.tuning
