@@ -14,7 +14,7 @@ class Challenge: ObservableObject {
     // MARK: Instance properties
 
     @Published private(set) var question: Question
-    @Published private(set) var fretboard: FretBoard
+    @Published private(set) var fretboard: Fretboard
     @Published private(set) var configuration: FretboardConfigurations.ConfigurationItem
 
     private(set) var configurations: FretboardConfigurations
@@ -28,7 +28,7 @@ class Challenge: ObservableObject {
         configurations = FretboardConfigurations()
 
         let defaultConfiguration = configurations.getDefaultConfigutation()
-        let defaultFretboard = FretBoard(tuningType: .standard, frets: defaultConfiguration.frets)
+        let defaultFretboard = Fretboard(tuningType: .standard, frets: defaultConfiguration.frets)
         fretboard = defaultFretboard
         configuration = defaultConfiguration
         question = Challenge.generateRandomQuestion(for: defaultFretboard)
@@ -41,7 +41,7 @@ class Challenge: ObservableObject {
         configurations.save(defaultConfiguration: item)
         configuration = item
 
-        fretboard = FretBoard(tuningType: .standard, frets: item.frets)
+        fretboard = Fretboard(tuningType: .standard, frets: item.frets)
         question = Challenge.generateRandomQuestion(for: fretboard)
     }
 
@@ -57,7 +57,7 @@ class Challenge: ObservableObject {
     }
 
 
-    private static func generateRandomQuestion(for fretboard: FretBoard) -> Question {
+    private static func generateRandomQuestion(for fretboard: Fretboard) -> Question {
         let fret = fretboard.frets.shuffled().first!
         let string = fretboard.strings.shuffled().first!
         return Question(fret: fret, string: string, on: fretboard)

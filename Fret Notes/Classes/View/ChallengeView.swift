@@ -19,7 +19,7 @@ struct ChallengeView: View {
         GeometryReader { geometry in
             VStack(alignment: .center, spacing: 20) {
                 VStack(alignment: .center, spacing: 8) {
-                    FretboardIndicatorView(challenge: self.challenge)
+                    FretboardIndicatorView(fretboard: self.challenge.fretboard, question: self.challenge.question)
                     FretboardConfiguration(challenge: self.challenge)
                 }
                 .frame(width: geometry.size.width)
@@ -61,50 +61,6 @@ struct ChallengeView: View {
         }
         result = nil
         challenge.nextQuestion()
-    }
-}
-
-
-struct FretboardIndicatorView: View {
-
-    @ObservedObject var challenge: Challenge
-
-    @State private var fretboardOffset: CGFloat = 0
-
-    var body: some View {
-        ZStack(alignment: Alignment(horizontal: .highlightedFret, vertical: .highlightedString)) {
-            FretboardView(fretboard: challenge.fretboard, highlightedFret: challenge.question.fret, highlightedString: challenge.question.string)
-            IndicatorView()
-        }
-        .alignmentGuide(.highlightedFret) { dimension in
-            dimension[.highlightedFret] + self.fretboardOffset
-        }
-        .frame(minHeight: 260, alignment: Alignment(horizontal: .highlightedFret, vertical: .center))
-        .gesture(DragGesture().onChanged { value in
-            self.fretboardOffset = -value.translation.width
-        }.onEnded { _ in
-            self.fretboardOffset = 0
-        })
-    }
-}
-
-
-struct IndicatorView: View {
-
-    @Environment(\.colorScheme) var colorScheme
-
-    var body: some View {
-        ZStack {
-            Circle()
-                .foregroundColor(Color("FretboardIndicator.indicator"))
-                .frame(width: 24, height: 24, alignment: .center)
-                .shadow(color: Color.black.opacity(colorScheme == .dark ? 1 : 0.2), radius: 2)
-
-            Circle()
-                .foregroundColor(Color("FretboardIndicator.indicator"))
-                .frame(width: 32, height: 32, alignment: .center)
-                .opacity(0.2)
-        }
     }
 }
 

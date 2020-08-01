@@ -34,7 +34,7 @@ extension HorizontalAlignment {
 
 struct FretboardView: View {
 
-    let fretboard: FretBoard
+    let fretboard: Fretboard
 
     let highlightedFret: Int
     let highlightedString: Int
@@ -179,7 +179,7 @@ struct StringView: View {
 
 struct FretboardView_Previews: PreviewProvider {
     static var previews: some View {
-        let fretboard = FretBoard(tuningType: .standard)
+        let fretboard = Fretboard(tuningType: .standard)
         return FretboardView(fretboard: fretboard, highlightedFret: 1, highlightedString: 1)
             .preferredColorScheme(.light)
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FretBoard {
+struct Fretboard {
 
     static let defaultFretsRange = 0...24
 

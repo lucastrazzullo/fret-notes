@@ -14,7 +14,7 @@ struct Question {
     let string: Int
     let note: Note
 
-    init(fret: Int, string: Int, on fretboard: FretBoard) {
+    init(fret: Int, string: Int, on fretboard: Fretboard) {
         self.fret = fret
         self.string = string
         self.note = fretboard.note(on: fret, string: string)
