@@ -22,7 +22,6 @@ struct ChallengeView: View {
                         OptionsView()
                         .padding(.horizontal, 24)
                         .frame(maxWidth: .infinity, alignment: .trailing)
-                        .accessibility(sortPriority: AccessibilityOrder.options.priority)
 
                         FretboardIndicatorView()
                         .accessibility(hidden: true)
@@ -31,6 +30,7 @@ struct ChallengeView: View {
                     .padding(.top, 12).padding(.bottom, 8)
                     .background(self.topBackgroundColor())
                     .accessibilityElement(children: .contain)
+                    .accessibility(sortPriority: AccessibilityOrder.options.priority)
 
                     QuestionView()
                     .frame(width: geometry.size.width)
@@ -46,6 +46,7 @@ struct ChallengeView: View {
                     .cornerRadius(12)
                     .accessibility(sortPriority: AccessibilityOrder.average.priority)
                 }
+                .accessibilityElement(children: .contain)
 
                 if self.challenge.result != nil {
                     OptionalResultView(result: self.challenge.result, action: self.challenge.nextQuestion)
@@ -53,6 +54,7 @@ struct ChallengeView: View {
                     .background(self.topBackgroundColor())
                     .cornerRadius(12)
                     .scaledToFit()
+                    .accessibility(addTraits: .isModal)
                     .accessibility(sortPriority: AccessibilityOrder.result.priority)
                 }
             }

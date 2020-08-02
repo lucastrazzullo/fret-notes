@@ -39,6 +39,7 @@ struct ResultView: View {
                     Text("🥁").font(.largeTitle)
                     Text("Good Job!").font(.headline)
                 }
+                .frame(maxWidth: .infinity)
                 .accessibilityElement(children: .combine)
                 .accessibility(label: Text("Good job! Your answer is correct."))
             } else {
@@ -46,6 +47,7 @@ struct ResultView: View {
                     Text("🔕").font(.largeTitle)
                     Text("Wrong note!").font(.headline)
                 }
+                .frame(maxWidth: .infinity)
                 .accessibilityElement(children: .combine)
                 .accessibility(label: Text("Wrong answer!"))
             }
@@ -68,9 +70,9 @@ struct ResultView: View {
             }
 
             Button(action: self.action) {
-                Text("Next")
+                Text("Next").fixedSize()
             }
-            .padding(.all, 8)
+            .padding(8)
             .background(Color("Action.accent"))
             .foregroundColor(Color("Action.foreground"))
             .cornerRadius(4)
