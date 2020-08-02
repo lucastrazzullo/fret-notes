@@ -14,7 +14,9 @@ struct OptionalResultView: View {
     let action: () -> ()
 
     var body: some View {
-        buildView()
+        ZStack {
+            buildView()
+        }
     }
 
     private func buildView() -> AnyView {
@@ -40,16 +42,12 @@ struct ResultView: View {
                     Text("Good Job!").font(.headline)
                 }
                 .frame(maxWidth: .infinity)
-                .accessibilityElement(children: .combine)
-                .accessibility(label: Text("Good job! Your answer is correct."))
             } else {
                 VStack {
                     Text("🔕").font(.largeTitle)
                     Text("Wrong note!").font(.headline)
                 }
                 .frame(maxWidth: .infinity)
-                .accessibilityElement(children: .combine)
-                .accessibility(label: Text("Wrong answer!"))
             }
 
             VStack {
@@ -57,16 +55,12 @@ struct ResultView: View {
                     Text(result.question.note.fullName).bold()
                     Text("is the correct note")
                 }
-                .accessibilityElement(children: .combine)
-                .accessibility(label: Text("The correct note is \(result.question.note.name) \(result.question.note.symbolExtended ?? "")"))
 
                 HStack {
                     Text("Answered in")
                     Text("\(result.timing, specifier: "%.2f")").font(.headline)
                     Text("seconds").font(.callout)
                 }
-                .accessibilityElement(children: .combine)
-                .accessibility(label: Text("Answered in \(result.timing, specifier: "%.2f") seconds"))
             }
 
             Button(action: self.action) {
@@ -76,6 +70,23 @@ struct ResultView: View {
             .background(Color("Action.accent"))
             .foregroundColor(Color("Action.foreground"))
             .cornerRadius(4)
+            .accessibility(removeTraits: .isButton)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityAction(named: Text("Next"), self.action)
+        .accessibility(label: accessibilityLabel())
+    }
+
+
+    // MARK: Private helper methods
+
+    private func accessibilityLabel() -> Text {
+        var commonString = "The correct note is \(result.question.note.name) \(result.question.note.symbolExtended ?? "")."
+        commonString += "Answered in \(Int(result.timing)) seconds"
+        if result.isCorrect {
+            return Text("Good job! Your answer is correct. \(commonString)")
+        } else {
+            return Text("Wrong Answer! \(commonString)")
         }
     }
 }

@@ -29,7 +29,6 @@ struct ChallengeView: View {
                     .frame(width: geometry.size.width)
                     .padding(.top, 12).padding(.bottom, 8)
                     .background(self.topBackgroundColor())
-                    .accessibilityElement(children: .contain)
                     .accessibility(sortPriority: AccessibilityOrder.options.priority)
 
                     QuestionView()
@@ -37,7 +36,7 @@ struct ChallengeView: View {
                     .accessibility(sortPriority: AccessibilityOrder.question.priority)
 
                     AnswerButtonsView()
-                    .accessibilityElement(children: .contain)
+                    .frame(width: geometry.size.width)
                     .accessibility(sortPriority: AccessibilityOrder.answer.priority)
 
                     AverageView()
@@ -47,22 +46,23 @@ struct ChallengeView: View {
                     .accessibility(sortPriority: AccessibilityOrder.average.priority)
                 }
                 .accessibilityElement(children: .contain)
+                .accessibility(hidden: self.challenge.result != nil)
 
-                if self.challenge.result != nil {
-                    OptionalResultView(result: self.challenge.result, action: self.challenge.nextQuestion)
-                    .padding(24)
-                    .background(self.topBackgroundColor())
-                    .cornerRadius(12)
-                    .scaledToFit()
-                    .accessibility(addTraits: .isModal)
-                    .accessibility(sortPriority: AccessibilityOrder.result.priority)
-                }
+                OptionalResultView(result: self.challenge.result, action: self.challenge.nextQuestion)
+                .padding(24)
+                .background(self.topBackgroundColor())
+                .cornerRadius(12)
+                .scaledToFit()
+                .opacity(self.challenge.result == nil ? 0 : 1)
+                .accessibilityElement(children: .combine)
+                .accessibility(hidden: self.challenge.result == nil)
+                .accessibility(sortPriority: AccessibilityOrder.result.priority)
             }
+            .accessibilityElement(children: .contain)
             .animation(self.reduceMotion ? .none : .default)
             .padding(.bottom, 24)
             .frame(width: geometry.size.width)
             .background(self.backgroundColor())
-            .accessibilityElement(children: .contain)
         }
     }
 

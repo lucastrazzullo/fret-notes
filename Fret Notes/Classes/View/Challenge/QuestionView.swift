@@ -19,7 +19,8 @@ struct QuestionView: View {
             Text("String \(challenge.question.string)").font(.headline)
         }
         .accessibilityElement(children: .combine)
-        .accessibility(label: Text("Fret \(challenge.question.fret), String \(challenge.question.string)"))
+        .accessibility(label: Text("Question"))
+        .accessibility(value: Text("Fret \(challenge.question.fret), String \(challenge.question.string)"))
         .accessibility(hint: Text("Guess the note"))
     }
 }

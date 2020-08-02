@@ -20,17 +20,17 @@ struct OptionsView: View {
             Image(systemName: "list.dash")
         }
         .foregroundColor(Color("Action.accent"))
+        .accessibilityElement(children: .combine)
+        .accessibility(removeTraits: .isImage)
+        .accessibility(addTraits: .isButton)
+        .accessibility(label: Text(accessibilityLabel()))
+        .accessibility(hint: Text(accessibilityHint()))
         .onTapGesture {
             self.showFretSections = true
         }
         .actionSheet(isPresented: $showFretSections) {
             ActionSheet(title: Text("Fretboard configuration"), message: nil, buttons: fretSectionButtons())
         }
-        .accessibilityElement(children: .combine)
-        .accessibility(removeTraits: .isImage)
-        .accessibility(addTraits: .isButton)
-        .accessibility(label: Text("Frets from \(configuration.fretboard.frets.lowerBound) to \(configuration.fretboard.frets.upperBound)"))
-        .accessibility(hint: Text("Update fret section"))
     }
 
 
@@ -57,6 +57,16 @@ struct OptionsView: View {
 
     private func fretSectionItemTitle(for fretSection: ClosedRange<Int>) -> String {
         return "\(fretSection.lowerBound)th to \(fretSection.upperBound)th fret"
+    }
+
+
+    private func accessibilityLabel() -> String {
+        return "Frets from \(configuration.fretboard.frets.lowerBound) to \(configuration.fretboard.frets.upperBound)"
+    }
+
+
+    private func accessibilityHint() -> String {
+        return "Update fret section"
     }
 }
 

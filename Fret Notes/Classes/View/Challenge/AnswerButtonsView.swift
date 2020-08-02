@@ -47,10 +47,10 @@ struct AnswerButtonsView: View {
             .frame(maxWidth: 80, maxHeight: 32, alignment: .center)
         }
         .padding(12)
+        .accessibility(addTraits: .isButton)
         .accessibilityElement(children: .combine)
         .accessibility(label: Text("Answer: \(note.name) \(note.symbol != nil ? "Sharp" : "")"))
         .accessibility(hint: Text("Click to answer: \(note.name) \(note.symbolExtended ?? "")"))
-        .accessibility(addTraits: .isButton)
     }
 }
 
