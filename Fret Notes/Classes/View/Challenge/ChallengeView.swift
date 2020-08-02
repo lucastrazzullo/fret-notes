@@ -30,10 +30,12 @@ struct ChallengeView: View {
                     .padding(.top, 12).padding(.bottom, 8)
                     .background(self.topBackgroundColor())
                     .accessibility(sortPriority: AccessibilityOrder.options.priority)
+                    .accessibility(addTraits: .isHeader)
 
                     QuestionView()
                     .frame(width: geometry.size.width)
                     .accessibility(sortPriority: AccessibilityOrder.question.priority)
+                    .accessibility(addTraits: .isHeader)
 
                     AnswerButtonsView()
                     .frame(width: geometry.size.width)
@@ -44,6 +46,7 @@ struct ChallengeView: View {
                     .background(Color.white.opacity(0.2))
                     .cornerRadius(12)
                     .accessibility(sortPriority: AccessibilityOrder.average.priority)
+                    .accessibility(addTraits: .isHeader)
                 }
                 .accessibilityElement(children: .contain)
                 .accessibility(hidden: self.challenge.result != nil)
@@ -55,6 +58,7 @@ struct ChallengeView: View {
                 .scaledToFit()
                 .opacity(self.challenge.result == nil ? 0 : 1)
                 .accessibilityElement(children: .combine)
+                .accessibility(addTraits: self.challenge.result == nil ? [] : .isModal)
                 .accessibility(hidden: self.challenge.result == nil)
                 .accessibility(sortPriority: AccessibilityOrder.result.priority)
             }

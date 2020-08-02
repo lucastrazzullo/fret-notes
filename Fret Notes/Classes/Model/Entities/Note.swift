@@ -32,13 +32,13 @@ enum Note: Int, CaseIterable, Codable {
 
     var name: String {
         switch self {
-        case .a, .aSharp: return "A"
-        case .b: return "B"
-        case .c, .cSharp: return "C"
-        case .d, .dSharp: return "D"
-        case .e: return "E"
-        case .f, .fSharp: return "F"
-        case .g, .gSharp: return "G"
+        case .a, .aSharp: return "a"
+        case .b: return "b"
+        case .c, .cSharp: return "c"
+        case .d, .dSharp: return "d"
+        case .e: return "e"
+        case .f, .fSharp: return "f"
+        case .g, .gSharp: return "g"
         }
     }
 

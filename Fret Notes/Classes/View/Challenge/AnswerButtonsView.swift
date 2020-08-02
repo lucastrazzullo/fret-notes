@@ -41,15 +41,14 @@ struct AnswerButtonsView: View {
     private func buildButton(for note: Note) -> some View {
         Button(action: { self.challenge.attemptAnswer(with: note) }) {
             HStack(alignment: .top, spacing: 4) {
-                Text(note.name).font(.title).foregroundColor(.primary)
+                Text(note.name.uppercased()).font(.title).foregroundColor(.primary)
                 Text(note.symbol ?? "").font(.headline).foregroundColor(.primary)
             }
             .frame(maxWidth: 80, maxHeight: 32, alignment: .center)
         }
         .padding(12)
-        .accessibility(addTraits: .isButton)
         .accessibilityElement(children: .combine)
-        .accessibility(label: Text("Answer: \(note.name) \(note.symbol != nil ? "Sharp" : "")"))
+        .accessibility(label: Text("\(note.name), \(note.symbol != nil ? "Sharp" : "")"))
         .accessibility(hint: Text("Click to answer: \(note.name) \(note.symbolExtended ?? "")"))
     }
 }
