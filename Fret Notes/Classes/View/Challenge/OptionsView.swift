@@ -1,5 +1,5 @@
 //
-//  RecapView.swift
+//  OptionsView.swift
 //  Fret Notes
 //
 //  Created by luca strazzullo on 1/8/20.
@@ -8,36 +8,28 @@
 
 import SwiftUI
 
-struct RecapView: View {
+struct OptionsView: View {
 
-    @EnvironmentObject var challenge: Challenge
     @EnvironmentObject var configuration: Configuration
 
     @State private var showFretSections: Bool = false
 
     var body: some View {
-        HStack(alignment: .center) {
-            HStack(alignment: .center, spacing: 4) {
-                Text("Fret \(challenge.question.fret)").font(.headline)
-                Text("|")
-                Text("String \(challenge.question.string)").font(.headline)
-            }
-            .padding()
-
-            HStack {
-                Text(fretSectionItemTitle(for: configuration.fretboard.frets)).underline()
-                Image(systemName: "list.dash")
-            }
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .trailing)
-            .foregroundColor(Color("Action.accent"))
-            .onTapGesture {
-                self.showFretSections = true
-            }
-            .actionSheet(isPresented: $showFretSections) {
-                ActionSheet(title: Text("Fretboard configuration"), message: nil, buttons: fretSectionButtons())
-            }
+        HStack {
+            Text(fretSectionItemTitle(for: configuration.fretboard.frets)).underline()
+            Image(systemName: "list.dash")
         }
+        .onTapGesture {
+            self.showFretSections = true
+        }
+        .actionSheet(isPresented: $showFretSections) {
+            ActionSheet(title: Text("Fretboard configuration"), message: nil, buttons: fretSectionButtons())
+        }
+        .accessibilityElement(children: .combine)
+        .accessibility(removeTraits: .isImage)
+        .accessibility(addTraits: .isButton)
+        .accessibility(label: Text("Frets from \(configuration.fretboard.frets.lowerBound) to \(configuration.fretboard.frets.upperBound)"))
+        .accessibility(hint: Text("Update fret section"))
     }
 
 
@@ -68,20 +60,18 @@ struct RecapView: View {
 }
 
 
-struct ChallengeRecapView_Previews: PreviewProvider {
+struct OptionsView_Previews: PreviewProvider {
 
     private static let configuration: Configuration = Configuration(with: .endBoard)
 
     static var previews: some View {
         Group {
-            RecapView()
-            .environmentObject(Challenge(configuration: .init()))
+            OptionsView()
             .environmentObject(configuration)
             .previewLayout(PreviewLayout.sizeThatFits)
             .preferredColorScheme(.light)
 
-            RecapView()
-            .environmentObject(Challenge(configuration: .init()))
+            OptionsView()
             .environmentObject(configuration)
             .previewLayout(PreviewLayout.sizeThatFits)
             .preferredColorScheme(.dark)

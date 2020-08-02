@@ -23,7 +23,7 @@ struct Fretboard: Codable, Equatable {
 
     // MARK: Object life cycle
 
-    init(_ default: Tuning.Default, frets: ClosedRange<Int> = defaultFretsRange, strings: ClosedRange<Int> = 1...6) {
+    init(_ default: Tuning.Default = .standard, frets: ClosedRange<Int> = defaultFretsRange, strings: ClosedRange<Int> = 1...6) {
         self.frets = frets
         self.strings = strings
         self.tuning = Tuning(with: `default`)

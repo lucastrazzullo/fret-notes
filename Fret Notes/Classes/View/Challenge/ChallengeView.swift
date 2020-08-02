@@ -12,29 +12,55 @@ struct ChallengeView: View {
 
     @Environment(\.accessibilityReduceMotion) var reduceMotion
 
+    @EnvironmentObject var challenge: Challenge
+
     var body: some View {
         GeometryReader { geometry in
-            VStack(alignment: .center, spacing: 20) {
-                VStack(alignment: .center, spacing: 8) {
-                    FretboardIndicatorView()
-                    RecapView()
+            ZStack {
+                VStack(alignment: .center, spacing: 32) {
+                    VStack {
+                        OptionsView()
+                        .padding(.horizontal, 24)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .accessibility(sortPriority: AccessibilityOrder.options.priority)
+
+                        FretboardIndicatorView()
+                        .accessibility(hidden: true)
+                    }
+                    .frame(width: geometry.size.width)
+                    .padding(.top, 12).padding(.bottom, 8)
+                    .background(self.topBackgroundColor())
+                    .accessibilityElement(children: .contain)
+
+                    QuestionView()
+                    .frame(width: geometry.size.width)
+                    .accessibility(sortPriority: AccessibilityOrder.question.priority)
+
+                    AnswerButtonsView()
+                    .accessibilityElement(children: .contain)
+                    .accessibility(sortPriority: AccessibilityOrder.answer.priority)
+
+                    AverageView()
+                    .padding(.all, 12)
+                    .background(Color.white.opacity(0.2))
+                    .cornerRadius(12)
+                    .accessibility(sortPriority: AccessibilityOrder.average.priority)
                 }
-                .frame(width: geometry.size.width)
-                .padding(.top, 12).padding(.bottom, 8)
-                .background(self.topBackgroundColor())
 
-                DashboardView()
-                .padding(.all, 12)
-                .background(Color.white.opacity(0.2))
-                .cornerRadius(12)
-
-                NoteSelectionView()
-                .padding(.horizontal, 24)
-                .padding(.bottom, 40)
+                if self.challenge.result != nil {
+                    OptionalResultView(result: self.challenge.result, action: self.challenge.nextQuestion)
+                    .padding(24)
+                    .background(self.topBackgroundColor())
+                    .cornerRadius(12)
+                    .scaledToFit()
+                    .accessibility(sortPriority: AccessibilityOrder.result.priority)
+                }
             }
             .animation(self.reduceMotion ? .none : .default)
+            .padding(.bottom, 24)
             .frame(width: geometry.size.width)
             .background(self.backgroundColor())
+            .accessibilityElement(children: .contain)
         }
     }
 
@@ -57,23 +83,23 @@ struct ChallengeView: View {
 
 // MARK: - Previews
 
-struct ContentView_Previews: PreviewProvider {
+struct ChallengeView_Previews: PreviewProvider {
 
     private static let configuration: Configuration = Configuration(with: .startBoard)
 
-    private static let noAnsweredChallenge: Challenge = Challenge(configuration: .init())
+    private static let noAnsweredChallenge: Challenge = Challenge(fretboard: .init(), average: .init(timings: []))
     private static let correctlyAnsweredChallenge: Challenge = {
-        let challenge = Challenge(configuration: configuration)
-        let question = challenge.question
         let fretboard = configuration.fretboard
+        let challenge = Challenge(fretboard: fretboard, average: .init(timings: []))
+        let question = challenge.question
         let note = fretboard.note(on: question.fret, string: question.string)
         challenge.attemptAnswer(with: note)
         return challenge
     }()
     private static let wronglyAnsweredChallenge: Challenge = {
-        let challenge = Challenge(configuration: configuration)
-        let question = challenge.question
         let fretboard = configuration.fretboard
+        let challenge = Challenge(fretboard: fretboard, average: .init(timings: []))
+        let question = challenge.question
         let correctNote = fretboard.note(on: question.fret, string: question.string)
         var notes = Note.allCases
         notes.remove(at: Note.allCases.firstIndex(of: correctNote)!)

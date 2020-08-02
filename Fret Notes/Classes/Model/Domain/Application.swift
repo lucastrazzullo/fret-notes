@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class Application {
 
@@ -15,15 +16,23 @@ class Application {
     let average: Average
 
     private let userActivity: NSUserActivity
+    private var subscriptions: Set<AnyCancellable> = []
 
 
     // MARK: Object life cycle
 
     init() {
-        configuration = Configuration.stored() ?? Configuration()
-        challenge = Challenge(configuration: configuration)
-        average = Average()
         userActivity = Application.buildChallengeActivity()
+
+        average = Average()
+        configuration = Configuration.stored() ?? Configuration()
+        challenge = Challenge(fretboard: configuration.fretboard, average: average)
+
+        configuration.$fretboard
+            .sink(receiveValue: { [weak challenge] fretboard in
+                challenge?.update(fretboard: fretboard)
+            })
+            .store(in: &subscriptions)
     }
 
 

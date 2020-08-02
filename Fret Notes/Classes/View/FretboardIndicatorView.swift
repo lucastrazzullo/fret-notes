@@ -10,20 +10,19 @@ import SwiftUI
 
 struct FretboardIndicatorView: View {
 
-    @EnvironmentObject var configuration: Configuration
     @EnvironmentObject var challenge: Challenge
 
     @State private var fretboardOffset: CGFloat = 0
 
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .highlightedFret, vertical: .highlightedString)) {
-            FretboardView(fretboard: configuration.fretboard, highlightedFret: challenge.question.fret, highlightedString: challenge.question.string)
+            FretboardView(fretboard: challenge.fretboard, highlightedFret: challenge.question.fret, highlightedString: challenge.question.string)
             IndicatorView()
         }
         .alignmentGuide(.highlightedFret) { dimension in
             dimension[.highlightedFret] + self.fretboardOffset
         }
-        .frame(minHeight: 260, alignment: Alignment(horizontal: .highlightedFret, vertical: .center))
+        .frame(alignment: Alignment(horizontal: .highlightedFret, vertical: .center))
         .gesture(DragGesture().onChanged { value in
             self.fretboardOffset = -value.translation.width
         }.onEnded { _ in
@@ -55,20 +54,18 @@ struct IndicatorView: View {
 
 struct FretboardIndicatorView_Previews: PreviewProvider {
 
-    private static let configuration: Configuration = Configuration(with: .startBoard)
+    private static let fretboard: Fretboard = .init()
 
     static var previews: some View {
         Group {
             FretboardIndicatorView()
-            .environmentObject(Challenge(configuration: configuration))
-            .environmentObject(configuration)
+            .environmentObject(Challenge(fretboard: fretboard, average: .init(timings: [])))
             .frame(width: 300, height: 400)
             .previewLayout(PreviewLayout.sizeThatFits)
             .preferredColorScheme(.light)
 
             FretboardIndicatorView()
-            .environmentObject(Challenge(configuration: configuration))
-            .environmentObject(configuration)
+            .environmentObject(Challenge(fretboard: fretboard, average: .init(timings: [])))
             .frame(width: 300, height: 400)
             .previewLayout(PreviewLayout.sizeThatFits)
             .preferredColorScheme(.dark)

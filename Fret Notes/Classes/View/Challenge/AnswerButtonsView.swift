@@ -45,10 +45,9 @@ struct AnswerButtonsView: View {
                 Text(note.symbol ?? "").font(.headline).foregroundColor(.primary)
             }
             .frame(maxWidth: 80, maxHeight: 32, alignment: .center)
-            .accessibilityElement(children: .ignore)
         }
         .padding(12)
-        .accessibilityElement(children: .ignore)
+        .accessibilityElement(children: .combine)
         .accessibility(label: Text("Answer: \(note.name) \(note.symbol != nil ? "Sharp" : "")"))
         .accessibility(hint: Text("Click to answer: \(note.name) \(note.symbolExtended ?? "")"))
         .accessibility(addTraits: .isButton)
@@ -56,16 +55,16 @@ struct AnswerButtonsView: View {
 }
 
 
-struct ButtonsView_Previews: PreviewProvider {
+struct AnswerButtonsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             AnswerButtonsView()
-            .environmentObject(Challenge(configuration: .init()))
+            .environmentObject(Challenge(fretboard: .init(), average: .init(timings: [])))
             .previewLayout(PreviewLayout.sizeThatFits)
             .preferredColorScheme(.light)
 
             AnswerButtonsView()
-            .environmentObject(Challenge(configuration: .init()))
+            .environmentObject(Challenge(fretboard: .init(), average: .init(timings: [])))
             .previewLayout(PreviewLayout.sizeThatFits)
             .preferredColorScheme(.dark)
         }

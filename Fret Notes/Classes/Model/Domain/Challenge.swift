@@ -14,30 +14,26 @@ class Challenge: ObservableObject {
     // MARK: Instance properties
 
     @Published private(set) var question: Question
-    @Published private(set) var result: Result?
+    @Published var result: Result?
+
+    private(set) var fretboard: Fretboard
+    private(set) var average: Average
 
     private var subscriptions: Set<AnyCancellable> = []
 
 
     // MARK: Object life cycle
 
-    init(configuration: Configuration) {
-        question = Challenge.makeRandomQuestion(for: configuration.fretboard)
-
-        configuration.$fretboard
-            .sink(receiveValue: nextQuestion(for:))
-            .store(in: &subscriptions)
+    init(fretboard: Fretboard, average: Average) {
+        self.question = Challenge.makeRandomQuestion(for: fretboard)
+        self.fretboard = fretboard
+        self.average = average
     }
 
 
     // MARK: Public methods
 
-    func attemptAnswer(with note: Note) {
-        result = Result(question: question, attemptedAnswer: Answer(note: note))
-    }
-
-
-    func nextQuestion(for fretboard: Fretboard) {
+    func nextQuestion() {
         result = nil
         question = Challenge.makeRandomQuestion(for: fretboard)
     }
@@ -47,6 +43,21 @@ class Challenge: ObservableObject {
         if result == nil {
             question.time = Date()
         }
+    }
+
+
+    func attemptAnswer(with note: Note) {
+        result = Result(question: question, attemptedAnswer: Answer(note: note))
+
+        if let result = result, result.isCorrect {
+            average.add(timing: result.timing)
+        }
+    }
+
+
+    func update(fretboard: Fretboard) {
+        self.fretboard = fretboard
+        self.nextQuestion()
     }
 
 

@@ -50,4 +50,13 @@ enum Note: Int, CaseIterable, Codable {
             return nil
         }
     }
+
+    var symbolExtended: String? {
+        switch self {
+        case .aSharp, .cSharp, .dSharp, .fSharp, .gSharp:
+            return "Sharp"
+        default:
+            return nil
+        }
+    }
 }

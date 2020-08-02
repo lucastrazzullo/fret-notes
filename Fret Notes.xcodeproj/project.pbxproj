@@ -14,9 +14,12 @@
 		81253D3724BF73C70054F392 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D3624BF73C70054F392 /* Question.swift */; };
 		81253D3924BF73D70054F392 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253D3824BF73D70054F392 /* Answer.swift */; };
 		8129C47224C1C0CC00F05E4C /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8129C47124C1C0CC00F05E4C /* Result.swift */; };
-		8161A30624D5A88400233321 /* RecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161A30524D5A88400233321 /* RecapView.swift */; };
-		8161A30824D5AD2700233321 /* NoteSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161A30724D5AD2700233321 /* NoteSelectionView.swift */; };
-		8161A30A24D5B1FC00233321 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161A30924D5B1FC00233321 /* DashboardView.swift */; };
+		814D10DA24D6C5B200194483 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D10D924D6C5B200194483 /* QuestionView.swift */; };
+		814D10DC24D6C9C500194483 /* AverageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D10DB24D6C9C500194483 /* AverageView.swift */; };
+		814D10DF24D6CE4D00194483 /* AccessibilityOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D10DE24D6CE4D00194483 /* AccessibilityOrder.swift */; };
+		8161A30624D5A88400233321 /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161A30524D5A88400233321 /* OptionsView.swift */; };
+		8161A30824D5AD2700233321 /* AnswerButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161A30724D5AD2700233321 /* AnswerButtonsView.swift */; };
+		8161A30A24D5B1FC00233321 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161A30924D5B1FC00233321 /* ResultView.swift */; };
 		8161A30C24D5BD6800233321 /* FretboardIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161A30B24D5BD6800233321 /* FretboardIndicatorView.swift */; };
 		81779BA724C85419004CF9C8 /* Average.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81779BA624C85419004CF9C8 /* Average.swift */; };
 		8185373624C1E166005059DD /* FretboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8185373524C1E166005059DD /* FretboardView.swift */; };
@@ -49,9 +52,12 @@
 		81253D3624BF73C70054F392 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		81253D3824BF73D70054F392 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		8129C47124C1C0CC00F05E4C /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
-		8161A30524D5A88400233321 /* RecapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecapView.swift; sourceTree = "<group>"; };
-		8161A30724D5AD2700233321 /* NoteSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSelectionView.swift; sourceTree = "<group>"; };
-		8161A30924D5B1FC00233321 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		814D10D924D6C5B200194483 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
+		814D10DB24D6C9C500194483 /* AverageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverageView.swift; sourceTree = "<group>"; };
+		814D10DE24D6CE4D00194483 /* AccessibilityOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityOrder.swift; sourceTree = "<group>"; };
+		8161A30524D5A88400233321 /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
+		8161A30724D5AD2700233321 /* AnswerButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerButtonsView.swift; sourceTree = "<group>"; };
+		8161A30924D5B1FC00233321 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		8161A30B24D5BD6800233321 /* FretboardIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FretboardIndicatorView.swift; path = ../FretboardIndicatorView.swift; sourceTree = "<group>"; };
 		81779BA624C85419004CF9C8 /* Average.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Average.swift; sourceTree = "<group>"; };
 		8185373524C1E166005059DD /* FretboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FretboardView.swift; sourceTree = "<group>"; };
@@ -113,6 +119,7 @@
 			children = (
 				81253D3024BF73470054F392 /* Entities */,
 				81253D3124BF734E0054F392 /* Domain */,
+				814D10DD24D6CE3D00194483 /* UI */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -150,13 +157,23 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		814D10DD24D6CE3D00194483 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				814D10DE24D6CE4D00194483 /* AccessibilityOrder.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		8161A30D24D5BDF500233321 /* Challenge */ = {
 			isa = PBXGroup;
 			children = (
 				8161A30B24D5BD6800233321 /* FretboardIndicatorView.swift */,
-				8161A30924D5B1FC00233321 /* DashboardView.swift */,
-				8161A30724D5AD2700233321 /* NoteSelectionView.swift */,
-				8161A30524D5A88400233321 /* RecapView.swift */,
+				8161A30524D5A88400233321 /* OptionsView.swift */,
+				814D10DB24D6C9C500194483 /* AverageView.swift */,
+				8161A30924D5B1FC00233321 /* ResultView.swift */,
+				8161A30724D5AD2700233321 /* AnswerButtonsView.swift */,
+				814D10D924D6C5B200194483 /* QuestionView.swift */,
 				81A8584024BF4C28003E788F /* ChallengeView.swift */,
 			);
 			path = Challenge;
@@ -311,6 +328,8 @@
 			files = (
 				8161A30C24D5BD6800233321 /* FretboardIndicatorView.swift in Sources */,
 				81A8583D24BF4C28003E788F /* AppDelegate.swift in Sources */,
+				814D10DF24D6CE4D00194483 /* AccessibilityOrder.swift in Sources */,
+				814D10DC24D6C9C500194483 /* AverageView.swift in Sources */,
 				81253D3724BF73C70054F392 /* Question.swift in Sources */,
 				81779BA724C85419004CF9C8 /* Average.swift in Sources */,
 				8185373624C1E166005059DD /* FretboardView.swift in Sources */,
@@ -318,12 +337,13 @@
 				81EB965824D2C4F700F71ACE /* Configuration.swift in Sources */,
 				81253D3924BF73D70054F392 /* Answer.swift in Sources */,
 				81253D3324BF736C0054F392 /* Challenge.swift in Sources */,
-				8161A30824D5AD2700233321 /* NoteSelectionView.swift in Sources */,
+				8161A30824D5AD2700233321 /* AnswerButtonsView.swift in Sources */,
 				81253D2C24BF71A40054F392 /* Tuning.swift in Sources */,
 				8129C47224C1C0CC00F05E4C /* Result.swift in Sources */,
 				81A8584124BF4C28003E788F /* ChallengeView.swift in Sources */,
-				8161A30A24D5B1FC00233321 /* DashboardView.swift in Sources */,
-				8161A30624D5A88400233321 /* RecapView.swift in Sources */,
+				814D10DA24D6C5B200194483 /* QuestionView.swift in Sources */,
+				8161A30A24D5B1FC00233321 /* ResultView.swift in Sources */,
+				8161A30624D5A88400233321 /* OptionsView.swift in Sources */,
 				81253D2A24BF71900054F392 /* Note.swift in Sources */,
 				81DB3BC424C6ECBD00BDE228 /* Application.swift in Sources */,
 				81253D2E24BF72BC0054F392 /* Fretboard.swift in Sources */,
