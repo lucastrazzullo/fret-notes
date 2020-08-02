@@ -19,6 +19,7 @@ struct OptionsView: View {
             Text(fretSectionItemTitle(for: configuration.fretboard.frets)).underline()
             Image(systemName: "list.dash")
         }
+        .foregroundColor(Color("Action.accent"))
         .onTapGesture {
             self.showFretSections = true
         }
