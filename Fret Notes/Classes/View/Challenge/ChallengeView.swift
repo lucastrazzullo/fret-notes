@@ -17,12 +17,11 @@ struct ChallengeView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                VStack(alignment: .center, spacing: 32) {
+                VStack(alignment: .center, spacing: 28) {
                     VStack {
                         OptionsView()
-                        .padding(.horizontal, 24)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .accessibility(sortPriority: AccessibilityOrder.options.priority)
+                        .padding(.trailing, 24)
+                        .frame(width: geometry.size.width, alignment: .trailing)
 
                         FretboardIndicatorView()
                         .accessibility(hidden: true)
@@ -30,14 +29,16 @@ struct ChallengeView: View {
                     .frame(width: geometry.size.width)
                     .padding(.top, 12).padding(.bottom, 8)
                     .background(self.topBackgroundColor())
-                    .accessibilityElement(children: .contain)
+                    .accessibility(sortPriority: AccessibilityOrder.options.priority)
+                    .accessibility(addTraits: .isHeader)
 
                     QuestionView()
                     .frame(width: geometry.size.width)
                     .accessibility(sortPriority: AccessibilityOrder.question.priority)
+                    .accessibility(addTraits: .isHeader)
 
-                    AnswerButtonsView()
-                    .accessibilityElement(children: .contain)
+                    KeyboardView()
+                    .frame(width: geometry.size.width)
                     .accessibility(sortPriority: AccessibilityOrder.answer.priority)
 
                     AverageView()
@@ -45,22 +46,27 @@ struct ChallengeView: View {
                     .background(Color.white.opacity(0.2))
                     .cornerRadius(12)
                     .accessibility(sortPriority: AccessibilityOrder.average.priority)
+                    .accessibility(addTraits: .isHeader)
                 }
+                .accessibilityElement(children: .contain)
+                .accessibility(hidden: self.challenge.result != nil)
 
-                if self.challenge.result != nil {
-                    OptionalResultView(result: self.challenge.result, action: self.challenge.nextQuestion)
-                    .padding(24)
-                    .background(self.topBackgroundColor())
-                    .cornerRadius(12)
-                    .scaledToFit()
-                    .accessibility(sortPriority: AccessibilityOrder.result.priority)
-                }
+                OptionalResultView(result: self.challenge.result, action: self.challenge.nextQuestion)
+                .padding(24)
+                .background(self.topBackgroundColor())
+                .cornerRadius(12)
+                .scaledToFit()
+                .opacity(self.challenge.result == nil ? 0 : 1)
+                .accessibilityElement(children: .combine)
+                .accessibility(addTraits: self.challenge.result == nil ? [] : .isModal)
+                .accessibility(hidden: self.challenge.result == nil)
+                .accessibility(sortPriority: AccessibilityOrder.result.priority)
             }
+            .accessibilityElement(children: .contain)
             .animation(self.reduceMotion ? .none : .default)
             .padding(.bottom, 24)
             .frame(width: geometry.size.width)
             .background(self.backgroundColor())
-            .accessibilityElement(children: .contain)
         }
     }
 

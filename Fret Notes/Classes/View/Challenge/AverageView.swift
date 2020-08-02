@@ -21,8 +21,6 @@ struct AverageView: View {
                     Text("seconds").font(.caption)
                 }
             }
-            .accessibilityElement(children: .combine)
-            .accessibility(label: Text("Your answer verage time is: \(average.value ?? 0, specifier: "%.2f")"))
 
             Button(action: average.reset) {
                 Text("Reset").font(.subheadline)
@@ -30,12 +28,37 @@ struct AverageView: View {
             }
             .disabled(average.value == nil)
             .padding(.all, 8)
-            .background(average.value == nil ? Color("Action.accent.disabled") : Color("Action.accent"))
-            .foregroundColor(average.value == nil ? Color("Action.foreground.disabled") : Color("Action.foreground"))
+            .background(background())
+            .foregroundColor(foregroundColor())
             .cornerRadius(4)
-            .accessibilityElement(children: .combine)
-            .accessibility(label: Text("Reset answer average time"))
+            .accessibility(removeTraits: .isButton)
         }
+        .accessibilityElement(children: .combine)
+        .accessibility(label: accessibilityLabel())
+        .accessibility(value: accessibilityValue())
+        .accessibilityAction(named: Text("Reset"), average.reset)
+    }
+
+
+    // MARK: Private helper methods
+
+    private func background() -> some View {
+        return average.value == nil ? Color("Action.accent.disabled") : Color("Action.accent")
+    }
+
+
+    private func foregroundColor() -> Color {
+        return average.value == nil ? Color("Action.foreground.disabled") : Color("Action.foreground")
+    }
+
+
+    private func accessibilityLabel() -> Text {
+        return Text("Your answer's average time")
+    }
+
+
+    private func accessibilityValue() -> Text {
+        return Text("\(Int(average.value ?? 0)) seconds")
     }
 }
 
