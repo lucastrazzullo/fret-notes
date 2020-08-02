@@ -31,6 +31,7 @@ struct AverageView: View {
             .background(background())
             .foregroundColor(foregroundColor())
             .cornerRadius(4)
+            .accessibility(removeTraits: .isButton)
         }
         .accessibilityElement(children: .combine)
         .accessibility(label: accessibilityLabel())
@@ -57,7 +58,7 @@ struct AverageView: View {
 
 
     private func accessibilityValue() -> Text {
-        return Text("\(average.value ?? 0, specifier: "%.2f") seconds")
+        return Text("\(Int(average.value ?? 0)) seconds")
     }
 }
 
