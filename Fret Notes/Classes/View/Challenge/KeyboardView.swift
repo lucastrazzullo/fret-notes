@@ -51,7 +51,7 @@ struct KeyboardView: View {
 
 struct KeyboardButtonStyle: ButtonStyle {
 
-    let size: CGFloat = 32
+    let size: CGFloat = 36
 
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
