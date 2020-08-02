@@ -20,8 +20,8 @@ struct ChallengeView: View {
                 VStack(alignment: .center, spacing: 28) {
                     VStack {
                         OptionsView()
-                        .padding(.horizontal, 24)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .padding(.trailing, 24)
+                        .frame(width: geometry.size.width, alignment: .trailing)
 
                         FretboardIndicatorView()
                         .accessibility(hidden: true)
