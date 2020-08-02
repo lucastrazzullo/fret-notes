@@ -17,7 +17,7 @@ struct ChallengeView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                VStack(alignment: .center, spacing: 32) {
+                VStack(alignment: .center, spacing: 28) {
                     VStack {
                         OptionsView()
                         .padding(.horizontal, 24)
@@ -37,7 +37,7 @@ struct ChallengeView: View {
                     .accessibility(sortPriority: AccessibilityOrder.question.priority)
                     .accessibility(addTraits: .isHeader)
 
-                    AnswerButtonsView()
+                    KeyboardView()
                     .frame(width: geometry.size.width)
                     .accessibility(sortPriority: AccessibilityOrder.answer.priority)
 

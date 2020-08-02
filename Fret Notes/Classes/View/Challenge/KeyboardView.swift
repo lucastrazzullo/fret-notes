@@ -13,24 +13,19 @@ struct KeyboardView: View {
     @EnvironmentObject var challenge: Challenge
 
     var body: some View {
-        VStack(alignment: .center, spacing: 2) {
-            HStack(alignment: .center, spacing: 12) {
-                ForEach(0..<3, id: \.self) { row in
+        VStack(alignment: .center, spacing: 12) {
+            HStack(alignment: .center, spacing: 28) {
+                ForEach(0..<4, id: \.self) { row in
                     self.buildButton(for: Note.allCases[row])
                 }
             }
-            HStack(alignment: .center, spacing: 12) {
-                ForEach(3..<6, id: \.self) { row in
+            HStack(alignment: .center, spacing: 28) {
+                ForEach(4..<8, id: \.self) { row in
                     self.buildButton(for: Note.allCases[row])
                 }
             }
-            HStack(alignment: .center, spacing: 12) {
-                ForEach(6..<9, id: \.self) { row in
-                    self.buildButton(for: Note.allCases[row])
-                }
-            }
-            HStack(alignment: .center, spacing: 12) {
-                ForEach(9..<12, id: \.self) { row in
+            HStack(alignment: .center, spacing: 28) {
+                ForEach(8..<12, id: \.self) { row in
                     self.buildButton(for: Note.allCases[row])
                 }
             }
@@ -40,16 +35,45 @@ struct KeyboardView: View {
 
     private func buildButton(for note: Note) -> some View {
         Button(action: { self.challenge.attemptAnswer(with: note) }) {
-            HStack(alignment: .top, spacing: 4) {
-                Text(note.name.uppercased()).font(.title).foregroundColor(.primary)
-                Text(note.symbol ?? "").font(.headline).foregroundColor(.primary)
+            ZStack(alignment: .center) {
+                Text(note.name.uppercased())
+                Text(note.symbol ?? "")
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: Alignment(horizontal: .trailing, vertical: .top))
             }
-            .frame(maxWidth: 80, maxHeight: 32, alignment: .center)
         }
-        .padding(12)
+        .buttonStyle(KeyboardButtonStyle())
         .accessibilityElement(children: .combine)
         .accessibility(label: Text("\(note.name), \(note.symbol != nil ? "Sharp" : "")"))
         .accessibility(hint: Text("Click to answer: \(note.name) \(note.symbolExtended ?? "")"))
+    }
+}
+
+
+struct KeyboardButtonStyle: ButtonStyle {
+
+    let size: CGFloat = 32
+
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+        .font(.headline)
+        .foregroundColor(.primary)
+        .frame(width: size, height: size)
+        .padding(12)
+        .background(background(for: configuration))
+    }
+
+
+    // MARK: Private helper methods
+
+    private func background(for configuration: Self.Configuration) -> some View {
+        if configuration.isPressed {
+            return AnyView(Circle()
+            .foregroundColor(Color.black.opacity(0.15)))
+        } else {
+            return AnyView(Circle()
+            .stroke(lineWidth: 3)
+            .foregroundColor(Color.black.opacity(0.15)))
+        }
     }
 }
 
